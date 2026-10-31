@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Kheun Lift
 
-## Getting Started
+Run `npm install` and `npm run dev`, then open http://localhost:3000.
+The home route `/` shows the public landing page. The dashboard preview is at `/dashboard`.
+`/login`, `/register`, `/leaderboard`, and `/profile` are navigable placeholders.
 
-First, run the development server:
+## File structure
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```text
+app/
+  layout.tsx                   # Root metadata and global styles
+  globals.css                  # Shared theme, focus styles, safe-area spacing
+  page.tsx                     # Public landing route
+  icon.svg                     # Kheun Lift browser icon
+  not-found.tsx                # Branded 404 page
+  (auth)/
+    layout.tsx                 # Shared account-page appearance
+    login/page.tsx             # Login placeholder
+    register/page.tsx          # Registration placeholder
+  (dashboard)/
+    layout.tsx                 # Shared workspace shell
+    dashboard/page.tsx         # Route entry and metadata
+    leaderboard/page.tsx       # Rankings placeholder
+    profile/page.tsx           # Athlete profile placeholder
+components/
+  layout/app-shell.tsx         # Desktop header and floating mobile navigation
+  layout/app-navigation.tsx    # Shared menu data and active route highlighting
+  ui/icon.tsx                  # Shared SVG icons
+features/
+  public/
+    components/public-landing.tsx
+  dashboard/
+    components/dashboard-overview.tsx
+    data/demo.ts               # Explicit sample data, no API calls
+  leaderboard/
+    data/demo.ts               # Sample ranking data shared by Public and Dashboard
+public/                        # Static assets
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Keep route files small. Shared UI belongs in `components`; components and data
+used by one feature belong together in `features/<feature>`. Shared domain data
+stays with its owning feature. When implementing account forms, put them in
+`features/auth/`; profile content belongs in `features/profile/`. The placeholder
+content stays directly in route files until those features are implemented.
+Add API clients, validation, and state only when a feature needs them.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The landing page follows the original Vite Public page, with a hero, sample
+leaderboard, and How it works section. Account links open placeholder pages;
+login and registration do not submit or save anything. Session redirects are not
+connected yet. Route groups organize appearance and do not protect routes.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The dashboard is a public UI preview with sample records, activity, leaderboard,
+and athlete profile. Navigation links open the prepared routes. It does not read or
+save account data. Connect the backend and add session protection before showing
+private athlete data. The existing Vite frontend and both backends are unchanged.
 
-## Learn More
+The visual reference is the original Vite frontend's Home page: black and yellow,
+rounded cards, a desktop header and a floating mobile navigation bar. At the
+768px breakpoint, the single column becomes a 320px profile column beside the
+leaderboard. Add Lift and Social stay disabled in this preview.
 
-To learn more about Next.js, take a look at the following resources:
+## Checks
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `npm run lint`
