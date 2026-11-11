@@ -1,5 +1,5 @@
-import { PublicLanding } from "@/features/public/components/public-landing";
+import { redirect } from "next/navigation";
 
 export default function Home() {
-  return <PublicLanding />;
+  redirect("/dashboard");
 }

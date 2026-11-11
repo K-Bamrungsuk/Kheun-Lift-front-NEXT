@@ -7,8 +7,8 @@ export default function LoginPage() {
   return (
     <>
       <h1 className="text-3xl font-black">Log in</h1>
-      <p className="mt-3 text-sm leading-6 text-zinc-400">Coming soon. Sign-in is not available yet.</p>
-      <p className="mt-6 text-sm text-zinc-400">New to Kheun Lift? <Link href="/register" className="font-semibold text-yellow-400 hover:underline">Create an account</Link></p>
+      <p className="mt-3 text-sm leading-6 text-muted">Coming soon. Sign-in is not available yet.</p>
+      <p className="mt-6 text-sm text-muted">New to Kheun Lift? <Link href="/register" className="font-semibold text-accent hover:underline">Create an account</Link></p>
     </>
   );
 }

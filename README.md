@@ -1,64 +1,49 @@
 # Kheun Lift
 
 Run `npm install` and `npm run dev`, then open http://localhost:3000.
-The home route `/` shows the public landing page. The dashboard preview is at `/dashboard`.
-`/login`, `/register`, `/leaderboard`, and `/profile` are navigable placeholders.
+The home route `/` redirects to `/dashboard`. The public marketing page has been removed.
 
-## File structure
+## Screens
 
-```text
-app/
-  layout.tsx                   # Root metadata and global styles
-  globals.css                  # Shared theme, focus styles, safe-area spacing
-  page.tsx                     # Public landing route
-  icon.svg                     # Kheun Lift browser icon
-  not-found.tsx                # Branded 404 page
-  (auth)/
-    layout.tsx                 # Shared account-page appearance
-    login/page.tsx             # Login placeholder
-    register/page.tsx          # Registration placeholder
-  (dashboard)/
-    layout.tsx                 # Shared workspace shell
-    dashboard/page.tsx         # Route entry and metadata
-    leaderboard/page.tsx       # Rankings placeholder
-    profile/page.tsx           # Athlete profile placeholder
-components/
-  layout/app-shell.tsx         # Desktop header and floating mobile navigation
-  layout/app-navigation.tsx    # Shared menu data and active route highlighting
-  ui/icon.tsx                  # Shared SVG icons
-features/
-  public/
-    components/public-landing.tsx
-  dashboard/
-    components/dashboard-overview.tsx
-    data/demo.ts               # Explicit sample data, no API calls
-  leaderboard/
-    data/demo.ts               # Sample ranking data shared by Public and Dashboard
-public/                        # Static assets
-```
+- `/dashboard`: athlete overview, personal records, recent lifts, and top-three rankings.
+- `/leaderboard`: sample exercise rankings with the sample athlete highlighted.
+- `/profile`: sample athlete details, personal records, and lift ledger.
+- `/log-lift`: editable UI preview with native discipline selection, load, reps, video URL, and notes. Submission is disabled. Inputs are not persisted.
+- `/login` and `/register`: existing account placeholders.
 
-Keep route files small. Shared UI belongs in `components`; components and data
-used by one feature belong together in `features/<feature>`. Shared domain data
-stays with its owning feature. When implementing account forms, put them in
-`features/auth/`; profile content belongs in `features/profile/`. The placeholder
-content stays directly in route files until those features are implemented.
-Add API clients, validation, and state only when a feature needs them.
+## Structure
 
-The landing page follows the original Vite Public page, with a hero, sample
-leaderboard, and How it works section. Account links open placeholder pages;
-login and registration do not submit or save anything. Session redirects are not
-connected yet. Route groups organize appearance and do not protect routes.
+Route files stay in `app/`. The dashboard route group shares `components/layout/app-shell.tsx`
+and `app-navigation.tsx`. The shell includes the demo notice, desktop navigation,
+and mobile bottom navigation. Shared SVG icons remain in `components/ui/icon.tsx`.
 
-The dashboard is a public UI preview with sample records, activity, leaderboard,
-and athlete profile. Navigation links open the prepared routes. It does not read or
-save account data. Connect the backend and add session protection before showing
-private athlete data. The existing Vite frontend and both backends are unchanged.
+Dashboard components and sample athlete data live in `features/dashboard/`.
+Profile reuses the dashboard's personal-record and lift-history components.
+Sample ranking data stays in `features/leaderboard/data/demo.ts`.
 
-The visual reference is the original Vite frontend's Home page: black and yellow,
-rounded cards, a desktop header and a floating mobile navigation bar. At the
-768px breakpoint, the single column becomes a 320px profile column beside the
-leaderboard. Add Lift and Social stay disabled in this preview.
+## Design
+
+Based on the Home, Log Lift, Profile, and Leaderboard screens in the
+Kheun Lift Redesign Stitch project (`12812117071399498758`). Navy surfaces,
+muted gold accents, compact cards, monospaced metrics, and bottom navigation
+follow the mobile reference, with a wider layout for desktop.
+
+Colors and font stacks are defined in `app/globals.css`, using Tailwind utilities.
+The font stacks use Plus Jakarta Sans and JetBrains Mono when installed, with
+Segoe UI / sans-serif and Consolas / monospace fallbacks. No external font request
+or new dependency is required.
+
+## Preview limitations
+
+All athlete data and ranking entries are samples. Sign-in, registration, profile
+editing, lift saving, and Social are not connected. No sample verified status
+represents a real verification. Route groups organize appearance and do not protect
+routes. Connect the backend and enforce session protection before displaying any
+private athlete data. The Vite frontend and both backends are unchanged.
 
 ## Checks
 
 - `npm run lint`
+- `npx --no-install tsc --noEmit --incremental false`
+
+Do not run a production build without explicit approval (see `AGENTS.md`).

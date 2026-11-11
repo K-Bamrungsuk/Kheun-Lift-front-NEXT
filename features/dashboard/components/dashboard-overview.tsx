@@ -3,105 +3,88 @@ import { Icon } from "@/components/ui/icon";
 import { demoLeaderboard } from "@/features/leaderboard/data/demo";
 import { demoAthlete, personalRecords, recentActivity } from "../data/demo";
 
-const rankColors = [
-  "bg-yellow-400 text-black",
-  "bg-slate-300 text-slate-950",
-  "bg-orange-800 text-orange-100",
-];
+export function PersonalRecords() {
+  return (
+    <section aria-labelledby="records-title" className="space-y-3">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <h2 id="records-title" className="font-mono text-xs font-semibold uppercase tracking-widest text-muted">Personal records</h2>
+        <span className="text-xs text-muted">Squat / Bench / Deadlift</span>
+      </div>
+      <dl className="grid grid-cols-3 gap-2.5">
+        {personalRecords.map((record) => (
+          <div key={record.exercise} className="min-w-0 rounded-xl bg-surface p-3 md:p-5">
+            <dt className="text-xs text-muted">{record.exercise}</dt>
+            <dd className="mt-3 font-mono text-2xl font-semibold tabular-nums tracking-tight md:text-3xl">{record.weight}<span className="ml-1 text-xs font-normal text-muted">kg</span></dd>
+            <dd className="mt-2 font-mono text-[11px] text-muted">{record.reps} rep max</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+  );
+}
+
+export function LiftHistory() {
+  return (
+    <section id="recent-activity" aria-labelledby="activity-title" className="space-y-3">
+      <div className="flex items-center justify-between gap-3">
+        <h2 id="activity-title" className="font-mono text-xs font-semibold uppercase tracking-widest text-muted">Lift ledger</h2>
+        <span className="font-mono text-xs text-muted">{recentActivity.length} entries</span>
+      </div>
+      <div className="divide-y divide-border overflow-hidden rounded-xl bg-surface">
+        {recentActivity.map((lift) => (
+          <article key={lift.id} className="flex flex-wrap items-center justify-between gap-3 p-4 md:p-5">
+            <div>
+              <h3 className="font-semibold">{lift.exercise}</h3>
+              <p className="mt-1 font-mono text-xl tabular-nums">{lift.weight}<span className="ml-1 text-xs text-muted">kg</span><span className="mx-2 text-sm text-muted">×</span>{lift.reps}<span className="ml-1 text-xs text-muted">rep</span></p>
+            </div>
+            <div className="flex flex-col items-end gap-2">
+              <span className={`inline-flex items-center gap-1.5 rounded-md bg-surface-high px-2 py-1 font-mono text-[11px] ${lift.status === "Verified" ? "text-accent" : "text-muted"}`}>
+                <span aria-hidden="true">{lift.status === "Verified" ? "✓" : "◷"}</span>{lift.status}
+              </span>
+              <time dateTime={lift.date} className="font-mono text-[10px] text-muted">{lift.date}</time>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
 
 export function DashboardOverview() {
   return (
     <>
-      <header className="flex items-center justify-between">
-        <h1 className="text-3xl font-black md:text-4xl">Home</h1>
-        <span className="rounded-2xl bg-yellow-400 p-3 text-black md:hidden"><Icon name="dumbbell" className="size-[22px]" /></span>
+      <header className="flex flex-wrap items-end justify-between gap-4">
+        <div><p className="mb-2 font-mono text-xs uppercase tracking-widest text-accent">Your training space</p><h1 className="text-2xl font-semibold tracking-tight md:text-4xl">Welcome back, {demoAthlete.username}</h1><p className="mt-2 text-sm text-muted">Build strength. Keep the record.</p></div>
+        <Link href="/log-lift" className="hidden min-h-11 items-center gap-2 rounded-xl bg-accent px-5 text-sm font-semibold text-background transition-colors hover:bg-accent/90 md:flex"><Icon name="plus" />Log a lift</Link>
       </header>
-      <p role="note" className="text-xs leading-5 text-zinc-400"><span className="font-semibold text-yellow-400">Demo mode</span> · Preview with sample data. Lift submission is not connected yet.</p>
-
-      <div className="grid gap-4 md:grid-cols-[320px_1fr]">
-        <div className="min-w-0 space-y-4">
-          <section id="profile" aria-labelledby="profile-title" className="overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-950">
-            <div className="flex items-center gap-4 p-5 md:p-6">
-              <div className="grid size-14 shrink-0 place-items-center rounded-2xl bg-yellow-400 text-xl font-black text-black shadow-lg shadow-yellow-400/10 md:size-16">K</div>
-              <div className="min-w-0">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-yellow-400">Profile</p>
-                <h2 id="profile-title" className="mt-1 truncate text-xl font-black">{demoAthlete.username}</h2>
-                <p className="mt-0.5 text-sm text-zinc-500">Sample profile</p>
-              </div>
-            </div>
-            <dl className="border-t border-zinc-800 bg-black/30 px-5 md:px-6">
-              <div className="flex items-center gap-3 border-b border-zinc-800 py-4">
-                <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-zinc-900 text-zinc-400"><Icon name="user" className="size-[17px]" /></span>
-                <div><dt className="text-xs text-zinc-500">Gender</dt><dd className="mt-0.5 text-sm font-bold text-zinc-200">{demoAthlete.gender}</dd></div>
-              </div>
-              <div className="flex items-center gap-3 border-b border-zinc-800 py-4">
-                <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-zinc-900 text-zinc-400"><Icon name="weight" className="size-[17px]" /></span>
-                <div><dt className="text-xs text-zinc-500">Body weight</dt><dd className="mt-0.5 text-sm font-bold text-zinc-200">{demoAthlete.bodyWeight}</dd></div>
-              </div>
-              <div className="flex items-center gap-3 py-4">
-                <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-yellow-400/10 text-yellow-400"><Icon name="trophy" className="size-[17px]" /></span>
-                <div><dt className="text-xs text-zinc-500">Weight class</dt><dd className="mt-0.5 text-sm font-bold text-yellow-400">{demoAthlete.weightClass}</dd></div>
-              </div>
-            </dl>
+      <div className="grid items-start gap-6 md:grid-cols-[minmax(0,1fr)_300px] lg:grid-cols-[minmax(0,1fr)_340px]">
+        <div className="min-w-0 space-y-6">
+          <section aria-labelledby="training-title" className="flex items-center justify-between gap-4 rounded-xl border border-accent/15 bg-surface p-5 md:p-6">
+            <div><p className="font-mono text-[11px] uppercase tracking-widest text-muted">The big three</p><h2 id="training-title" className="mt-2 text-xl font-semibold">Every lift has a story.</h2><p className="mt-2 text-sm leading-6 text-muted">Your personal bests and recent attempts, all in one place.</p></div>
+            <span className="grid size-14 shrink-0 place-items-center rounded-full border border-accent/40 bg-accent/5 text-accent"><Icon name="dumbbell" className="size-7" /></span>
           </section>
-
-          <section id="recent-activity" aria-labelledby="activity-title" className="rounded-3xl border border-zinc-800 bg-zinc-950 p-5">
-            <h2 id="activity-title" className="mb-3 font-bold">Recent Activity</h2>
-            <div className="space-y-3">
-              {recentActivity.map((lift) => (
-                <article key={lift.id} className="flex items-center justify-between gap-3 rounded-2xl border border-zinc-800 bg-black p-4">
-                  <div className="flex min-w-0 items-center gap-3">
-                    <span aria-hidden="true" className={`size-2 shrink-0 rounded-full ${lift.status === "Verified" ? "bg-green-400" : "bg-yellow-400"}`} />
-                    <div className="min-w-0">
-                      <h3 className="text-sm font-bold">{lift.exercise}</h3>
-                      <p className="text-xs text-zinc-400">{lift.reps} rep · <time dateTime={lift.date}>{lift.date}</time></p>
-                      <p className="mt-1 text-[11px] text-zinc-500">{lift.status}</p>
-                    </div>
-                  </div>
-                  <strong className="whitespace-nowrap text-sm text-yellow-400">{lift.weight} kg</strong>
-                </article>
-              ))}
-            </div>
-          </section>
+          <PersonalRecords />
+          <LiftHistory />
+          <aside className="flex items-center gap-3 rounded-xl bg-surface-low p-4"><span className="grid size-10 shrink-0 place-items-center rounded-lg bg-surface text-accent"><Icon name="shieldCheck" /></span><div><p className="font-mono text-[10px] uppercase tracking-widest text-muted">Discipline over everything</p><p className="mt-1 text-sm">Small improvements. Stronger foundations.</p></div></aside>
         </div>
-
-        <div className="flex min-w-0 flex-col gap-4">
-          <section id="leaderboard" aria-labelledby="leaderboard-title" className="rounded-3xl border border-zinc-800 bg-zinc-950 p-5 md:p-8">
-            <div className="mb-5 flex items-end justify-between border-b border-zinc-800 pb-5">
-              <div><p className="text-xs uppercase tracking-widest text-zinc-500">Leaderboard</p><h2 id="leaderboard-title" className="mt-1 text-xl font-bold">{demoLeaderboard.exercise}</h2></div>
-              <span className="rounded-xl bg-yellow-400/10 px-3 py-2 text-xs font-bold text-yellow-400">Top 3</span>
-            </div>
-            <ol className="space-y-3">
-              {demoLeaderboard.entries.slice(0, 3).map((entry, index) => (
-                <li key={entry.rank} className="grid grid-cols-[42px_1fr_auto] items-center gap-3 rounded-2xl border border-zinc-800 bg-black p-4">
-                  <span className={`grid size-10 place-items-center rounded-xl font-black ${rankColors[index]}`}>#{entry.rank}</span>
-                  <div className="min-w-0">
-                    <p className="truncate text-sm font-bold">{entry.athlete}</p>
-                    <p className="mt-1 text-xs text-yellow-400">Class: {demoLeaderboard.weightClass}</p>
-                  </div>
-                  <strong className="whitespace-nowrap text-sm text-yellow-400">{entry.weight} kg</strong>
-                </li>
+        <aside className="min-w-0 space-y-6">
+          <section aria-labelledby="athlete-title" className="rounded-xl bg-surface p-5">
+            <div className="flex items-center gap-3"><span className="grid size-12 place-items-center rounded-full border border-accent/30 bg-surface-high text-xl font-semibold text-accent">K</span><div><p className="font-mono text-[10px] uppercase tracking-widest text-muted">Athlete overview</p><h2 id="athlete-title" className="mt-1 text-lg font-semibold">{demoAthlete.username}</h2></div></div>
+            <dl className="mt-5 grid grid-cols-2 gap-4 border-t border-border pt-4"><div><dt className="text-xs text-muted">Body weight</dt><dd className="mt-1 font-mono text-sm">{demoAthlete.bodyWeight}</dd></div><div><dt className="text-xs text-muted">Weight class</dt><dd className="mt-1 font-mono text-sm text-accent">{demoAthlete.weightClass}</dd></div></dl>
+            <Link href="/profile" className="mt-4 flex min-h-11 items-center justify-between rounded-lg bg-surface-high px-3 text-sm transition-colors hover:bg-border">View profile<Icon name="arrowRight" className="size-4" /></Link>
+          </section>
+          <section aria-labelledby="leaderboard-title" className="rounded-xl bg-surface p-5">
+            <p className="font-mono text-[10px] uppercase tracking-widest text-accent">The leaderboard</p>
+            <div className="mt-2 flex items-center justify-between gap-3"><h2 id="leaderboard-title" className="text-lg font-semibold">{demoLeaderboard.exercise}</h2><Icon name="trophy" className="size-5 text-accent" /></div>
+            <p className="mt-1 text-xs text-muted">{demoLeaderboard.weightClass}</p>
+            <ol className="mt-4 divide-y divide-border">
+              {demoLeaderboard.entries.slice(0, 3).map((entry) => (
+                <li key={entry.rank} className="flex items-center gap-3 py-4"><span className="w-5 shrink-0 font-mono text-sm text-accent">0{entry.rank}</span><span className="min-w-0 flex-1 truncate text-sm">{entry.athlete}</span><strong className="whitespace-nowrap font-mono text-sm font-medium tabular-nums">{entry.weight}<span className="ml-1 text-[10px] text-muted">kg</span></strong></li>
               ))}
             </ol>
+            <Link href="/leaderboard" className="mt-2 flex min-h-11 items-center justify-between rounded-lg bg-surface-high px-3 text-sm transition-colors hover:bg-border">View leaderboard<Icon name="arrowRight" className="size-4" /></Link>
           </section>
-
-          <div className="order-first grid grid-cols-2 gap-3 md:order-none">
-            <button type="button" disabled title="Lift submission is not connected yet" className="cursor-not-allowed rounded-2xl bg-yellow-400 py-4 font-bold text-black">Submit Lift</button>
-            <Link href="/leaderboard" className="rounded-2xl border border-zinc-800 bg-zinc-950 py-4 text-center font-bold hover:border-zinc-400">Leaderboard</Link>
-          </div>
-
-          <section id="personal-records" aria-labelledby="records-title" className="rounded-3xl border border-zinc-800 bg-zinc-950 p-5 md:p-8">
-            <h2 id="records-title" className="mb-4 font-bold">Personal records</h2>
-            <dl className="grid grid-cols-3 gap-3">
-              {personalRecords.map((record) => (
-                <div key={record.exercise} className="rounded-2xl border border-zinc-800 bg-black p-3">
-                  <dt className="text-xs text-zinc-400">{record.exercise}</dt>
-                  <dd className="mt-2 text-lg font-black text-yellow-400">{record.weight} <span className="text-xs font-normal text-zinc-400">kg</span></dd>
-                </div>
-              ))}
-            </dl>
-          </section>
-        </div>
+        </aside>
       </div>
     </>
   );
