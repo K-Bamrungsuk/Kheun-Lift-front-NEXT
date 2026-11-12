@@ -309,4 +309,4 @@
 
 - ขึ้นต้นด้วย `NEXT_PUBLIC_` → ใช้ได้ทั้งใน browser และ server (ไม่ใช่ความลับ)
 - สร้าง `.env.example` ที่มีตัวแปรนี้ (ค่าว่าง) — **ห้าม commit `.env.local`**
-- ⚠ บนเครื่อง: Next อยู่ `localhost:3000` และ Go อยู่ `localhost:3001` → เป็น same-site เหมือนบน prod แต่ Go ต้องตั้ง `APP_ORIGIN=http://localhost:3000` (B1.3)
+- ⚠ บนเครื่อง: Next อยู่ `localhost:3002` และ Go อยู่ `localhost:3001` → เป็น same-site เหมือนบน prod แต่ Go ต้องตั้ง `APP_ORIGIN=http://localhost:3002` (B1.3)

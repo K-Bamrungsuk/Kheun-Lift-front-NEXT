@@ -13,11 +13,15 @@ export function LoginForm() {
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const form = new FormData(event.currentTarget);
+    const formElement = event.currentTarget;
+    const form = new FormData(formElement);
     setPending(true);
     setError("");
     try {
       await login(String(form.get("email")), String(form.get("password")));
+      formElement.reset();
+      setPending(false);
+
       router.replace("/dashboard");
       router.refresh();
     } catch (err) {
@@ -29,9 +33,22 @@ export function LoginForm() {
   return (
     <form onSubmit={handleSubmit} className="mt-6 space-y-5">
       <Field id="email" label="Email" type="email" autoComplete="email" />
-      <Field id="password" label="Password" type="password" autoComplete="current-password" />
-      {error && <p role="alert" className="text-sm text-red-400">{error}</p>}
-      <button type="submit" disabled={pending} className="flex min-h-12 w-full items-center justify-center rounded-xl bg-accent px-4 font-semibold text-background disabled:opacity-60">
+      <Field
+        id="password"
+        label="Password"
+        type="password"
+        autoComplete="current-password"
+      />
+      {error && (
+        <p role="alert" className="text-sm text-red-400">
+          {error}
+        </p>
+      )}
+      <button
+        type="submit"
+        disabled={pending}
+        className="flex min-h-12 w-full items-center justify-center rounded-xl bg-accent px-4 font-semibold text-background disabled:opacity-60"
+      >
         {pending ? "Logging in..." : "Log in"}
       </button>
     </form>

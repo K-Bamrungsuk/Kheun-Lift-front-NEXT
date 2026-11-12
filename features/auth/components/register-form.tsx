@@ -13,15 +13,19 @@ export function RegisterForm() {
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const form = new FormData(event.currentTarget);
+    const formElement = event.currentTarget;
+    const form = new FormData(formElement);
     const email = String(form.get("email"));
     const password = String(form.get("password"));
     setPending(true);
     setError("");
     try {
       await register(String(form.get("username")), email, password);
-      // Go does not set a session on register, so log in right away.
       await login(email, password);
+      
+      // Go does not set a session on register, so log in right away.
+      formElement.reset();
+      setPending(false);
       router.replace("/dashboard");
       router.refresh();
     } catch (err) {

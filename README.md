@@ -1,6 +1,6 @@
 # Kheun Lift
 
-Run `npm install` and `npm run dev`, then open http://localhost:3000.
+Run `npm install` and `npm run dev`, then open http://localhost:3002.
 The home route `/` redirects to `/dashboard`. The public marketing page has been removed.
 
 ## Screens
