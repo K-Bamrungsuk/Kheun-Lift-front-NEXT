@@ -67,7 +67,7 @@
 
 ## สัปดาห์ 0 — เตรียมตัว
 
-- [ ] **F0.1 Commit งานค้าง** — redesign + หน้า `/log-lift` + ไฟล์ `PLAN.md` นี้ แล้ว push
+- [x] **F0.1 Commit งานค้าง** — redesign + หน้า `/log-lift` + ไฟล์ `PLAN.md` นี้ แล้ว push
 - [ ] **F0.2 สมัคร Vercel** + เชื่อม GitHub repo นี้ (ยังไม่ต้องตั้ง domain)
 - [ ] **F0.3 อ่าน docs Next 16** ใน `node_modules/next/dist/docs/` หัวข้อ: `proxy`, `cookies`, `cacheComponents`, `loading.js`, `error.js`, `redirect`
 
@@ -82,7 +82,7 @@
 - **ทดสอบร่วมกับ Go:** เปิด DevTools บน `app.<domain>` → `fetch("https://api.<domain>/health")` ได้ผล, login แล้วมี cookie `kheun_session` ที่ Domain `.<domain>`
 - **เสร็จเมื่อ:** ทั้ง `app.` และ `api.` ใช้ HTTPS ได้ และ cookie ข้ามกันได้ (ต้องรอ B1.3, B1.4)
 
-### F1.2 `lib/api.ts` — ตัวเรียก API กลาง
+### F1.2 `lib/api.ts` — ตัวเรียก API กลาง — 🟡 โค้ดเสร็จ รอทดสอบใน browser + commit
 - **ทำอะไร:** ฟังก์ชัน 2 ตัว ใช้ทั้งแอป
   - `clientFetch<T>(path, init?)` — สำหรับ Client Component, ใส่ `credentials: "include"`
   - `serverFetch<T>(path, init?)` — สำหรับ Server Component, อ่าน cookie ด้วย `cookies()` แล้วส่งเป็น header `Cookie` ให้ Go, ตั้ง `cache: "no-store"` (ข้อมูลของแต่ละคนไม่ควร cache รวม)
@@ -93,7 +93,8 @@
 - **ทำไมต้องรวมไว้ที่เดียว:** ถ้าวันหนึ่งเปลี่ยน URL หรือวิธีจัดการ error แก้จุดเดียว
 - **เสร็จเมื่อ:** หน้า dashboard เรียก `serverFetch("/users/me")` ได้ข้อมูลจริง
 
-### F1.3 Route protection
+### F1.3 Route protection — 🟡 โค้ดเสร็จ รอทดสอบใน browser + commit
+- **ต่างจากแผนเดิม:** `proxy.ts` ไม่พาคนที่มี cookie ออกจาก `/login` เพราะถ้า cookie ค้างแต่ session หมดอายุจะวน `/login` ↔ `/dashboard`
 - **ทำอะไร:** หน้าใน `(dashboard)` ต้อง login, หน้า `/login` `/register` ถ้า login แล้วให้ไป dashboard
 - **ทำยังไง (2 ชั้น):**
   1. **`proxy.ts`** (ชื่อใหม่ของ middleware ใน Next 16 — เช็ก docs): ไม่มี cookie `kheun_session` → redirect `/login` (เช็กแค่มี cookie ไหม ไม่เรียก API → เร็ว)
@@ -101,7 +102,8 @@
 - **หน้า public:** `/leaderboard` ควรดูได้โดยไม่ login → ย้ายออกจาก `(dashboard)` หรือทำ layout แยกที่ไม่บังคับ login (ต้องรอ B1.5)
 - **เสร็จเมื่อ:** เปิด `/dashboard` ตอนไม่ login → ไป `/login`, ลบ cookie แล้ว refresh → ไป `/login`
 
-### F1.4 Login + Register
+### F1.4 Login + Register — 🟡 โค้ดเสร็จ รอทดสอบใน browser + commit
+- **ต่างจากแผนเดิม:** สมัครเสร็จแล้ว login ให้อัตโนมัติ ไปหน้า `/dashboard` เลย ไม่กลับไปหน้า `/login`
 - **ทำอะไร:** เปลี่ยนหน้า placeholder เป็นฟอร์มจริง
 - **ทำยังไง:**
   - Client Component ใน `features/auth/components/`
@@ -111,7 +113,7 @@
   - แสดง `message` จาก Go เมื่อ error (เช่น 409 "Username or email is already registered.", 429 "Too many requests")
 - **เสร็จเมื่อ:** สมัครแล้ว login ได้บนเว็บจริง, error แสดงถูกต้อง
 
-### F1.5 Logout
+### F1.5 Logout — 🟡 โค้ดเสร็จ รอทดสอบใน browser + commit
 - ปุ่มใน `AppShell` (desktop) และหน้า profile (mobile) → `POST /auth/logout` → `router.replace("/login")`
 
 ### F1.6 Onboarding — กรอกโปรไฟล์ก่อนใช้งาน
@@ -149,7 +151,7 @@
 ### F1.11 เก็บกวาด
 - [ ] ลบ `features/dashboard/data/demo.ts`, `features/leaderboard/data/demo.ts`
 - [ ] ลบแถบ "Demo preview" ใน `components/layout/app-shell.tsx`
-- [ ] avatar ใน header ใช้ตัวอักษรแรกของ username จริง (ตอนนี้ hard-code "K")
+- [x] avatar ใน header ใช้ตัวอักษรแรกของ username จริง (ตอนนี้ hard-code "K")
 - [ ] `loading.tsx` + `error.tsx` ใน `(dashboard)` — error ให้มีปุ่ม "ลองใหม่"
 - [ ] อัปเดต `README.md` ส่วน "Preview limitations" ที่ไม่จริงแล้ว
 

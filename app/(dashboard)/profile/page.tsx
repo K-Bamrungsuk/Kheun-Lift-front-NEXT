@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Icon } from "@/components/ui/icon";
 import { LiftHistory, PersonalRecords } from "@/features/dashboard/components/dashboard-overview";
 import { demoAthlete } from "@/features/dashboard/data/demo";
+import { LogoutButton } from "@/features/auth/components/logout-button";
 
 export const metadata: Metadata = { title: "Profile | Kheun Lift" };
 
@@ -21,6 +22,7 @@ export default function ProfilePage() {
           <button type="button" disabled className="mt-5 min-h-11 w-full cursor-not-allowed rounded-lg border border-border px-4 text-sm text-muted/60" aria-describedby="edit-notice">Edit profile</button>
           <p id="edit-notice" className="mt-2 text-xs leading-5 text-muted">Profile editing is not connected yet.</p>
           <Link href="/log-lift" className="mt-5 flex min-h-11 items-center justify-center gap-2 rounded-lg bg-accent px-4 text-sm font-semibold text-background transition-colors hover:bg-accent/90"><Icon name="plus" className="size-4" />Log a lift</Link>
+          <LogoutButton className="mt-3 w-full md:hidden" />
         </section>
         <div className="min-w-0 space-y-6"><PersonalRecords /><LiftHistory /></div>
       </div>

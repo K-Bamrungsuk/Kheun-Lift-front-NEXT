@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { Icon } from "@/components/ui/icon";
+import { LogoutButton } from "@/features/auth/components/logout-button";
+import type { User } from "@/features/user/types";
 import { AppNavigation } from "./app-navigation";
 
-export function AppShell({ children }: { children: React.ReactNode }) {
+export function AppShell({ user, children }: { user: User; children: React.ReactNode }) {
   return (
     <div className="min-h-dvh bg-background text-foreground">
       <a className="skip-link" href="#main-content">Skip to content</a>
@@ -12,8 +14,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <span className="grid size-11 place-items-center rounded-xl bg-surface text-accent"><Icon name="shieldCheck" className="size-6" /></span>
             <span><span className="block font-mono text-xs font-semibold tracking-[0.2em] text-accent">KHEUN LIFT</span><span className="mt-0.5 block text-sm text-muted">Your strength. On record.</span></span>
           </Link>
-          <div className="hidden md:block"><AppNavigation /></div>
-          <Link href="/profile" aria-label="View athlete profile" className="grid size-11 shrink-0 place-items-center rounded-full border border-accent/30 bg-surface-high font-semibold text-accent md:hidden">K</Link>
+          <div className="hidden items-center gap-2 md:flex"><AppNavigation /><LogoutButton /></div>
+          <Link href="/profile" aria-label="View athlete profile" className="grid size-11 shrink-0 place-items-center rounded-full border border-accent/30 bg-surface-high font-semibold text-accent md:hidden">{user.username[0].toUpperCase()}</Link>
         </div>
       </header>
       <main id="main-content" tabIndex={-1} className="mx-auto max-w-xl space-y-6 px-4 pb-[calc(8rem+env(safe-area-inset-bottom))] pt-6 md:max-w-6xl md:px-8 md:pb-12 md:pt-10">
