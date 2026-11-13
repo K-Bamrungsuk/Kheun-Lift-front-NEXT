@@ -4,10 +4,13 @@ import { Icon } from "@/components/ui/icon";
 import { LiftHistory, PersonalRecords } from "@/features/dashboard/components/dashboard-overview";
 import { demoAthlete } from "@/features/dashboard/data/demo";
 import { LogoutButton } from "@/features/auth/components/logout-button";
+import type { LiftRecord } from "@/features/lifts/types";
+import { serverFetch } from "@/lib/api-server";
 
 export const metadata: Metadata = { title: "Profile | Kheun Lift" };
 
-export default function ProfilePage() {
+export default async function ProfilePage() {
+  const lifts = await serverFetch<{ data: LiftRecord[] }>("/lifts/me").then((res) => res.data);
   return (
     <>
       <header><p className="mb-2 font-mono text-xs uppercase tracking-widest text-accent">The athlete</p><h1 className="text-3xl font-semibold tracking-tight md:text-4xl">Profile</h1><p className="mt-2 text-sm text-muted">Your identity. Your lifts. Your progress.</p></header>
@@ -24,7 +27,7 @@ export default function ProfilePage() {
           <Link href="/log-lift" className="mt-5 flex min-h-11 items-center justify-center gap-2 rounded-lg bg-accent px-4 text-sm font-semibold text-background transition-colors hover:bg-accent/90"><Icon name="plus" className="size-4" />Log a lift</Link>
           <LogoutButton className="mt-3 w-full md:hidden" />
         </section>
-        <div className="min-w-0 space-y-6"><PersonalRecords /><LiftHistory /></div>
+        <div className="min-w-0 space-y-6"><PersonalRecords lifts={lifts} /><LiftHistory lifts={lifts} /></div>
       </div>
     </>
   );

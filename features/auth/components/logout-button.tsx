@@ -21,6 +21,8 @@ export function LogoutButton({ className = "" }: { className?: string }) {
         return;
       }
     }
+    // cacheComponents keeps this button mounted (hidden) after leaving, so reset it.
+    setPending(false);
     router.replace("/login");
     router.refresh();
   }

@@ -31,7 +31,7 @@ export function LoginForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="mt-6 space-y-5">
+    <form method="post" onSubmit={handleSubmit} className="mt-6 space-y-5">
       <Field id="email" label="Email" type="email" autoComplete="email" />
       <Field
         id="password"

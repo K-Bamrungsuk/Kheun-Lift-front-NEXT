@@ -35,7 +35,7 @@ export function RegisterForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="mt-6 space-y-5">
+    <form method="post" onSubmit={handleSubmit} className="mt-6 space-y-5">
       <Field id="username" label="Username" autoComplete="username" maxLength={20} />
       <Field id="email" label="Email" type="email" autoComplete="email" />
       <Field id="password" label="Password (at least 6 characters)" type="password" autoComplete="new-password" minLength={6} />
