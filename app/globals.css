@@ -38,3 +38,4 @@ section[id] { scroll-margin-top: 100px; }
 .mobile-nav { padding-bottom: env(safe-area-inset-bottom); }
 .skip-link { position: fixed; top: -100px; left: 20px; z-index: 60; padding: 12px; background: var(--accent); color: var(--background); border-radius: 8px; }
 .skip-link:focus { top: 12px; }
+body:has(dialog[open]) { overflow: hidden; }

@@ -124,13 +124,6 @@ export function DashboardOverview({
             Build strength. Keep the record.
           </p>
         </div>
-        <Link
-          href="/log-lift"
-          className="hidden min-h-11 items-center gap-2 rounded-xl bg-accent px-5 text-sm font-semibold text-background transition-colors hover:bg-accent/90 md:flex"
-        >
-          <Icon name="plus" />
-          Log a lift
-        </Link>
       </header>
       <div className="grid items-start gap-6 md:grid-cols-2">
         <section
@@ -191,7 +184,10 @@ export function DashboardOverview({
               <p className="font-mono text-[10px] uppercase tracking-widest text-muted">
                 Athlete overview
               </p>
-              <h2 id="athlete-title" className="mt-1 truncate text-lg font-semibold">
+              <h2
+                id="athlete-title"
+                className="mt-1 truncate text-lg font-semibold"
+              >
                 {user.username}
               </h2>
               {user.weightClass && (

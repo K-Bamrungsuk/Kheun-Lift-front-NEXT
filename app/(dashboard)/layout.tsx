@@ -4,13 +4,16 @@ import { getMe } from "@/features/user/api-server";
 
 export default function DashboardLayout({
   children,
+  modal,
 }: {
   children: React.ReactNode;
+  modal: React.ReactNode;
 }) {
   // cookies() must sit inside Suspense when cacheComponents is on.
   return (
     <Suspense>
       <SignedInShell>{children}</SignedInShell>
+      {modal}
     </Suspense>
   );
 }
