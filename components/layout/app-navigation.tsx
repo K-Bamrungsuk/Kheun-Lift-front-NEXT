@@ -8,7 +8,7 @@ import { Icon } from "@/components/ui/icon";
 const navigation = [
   { name: "Home", href: "/dashboard", icon: "dumbbell" },
   { name: "Social", icon: "users" },
-  { name: "Board", href: "/leaderboard", icon: "trophy" },
+  { name: "Rank", href: "/leaderboard", icon: "trophy" },
   { name: "Profile", href: "/profile", icon: "user" },
 ] as const;
 

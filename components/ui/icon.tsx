@@ -5,6 +5,7 @@ const paths = {
   user: "M20 21v-2a6 6 0 0 0-6-6h-4a6 6 0 0 0-6 6v2M16 6a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z",
   dumbbell: "m7 7 10 10M4 8l4-4 3 3-4 4ZM13 17l4-4 3 3-4 4ZM2 5l3-3M19 22l3-3",
   plus: "M12 5v14M5 12h14",
+  pencil: "M17 3a2.85 2.85 0 0 1 4 4L7.5 20.5 2 22l1.5-5.5Z",
   arrowRight: "M5 12h14M12 5l7 7-7 7",
   shieldCheck: "M12 3 3 7v5c0 5 9 9 9 9s9-4 9-9V7ZM8 12l3 3 5-6",
   weight: "M15 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM6 8h12l3 13H3Z",

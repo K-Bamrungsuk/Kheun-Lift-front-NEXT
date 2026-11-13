@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Icon } from "@/components/ui/icon";
-import { LogoutButton } from "@/features/auth/components/logout-button";
 import type { User } from "@/features/user/types";
 import { AppNavigation } from "./app-navigation";
 
@@ -14,7 +13,7 @@ export function AppShell({ user, children }: { user: User; children: React.React
             <span className="grid size-11 place-items-center rounded-xl bg-surface text-accent"><Icon name="shieldCheck" className="size-6" /></span>
             <span><span className="block font-mono text-xs font-semibold tracking-[0.2em] text-accent">KHEUN LIFT</span><span className="mt-0.5 block text-sm text-muted">Your strength. On record.</span></span>
           </Link>
-          <div className="hidden items-center gap-2 md:flex"><AppNavigation /><LogoutButton /></div>
+          <div className="hidden md:flex"><AppNavigation /></div>
           <Link href="/profile" aria-label="View athlete profile" className="grid size-11 shrink-0 place-items-center rounded-full border border-accent/30 bg-surface-high font-semibold text-accent md:hidden">{user.username[0].toUpperCase()}</Link>
         </div>
       </header>

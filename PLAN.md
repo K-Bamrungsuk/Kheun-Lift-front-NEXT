@@ -82,7 +82,7 @@
 - **ทดสอบร่วมกับ Go:** เปิด DevTools บน `app.<domain>` → `fetch("https://api.<domain>/health")` ได้ผล, login แล้วมี cookie `kheun_session` ที่ Domain `.<domain>`
 - **เสร็จเมื่อ:** ทั้ง `app.` และ `api.` ใช้ HTTPS ได้ และ cookie ข้ามกันได้ (ต้องรอ B1.3, B1.4)
 
-### F1.2 `lib/api.ts` — ตัวเรียก API กลาง — 🟡 โค้ดเสร็จ รอทดสอบใน browser + commit
+### F1.2 `lib/api.ts` — ตัวเรียก API กลาง — 🟡 commit แล้ว รอทดสอบบน `app.<domain>` (ต้องรอ F1.1)
 - **ทำอะไร:** ฟังก์ชัน 2 ตัว ใช้ทั้งแอป
   - `clientFetch<T>(path, init?)` — สำหรับ Client Component, ใส่ `credentials: "include"`
   - `serverFetch<T>(path, init?)` — สำหรับ Server Component, อ่าน cookie ด้วย `cookies()` แล้วส่งเป็น header `Cookie` ให้ Go, ตั้ง `cache: "no-store"` (ข้อมูลของแต่ละคนไม่ควร cache รวม)
@@ -93,7 +93,7 @@
 - **ทำไมต้องรวมไว้ที่เดียว:** ถ้าวันหนึ่งเปลี่ยน URL หรือวิธีจัดการ error แก้จุดเดียว
 - **เสร็จเมื่อ:** หน้า dashboard เรียก `serverFetch("/users/me")` ได้ข้อมูลจริง
 
-### F1.3 Route protection — 🟡 โค้ดเสร็จ รอทดสอบใน browser + commit
+### F1.3 Route protection — 🟡 commit แล้ว รอทดสอบบน `app.<domain>` (ต้องรอ F1.1)
 - **ต่างจากแผนเดิม:** `proxy.ts` ไม่พาคนที่มี cookie ออกจาก `/login` เพราะถ้า cookie ค้างแต่ session หมดอายุจะวน `/login` ↔ `/dashboard`
 - **ทำอะไร:** หน้าใน `(dashboard)` ต้อง login, หน้า `/login` `/register` ถ้า login แล้วให้ไป dashboard
 - **ทำยังไง (2 ชั้น):**
@@ -102,7 +102,7 @@
 - **หน้า public:** `/leaderboard` ควรดูได้โดยไม่ login → ย้ายออกจาก `(dashboard)` หรือทำ layout แยกที่ไม่บังคับ login (ต้องรอ B1.5)
 - **เสร็จเมื่อ:** เปิด `/dashboard` ตอนไม่ login → ไป `/login`, ลบ cookie แล้ว refresh → ไป `/login`
 
-### F1.4 Login + Register — 🟡 โค้ดเสร็จ รอทดสอบใน browser + commit
+### F1.4 Login + Register — 🟡 commit แล้ว รอทดสอบบน `app.<domain>` (ต้องรอ F1.1)
 - **ต่างจากแผนเดิม:** สมัครเสร็จแล้ว login ให้อัตโนมัติ ไปหน้า `/dashboard` เลย ไม่กลับไปหน้า `/login`
 - **ทำอะไร:** เปลี่ยนหน้า placeholder เป็นฟอร์มจริง
 - **ทำยังไง:**
@@ -113,7 +113,7 @@
   - แสดง `message` จาก Go เมื่อ error (เช่น 409 "Username or email is already registered.", 429 "Too many requests")
 - **เสร็จเมื่อ:** สมัครแล้ว login ได้บนเว็บจริง, error แสดงถูกต้อง
 
-### F1.5 Logout — 🟡 โค้ดเสร็จ รอทดสอบใน browser + commit
+### F1.5 Logout — 🟡 commit แล้ว รอทดสอบบน `app.<domain>` (ต้องรอ F1.1)
 - ปุ่มใน `AppShell` (desktop) และหน้า profile (mobile) → `POST /auth/logout` → `router.replace("/login")`
 
 ### F1.6 Onboarding — กรอกโปรไฟล์ก่อนใช้งาน
@@ -121,7 +121,7 @@
 - **ทำยังไง:** ใน dashboard layout ถ้า `user.gender` หรือ `user.bodyWeight` เป็น `null` → แสดงการ์ดให้กรอก (gender, น้ำหนักตัว, ส่วนสูง, วันเกิด) → `PATCH /users/me`
 - **เสร็จเมื่อ:** ผู้ใช้ใหม่กรอกครั้งเดียวแล้วเห็นรุ่นน้ำหนักของตัวเอง
 
-### F1.7 Dashboard ข้อมูลจริง
+### F1.7 Dashboard ข้อมูลจริง — ✅ เสร็จ (ไม่ import demo แล้ว)
 - `GET /users/me` → ชื่อ, น้ำหนักตัว, `weightClass.name`
 - `GET /lifts/me` → personal records (best ของแต่ละท่าที่ verified) + lift ล่าสุด 5 รายการ
   - ลอก logic จาก `Kheun-Lift-frontend/src/utils/getPersonalRecords.js` มาเป็น TypeScript
@@ -135,7 +135,7 @@
 - แสดงรุ่นน้ำหนักจริงของผู้ใช้แทน `demoAthlete.weightClass`
 - **เสร็จเมื่อ:** ส่ง lift แล้วเห็นสถานะ "Pending" ใน dashboard
 
-### F1.9 Profile ข้อมูลจริง
+### F1.9 Profile ข้อมูลจริง — 🟡 รายการ lift ใช้ `/lifts/me` แล้ว; ข้อมูลโปรไฟล์ยังใช้ `demoAthlete` + avatar "K", ยังไม่มีแก้โปรไฟล์ / แก้-ลบ lift / ลบบัญชี
 - ข้อมูลจาก `/users/me` + lift ทั้งหมดจาก `/lifts/me`
 - **แก้โปรไฟล์:** ปุ่ม "Edit profile" เปิดฟอร์ม → `PATCH /users/me` (ส่งเฉพาะ field ที่เปลี่ยน, Go ไม่รับค่า `null`)
 - **แก้ caption / ลบ lift ของตัวเอง:** `PATCH /lifts/:id`, `DELETE /lifts/:id` + กล่องยืนยันก่อนลบ
@@ -152,7 +152,7 @@
 - [ ] ลบ `features/dashboard/data/demo.ts`, `features/leaderboard/data/demo.ts`
 - [ ] ลบแถบ "Demo preview" ใน `components/layout/app-shell.tsx`
 - [x] avatar ใน header ใช้ตัวอักษรแรกของ username จริง (ตอนนี้ hard-code "K")
-- [ ] `loading.tsx` + `error.tsx` ใน `(dashboard)` — error ให้มีปุ่ม "ลองใหม่"
+- [ ] `loading.tsx` + `error.tsx` ใน `(dashboard)` — error ให้มีปุ่ม "ลองใหม่" (🟡 มี `loading.tsx` ของ dashboard + profile แล้ว, ยังไม่มี `error.tsx`)
 - [ ] อัปเดต `README.md` ส่วน "Preview limitations" ที่ไม่จริงแล้ว
 
 **สัปดาห์ 1 เสร็จเมื่อ:** สมัคร → login → กรอกโปรไฟล์ → ส่ง lift → เห็นใน profile **บน `app.<domain>`**
