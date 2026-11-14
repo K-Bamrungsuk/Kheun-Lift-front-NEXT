@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { errorMessage } from "@/lib/api";
 import { login } from "../api";
-import { Field } from "./field";
+import { Field } from "@/components/ui/field";
 
 export function LoginForm() {
   const router = useRouter();

@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { AppShell } from "@/components/layout/app-shell";
 import { getMe } from "@/features/user/api-server";
+import { OnboardingForm } from "@/features/user/components/onboarding-form";
 
 export default function DashboardLayout({
   children,
@@ -20,5 +21,10 @@ export default function DashboardLayout({
 
 async function SignedInShell({ children }: { children: React.ReactNode }) {
   const user = await getMe();
-  return <AppShell user={user}>{children}</AppShell>;
+  return (
+    <AppShell user={user}>
+      {(!user.gender || user.bodyWeight == null) && <OnboardingForm />}
+      {children}
+    </AppShell>
+  );
 }

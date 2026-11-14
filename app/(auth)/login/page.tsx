@@ -9,7 +9,15 @@ export default function LoginPage() {
     <>
       <h1 className="text-3xl font-black">Log in</h1>
       <LoginForm />
-      <p className="mt-6 text-sm text-muted">New to Kheun Lift? <Link href="/register" className="font-semibold text-accent hover:underline">Create an account</Link></p>
+      <p className="mt-6 text-sm text-muted">
+        New to Kheun Lift?{" "}
+        <Link
+          href="/register"
+          className="font-semibold text-accent hover:underline"
+        >
+          Create an account
+        </Link>
+      </p>
     </>
   );
 }

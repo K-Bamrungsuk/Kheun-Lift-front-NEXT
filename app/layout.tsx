@@ -3,7 +3,8 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Kheun Lift",
-  description: "Track your lifts, celebrate personal records, and find your place on the leaderboard.",
+  description:
+    "Track your lifts, celebrate personal records, and find your place on the leaderboard.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

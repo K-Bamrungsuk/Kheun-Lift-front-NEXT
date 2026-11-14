@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { errorMessage } from "@/lib/api";
 import { login, register } from "../api";
-import { Field } from "./field";
+import { Field } from "@/components/ui/field";
 
 export function RegisterForm() {
   const router = useRouter();

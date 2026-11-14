@@ -1,20 +1,15 @@
 import type { Metadata } from "next";
 import { Icon } from "@/components/ui/icon";
-import {
-  LiftHistory,
-  PersonalRecords,
-} from "@/features/dashboard/components/dashboard-overview";
 import { demoAthlete } from "@/features/dashboard/data/demo";
 import { LogoutButton } from "@/features/auth/components/logout-button";
-import type { LiftRecord } from "@/features/lifts/types";
-import { serverFetch } from "@/lib/api-server";
+import { getMyLifts } from "@/features/lifts/api-server";
+import { LiftHistory } from "@/features/lifts/components/lift-history";
+import { PersonalRecords } from "@/features/lifts/components/personal-records";
 
 export const metadata: Metadata = { title: "Profile | Kheun Lift" };
 
 export default async function ProfilePage() {
-  const lifts = await serverFetch<{ data: LiftRecord[] }>("/lifts/me").then(
-    (res) => res.data,
-  );
+  const lifts = await getMyLifts();
   return (
     <>
       <header>
