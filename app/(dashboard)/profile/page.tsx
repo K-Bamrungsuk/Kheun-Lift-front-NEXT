@@ -1,15 +1,18 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Icon } from "@/components/ui/icon";
-import { demoAthlete } from "@/features/dashboard/data/demo";
 import { LogoutButton } from "@/features/auth/components/logout-button";
 import { getMyLifts } from "@/features/lifts/api-server";
 import { LiftHistory } from "@/features/lifts/components/lift-history";
 import { PersonalRecords } from "@/features/lifts/components/personal-records";
+import { getMe } from "@/features/user/api-server";
+import { AthleteStats } from "@/features/user/components/athlete-stats";
+import { DeleteAccountButton } from "@/features/user/components/delete-account-button";
 
 export const metadata: Metadata = { title: "Profile | Kheun Lift" };
 
 export default async function ProfilePage() {
-  const lifts = await getMyLifts();
+  const [user, lifts] = await Promise.all([getMe(), getMyLifts()]);
   return (
     <>
       <header>
@@ -28,18 +31,16 @@ export default async function ProfilePage() {
           aria-labelledby="athlete-title"
           className="relative rounded-xl bg-surface p-5 md:p-6"
         >
-          <button
-            type="button"
-            disabled
-            aria-label="Edit profile (coming soon)"
-            title="Profile editing is not connected yet"
-            className="absolute right-3 top-3 grid size-11 cursor-not-allowed place-items-center rounded-lg text-muted/60"
+          <Link
+            href="/profile/edit"
+            aria-label="Edit profile"
+            className="absolute right-3 top-3 grid size-11 place-items-center rounded-lg text-muted transition-colors hover:bg-surface-high hover:text-foreground"
           >
             <Icon name="pencil" className="size-5" />
-          </button>
+          </Link>
           <div className="flex items-center gap-4 pr-10">
             <span className="grid size-16 shrink-0 place-items-center rounded-full border border-accent/40 bg-surface-high text-2xl font-semibold text-accent">
-              K
+              {user.username[0].toUpperCase()}
             </span>
             <div className="min-w-0">
               <p className="font-mono text-[10px] uppercase tracking-widest text-muted">
@@ -49,31 +50,20 @@ export default async function ProfilePage() {
                 id="athlete-title"
                 className="mt-1 truncate text-xl font-semibold"
               >
-                {demoAthlete.username}
+                {user.username}
               </h2>
-              <p className="mt-2 inline-flex items-center gap-1.5 rounded-lg border border-accent/25 bg-accent/10 px-2.5 py-1 font-mono text-xs text-accent">
-                <Icon name="trophy" className="size-3.5" />
-                <span className="sr-only">Weight class: </span>
-                {demoAthlete.weightClass}
-              </p>
+              {user.weightClass && (
+                <p className="mt-2 inline-flex items-center gap-1.5 rounded-lg border border-accent/25 bg-accent/10 px-2.5 py-1 font-mono text-xs text-accent">
+                  <Icon name="trophy" className="size-3.5" />
+                  <span className="sr-only">Weight class: </span>
+                  {user.weightClass.name}
+                </p>
+              )}
             </div>
           </div>
-          <dl className="mt-6 grid grid-cols-2 gap-2.5">
-            <div className="rounded-lg bg-surface-high p-3">
-              <dt className="flex items-center gap-1.5 text-xs text-muted">
-                <Icon name="user" className="size-4" />
-                Gender
-              </dt>
-              <dd className="mt-2 text-sm">{demoAthlete.gender}</dd>
-            </div>
-            <div className="rounded-lg bg-surface-high p-3">
-              <dt className="flex items-center gap-1.5 text-xs text-muted">
-                <Icon name="weight" className="size-4" />
-                Body weight
-              </dt>
-              <dd className="mt-2 font-mono text-sm">{demoAthlete.bodyWeight}</dd>
-            </div>
-          </dl>
+          <div className="mt-6">
+            <AthleteStats user={user} />
+          </div>
         </section>
         <div className="min-w-0 space-y-6">
           <PersonalRecords lifts={lifts} />
@@ -81,6 +71,7 @@ export default async function ProfilePage() {
         </div>
       </div>
       <LogoutButton className="w-full bg-surface" />
+      <DeleteAccountButton />
     </>
   );
 }

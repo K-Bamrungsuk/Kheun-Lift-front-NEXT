@@ -23,7 +23,7 @@ async function SignedInShell({ children }: { children: React.ReactNode }) {
   const user = await getMe();
   return (
     <AppShell user={user}>
-      {(!user.gender || user.bodyWeight == null) && <OnboardingForm />}
+      {(!user.gender || user.bodyWeight == null) && <OnboardingForm user={user} />}
       {children}
     </AppShell>
   );

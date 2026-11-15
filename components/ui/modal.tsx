@@ -29,7 +29,7 @@ export function Modal({
         event.preventDefault();
         router.back();
       }}
-      className="m-0 mt-auto max-h-[90dvh] w-full max-w-none overflow-y-auto rounded-t-2xl bg-surface pb-[env(safe-area-inset-bottom)] text-foreground backdrop:bg-background/80 backdrop:backdrop-blur-sm md:m-auto md:max-w-lg md:rounded-2xl md:pb-0"
+      className="m-auto max-h-[85dvh] w-[calc(100%-2rem)] max-w-md overflow-y-auto rounded-2xl bg-surface text-foreground shadow-2xl backdrop:bg-background/60 backdrop:backdrop-blur-md"
     >
       <div className="flex justify-end px-3 pt-3">
         <button

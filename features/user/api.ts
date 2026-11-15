@@ -3,7 +3,10 @@ import type { User } from "./types";
 
 // Go rejects null values, so send only the fields that changed.
 export type UpdateMeInput = Partial<
-  Record<"gender" | "bodyWeight" | "height" | "dateOfBirth", string | number>
+  Record<
+    "username" | "gender" | "bodyWeight" | "height" | "dateOfBirth",
+    string | number
+  >
 >;
 
 export const updateMe = (body: UpdateMeInput) =>
@@ -11,3 +14,5 @@ export const updateMe = (body: UpdateMeInput) =>
     method: "PATCH",
     body: JSON.stringify(body),
   });
+
+export const deleteMe = () => clientFetch("/users/me", { method: "DELETE" });

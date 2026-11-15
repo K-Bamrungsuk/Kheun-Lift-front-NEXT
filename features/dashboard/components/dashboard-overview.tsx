@@ -4,6 +4,7 @@ import type { RandomLeaderboard } from "@/features/leaderboard/types";
 import { LiftHistory } from "@/features/lifts/components/lift-history";
 import { PersonalRecords } from "@/features/lifts/components/personal-records";
 import type { LiftRecord } from "@/features/lifts/types";
+import { AthleteStats } from "@/features/user/components/athlete-stats";
 import type { User } from "@/features/user/types";
 
 export function DashboardOverview({
@@ -106,24 +107,9 @@ export function DashboardOverview({
               )}
             </div>
           </div>
-          <dl className="mt-5 grid grid-cols-2 gap-2.5">
-            <div className="rounded-lg bg-surface-high p-3">
-              <dt className="flex items-center gap-1.5 text-xs text-muted">
-                <Icon name="user" className="size-4" />
-                Gender
-              </dt>
-              <dd className="mt-2 text-sm capitalize">{user.gender ?? "—"}</dd>
-            </div>
-            <div className="rounded-lg bg-surface-high p-3">
-              <dt className="flex items-center gap-1.5 text-xs text-muted">
-                <Icon name="weight" className="size-4" />
-                Body weight
-              </dt>
-              <dd className="mt-2 font-mono text-sm">
-                {user.bodyWeight != null ? `${user.bodyWeight} kg` : "—"}
-              </dd>
-            </div>
-          </dl>
+          <div className="mt-5">
+            <AthleteStats user={user} />
+          </div>
         </section>
       </div>
       <PersonalRecords lifts={lifts} />
