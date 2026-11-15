@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Icon } from "@/components/ui/icon";
 import { demoLeaderboard } from "@/features/leaderboard/data/demo";
-import { demoAthlete } from "@/features/dashboard/data/demo";
 
 export const metadata: Metadata = { title: "Rank | Kheun Lift" };
 
@@ -69,7 +68,7 @@ export default function LeaderboardPage() {
                 <tr
                   key={entry.rank}
                   className={
-                    entry.athlete === demoAthlete.username ? "bg-accent/10" : ""
+                    entry.athlete === demoLeaderboard.you ? "bg-accent/10" : ""
                   }
                 >
                   <td className="px-3 py-5 font-mono tabular-nums text-accent md:px-5">
@@ -77,7 +76,7 @@ export default function LeaderboardPage() {
                   </td>
                   <th scope="row" className="px-3 py-5 font-medium md:px-5">
                     <span className="break-all">{entry.athlete}</span>
-                    {entry.athlete === demoAthlete.username && (
+                    {entry.athlete === demoLeaderboard.you && (
                       <span className="ml-2 rounded bg-surface-high px-1.5 py-1 font-mono text-[9px] uppercase text-accent">
                         You
                       </span>

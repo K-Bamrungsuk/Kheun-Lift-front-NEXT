@@ -2,6 +2,7 @@
 export const demoLeaderboard = {
   exercise: "Deadlift",
   weightClass: "Under 75 kg",
+  you: "Kheun",
   entries: [
     { rank: 1, athlete: "IronMind", weight: 215 },
     { rank: 2, athlete: "BarbellClub", weight: 200 },

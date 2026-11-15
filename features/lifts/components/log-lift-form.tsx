@@ -1,5 +1,6 @@
+import { Suspense } from "react";
 import { Icon } from "@/components/ui/icon";
-import { demoAthlete } from "@/features/dashboard/data/demo";
+import { getMe } from "@/features/user/api-server";
 
 export function LogLiftForm() {
   return (
@@ -11,9 +12,9 @@ export function LogLiftForm() {
         <h2 id="attempt-title" className="text-lg font-semibold">
           Your lift details
         </h2>
-        <span className="rounded-md bg-surface-high px-2.5 py-1.5 font-mono text-[10px] text-accent">
-          {demoAthlete.weightClass}
-        </span>
+        <Suspense>
+          <WeightClassBadge />
+        </Suspense>
       </div>
       <fieldset>
         <legend className="mb-3 font-mono text-xs uppercase tracking-widest text-muted">
@@ -142,5 +143,17 @@ export function LogLiftForm() {
         </button>
       </div>
     </section>
+  );
+}
+
+// getMe() reads cookies, so it sits in its own Suspense; the layout already made this request.
+async function WeightClassBadge() {
+  const { weightClass } = await getMe();
+  if (!weightClass) return null;
+  return (
+    <span className="rounded-md bg-surface-high px-2.5 py-1.5 font-mono text-[10px] text-accent">
+      <span className="sr-only">Weight class: </span>
+      {weightClass.name}
+    </span>
   );
 }
