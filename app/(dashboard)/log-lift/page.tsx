@@ -20,7 +20,7 @@ export default function LogLiftPage() {
         </p>
       </header>
       <div className="grid items-start gap-6 md:grid-cols-[minmax(0,1fr)_280px]">
-        <LogLiftForm />
+        <LogLiftForm after="dashboard" />
         <aside className="space-y-4 rounded-xl bg-surface-low p-5">
           <span className="grid size-11 place-items-center rounded-xl bg-surface text-accent">
             <Icon name="shieldCheck" className="size-6" />
@@ -31,10 +31,6 @@ export default function LogLiftPage() {
           <p className="text-sm leading-6 text-muted">
             Clear video makes a lift easier to review. Keep the full movement
             and equipment in frame.
-          </p>
-          <p className="text-xs leading-5 text-muted">
-            Lift verification and saving will be available once account services
-            are connected.
           </p>
         </aside>
       </div>
