@@ -51,15 +51,6 @@ export function AppShell({
         tabIndex={-1}
         className="mx-auto max-w-xl space-y-6 px-4 pb-[calc(8rem+env(safe-area-inset-bottom))] pt-6 md:max-w-6xl md:px-8 md:pb-12 md:pt-10"
       >
-        <p
-          role="note"
-          className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs leading-5 text-muted"
-        >
-          <span className="rounded border border-accent/25 bg-accent/10 px-2 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wider text-accent">
-            Demo preview
-          </span>
-          Sample data. Account changes and lift saving are not connected.
-        </p>
         {children}
       </main>
       <AppNavigation mobile />
