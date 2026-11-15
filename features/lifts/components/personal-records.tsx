@@ -11,7 +11,6 @@ export function PersonalRecords({ lifts }: { lifts: LiftRecord[] }) {
         >
           Personal records
         </h2>
-        <span className="text-xs text-muted">Squat / Bench / Deadlift</span>
       </div>
       <dl className="grid grid-cols-3 gap-2.5">
         {getPersonalRecords(lifts).map(({ name, best }) => (
