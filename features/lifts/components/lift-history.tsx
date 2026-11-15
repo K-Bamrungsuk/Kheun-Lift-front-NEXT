@@ -1,5 +1,11 @@
 import type { LiftRecord } from "../types";
 
+const statusBadge = {
+  verified: { glyph: "✓", color: "text-accent" },
+  pending: { glyph: "◷", color: "text-muted" },
+  rejected: { glyph: "⊘", color: "text-red-400" },
+};
+
 export function LiftHistory({ lifts }: { lifts: LiftRecord[] }) {
   return (
     <section
@@ -41,10 +47,10 @@ export function LiftHistory({ lifts }: { lifts: LiftRecord[] }) {
             </div>
             <div className="flex flex-col items-end gap-2">
               <span
-                className={`inline-flex items-center gap-1.5 rounded-md bg-surface-high px-2 py-1 font-mono text-[11px] capitalize ${lift.status === "verified" ? "text-accent" : "text-muted"}`}
+                className={`inline-flex items-center gap-1.5 rounded-md bg-surface-high px-2 py-1 font-mono text-[11px] capitalize ${statusBadge[lift.status].color}`}
               >
                 <span aria-hidden="true">
-                  {lift.status === "verified" ? "✓" : "◷"}
+                  {statusBadge[lift.status].glyph}
                 </span>
                 {lift.status}
               </span>

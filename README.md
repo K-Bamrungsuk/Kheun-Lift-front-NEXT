@@ -19,7 +19,7 @@ and mobile bottom navigation. Shared SVG icons remain in `components/ui/icon.tsx
 
 Dashboard components and sample athlete data live in `features/dashboard/`.
 Profile reuses the dashboard's personal-record and lift-history components.
-Sample ranking data stays in `features/leaderboard/data/demo.ts`.
+Rankings come from the Go API through `features/leaderboard/api-server.ts`.
 
 ## Design
 

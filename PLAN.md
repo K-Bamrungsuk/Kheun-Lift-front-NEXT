@@ -26,7 +26,7 @@
 
 - [ ] Vercel + `NEXT_PUBLIC_API_URL=https://api.<domain>` (ตั้งก่อน build เพราะค่าฝังตอน build)
   - ⚠ preview URL `*.vercel.app` login ไม่ได้ ต้องทดสอบบน app.<domain>
-- [ ] Leaderboard ข้อมูลจริง
+- [x] Leaderboard ข้อมูลจริง
   - ตัวเลือกท่า / เพศ / รุ่น เก็บใน URL ให้แชร์ลิงก์ได้
   - response เป็น `{message, data}` ไม่ใช่ array
 - [ ] แก้ caption / ลบ lift ในหน้า profile (มีกล่องยืนยันก่อนลบ)
