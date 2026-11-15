@@ -128,7 +128,7 @@
 - `GET /leaderboards/random` → การ์ด leaderboard ด้านข้าง (ถ้า `data` เป็น `null` แสดง "ยังไม่มีอันดับ")
 - **เสร็จเมื่อ:** ไม่มีการ import จาก `features/dashboard/data/demo.ts` แล้ว
 
-### F1.8 Log lift ข้อมูลจริง
+### F1.8 Log lift ข้อมูลจริง — ✅ เสร็จ
 - ตัวเลือกท่าจาก `GET /exercises` (ไม่ hard-code Squat/Bench/Deadlift)
 - น้ำหนัก (> 0, step 0.5), reps (≥ 1), caption (ไม่เกิน 300), **video URL เป็น required** (lift ไม่มีวิดีโอ verify ไม่ได้)
 - `POST /lifts` → สำเร็จไป `/dashboard`, error 409 = "เคยส่ง lift น้ำหนักและ reps นี้แล้ว"
