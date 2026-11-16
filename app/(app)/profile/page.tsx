@@ -9,7 +9,6 @@ import { PersonalRecords } from "@/features/lifts/components/personal-records";
 import { getMe } from "@/features/user/api-server";
 import { AthleteStats } from "@/features/user/components/athlete-stats";
 import { DeleteAccountButton } from "@/features/user/components/delete-account-button";
-import { ProfileImageInput } from "@/features/user/components/profile-image-input";
 
 export const metadata: Metadata = { title: "Profile | Kheun Lift" };
 
@@ -18,9 +17,6 @@ export default async function ProfilePage() {
   return (
     <>
       <header>
-        <p className="mb-2 font-mono text-xs uppercase tracking-widest text-accent">
-          The athlete
-        </p>
         <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
           Profile
         </h1>
@@ -36,16 +32,21 @@ export default async function ProfilePage() {
           <Link
             href="/profile/edit"
             aria-label="Edit profile"
-            className="absolute right-3 top-3 grid size-11 place-items-center rounded-lg text-muted transition-colors hover:bg-surface-high hover:text-foreground"
+            className="absolute right-3 top-3 grid size-11 place-items-center rounded-lg text-muted transition-colors hover:bg-surface-high hover:text-foreground border-2 rounded-xl border-gray-600"
           >
             <Icon name="pencil" className="size-5" />
           </Link>
           <div className="flex items-center gap-4 pr-10">
-            <Avatar
-              src={user.profileImage}
-              alt={`${user.username} profile picture`}
-              className="size-16"
-            />
+            <Link
+              href="/profile/picture"
+              aria-label="Change profile picture"
+              className="relative shrink-0 rounded-full"
+            >
+              <Avatar src={user.profileImage} alt="" className="size-16" />
+              <span className="absolute -bottom-0.5 -right-0.5 grid size-6 place-items-center rounded-full border-2 border-surface bg-accent text-background">
+                <Icon name="camera" className="size-3.5" />
+              </span>
+            </Link>
             <div className="min-w-0">
               <p className="font-mono text-[10px] uppercase tracking-widest text-muted">
                 Athlete profile
@@ -64,9 +65,6 @@ export default async function ProfilePage() {
                 </p>
               )}
             </div>
-          </div>
-          <div className="mt-6">
-            <ProfileImageInput hasImage={user.profileImage !== null} />
           </div>
           <div className="mt-6">
             <AthleteStats user={user} />
