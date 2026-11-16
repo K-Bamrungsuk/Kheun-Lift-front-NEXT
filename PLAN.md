@@ -30,6 +30,11 @@
   - ตัวเลือกท่า / เพศ / รุ่น เก็บใน URL ให้แชร์ลิงก์ได้
   - response เป็น `{message, data}` ไม่ใช่ array
 - [ ] แก้ caption / ลบ lift ในหน้า profile (มีกล่องยืนยันก่อนลบ)
+- [x] อัปโหลดรูปโปรไฟล์ในหน้า profile (`POST /users/me/profile-image`, FormData ช่อง `profileImage`)
+  - เช็กไม่เกิน 2 MB ฝั่ง client ก่อนส่ง, Go ตรวจชนิดไฟล์จากเนื้อไฟล์
+- [x] ลบรูปโปรไฟล์ (`DELETE /users/me/profile-image`) → กลับเป็น avatar เปล่า
+- [x] `components/ui/avatar.tsx` ใช้ใน profile, dashboard, header มือถือ (ไม่มีรูป = ไอคอน user แทนตัวอักษรแรก)
+  - ยังไม่ทำ: ครอป/ย่อรูป, พรีวิว, รูปใน leaderboard
 
 **เสร็จเมื่อ:** สมัคร → login → กรอกโปรไฟล์ → ส่ง lift → เห็นใน profile บน app.<domain>
 

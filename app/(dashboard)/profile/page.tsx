@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Avatar } from "@/components/ui/avatar";
 import { Icon } from "@/components/ui/icon";
 import { LogoutButton } from "@/features/auth/components/logout-button";
 import { getMyLifts } from "@/features/lifts/api-server";
@@ -8,6 +9,7 @@ import { PersonalRecords } from "@/features/lifts/components/personal-records";
 import { getMe } from "@/features/user/api-server";
 import { AthleteStats } from "@/features/user/components/athlete-stats";
 import { DeleteAccountButton } from "@/features/user/components/delete-account-button";
+import { ProfileImageInput } from "@/features/user/components/profile-image-input";
 
 export const metadata: Metadata = { title: "Profile | Kheun Lift" };
 
@@ -39,9 +41,11 @@ export default async function ProfilePage() {
             <Icon name="pencil" className="size-5" />
           </Link>
           <div className="flex items-center gap-4 pr-10">
-            <span className="grid size-16 shrink-0 place-items-center rounded-full border border-accent/40 bg-surface-high text-2xl font-semibold text-accent">
-              {user.username[0].toUpperCase()}
-            </span>
+            <Avatar
+              src={user.profileImage}
+              alt={`${user.username} profile picture`}
+              className="size-16"
+            />
             <div className="min-w-0">
               <p className="font-mono text-[10px] uppercase tracking-widest text-muted">
                 Athlete profile
@@ -60,6 +64,9 @@ export default async function ProfilePage() {
                 </p>
               )}
             </div>
+          </div>
+          <div className="mt-6">
+            <ProfileImageInput hasImage={user.profileImage !== null} />
           </div>
           <div className="mt-6">
             <AthleteStats user={user} />

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Avatar } from "@/components/ui/avatar";
 import { Icon } from "@/components/ui/icon";
 import type { RandomLeaderboard } from "@/features/leaderboard/types";
 import { LiftHistory } from "@/features/lifts/components/lift-history";
@@ -85,9 +86,11 @@ export function DashboardOverview({
           className="rounded-xl bg-surface p-5"
         >
           <div className="flex items-center gap-3">
-            <span className="grid size-12 place-items-center rounded-full border border-accent/30 bg-surface-high text-xl font-semibold text-accent">
-              {user.username[0].toUpperCase()}
-            </span>
+            <Avatar
+              src={user.profileImage}
+              alt={`${user.username} profile picture`}
+              className="size-12"
+            />
             <div className="min-w-0">
               <p className="font-mono text-[10px] uppercase tracking-widest text-muted">
                 Athlete overview

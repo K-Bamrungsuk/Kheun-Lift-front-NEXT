@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Avatar } from "@/components/ui/avatar";
 import { Icon } from "@/components/ui/icon";
 import type { User } from "@/features/user/types";
 import { AppNavigation } from "./app-navigation";
@@ -40,9 +41,10 @@ export function AppShell({
           <Link
             href="/profile"
             aria-label="View athlete profile"
-            className="grid size-11 shrink-0 place-items-center rounded-full border border-accent/30 bg-surface-high font-semibold text-accent md:hidden"
+            className="shrink-0 rounded-full md:hidden"
           >
-            {user.username[0].toUpperCase()}
+            {/* The link's aria-label already names it, so the image is decorative. */}
+            <Avatar src={user.profileImage} alt="" className="size-11" />
           </Link>
         </div>
       </header>

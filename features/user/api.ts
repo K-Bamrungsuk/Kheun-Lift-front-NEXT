@@ -16,3 +16,17 @@ export const updateMe = (body: UpdateMeInput) =>
   });
 
 export const deleteMe = () => clientFetch("/users/me", { method: "DELETE" });
+
+export function uploadProfileImage(file: File) {
+  const body = new FormData();
+  body.append("profileImage", file);
+  return clientFetch<{ user: User }>("/users/me/profile-image", {
+    method: "POST",
+    body,
+  });
+}
+
+export const deleteProfileImage = () =>
+  clientFetch<{ message: string }>("/users/me/profile-image", {
+    method: "DELETE",
+  });
