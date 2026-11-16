@@ -69,21 +69,27 @@ export default async function LeaderboardPage({
   // The class row only shows for a chosen gender, so a class without one is ignored.
   const weightClass = gender ? first(params.weightClass) : undefined;
 
-  const [me, exercises] = await Promise.all([getMe(), getExercises()]);
+  // Go answers 400/404 for a bad gender, an unknown class, or a class of the other gender.
+  const notFoundOnBadQuery = (error: unknown): never => {
+    if (error instanceof ApiError && [400, 404].includes(error.status))
+      notFound();
+    throw error;
+  };
+
+  // Weight classes need only the gender, so they load together with the user and exercises.
+  const [me, exercises, classes] = await Promise.all([
+    getMe(),
+    getExercises(),
+    gender ? getWeightClasses(gender) : [],
+  ]).catch(notFoundOnBadQuery);
   const exercise = exerciseParam
     ? exercises.find((item) => String(item.id) === exerciseParam)
     : exercises[0];
   if (!exercise) notFound();
 
-  // Go answers 400/404 for a bad gender, an unknown class, or a class of the other gender.
-  const [entries, classes] = await Promise.all([
-    getLeaderboard(exercise.id, weightClass, gender),
-    gender ? getWeightClasses(gender) : [],
-  ]).catch((error) => {
-    if (error instanceof ApiError && [400, 404].includes(error.status))
-      notFound();
-    throw error;
-  });
+  const entries = await getLeaderboard(exercise.id, weightClass, gender).catch(
+    notFoundOnBadQuery,
+  );
 
   const className =
     classes.find((item) => String(item.id) === weightClass)?.name ??
