@@ -1,25 +1,31 @@
-# Kheun Lift
+# Kheun Lift (Next.js frontend)
 
-Run `npm install` and `npm run dev`, then open http://localhost:3002.
-The home route `/` redirects to `/dashboard`. The public marketing page has been removed.
+Copy `.env.example` to `.env` and set `NEXT_PUBLIC_API_URL=http://localhost:3001`
+(the Go API in `../kheun-lift-backend-go`). Then run `npm install` and `npm run dev`,
+and open http://localhost:3002. `/` redirects to `/dashboard`.
 
 ## Screens
 
-- `/dashboard`: athlete overview, personal records, recent lifts, and top-three rankings.
-- `/leaderboard`: sample exercise rankings with the sample athlete highlighted.
-- `/profile`: sample athlete details, personal records, and lift ledger.
-- `/log-lift`: editable UI preview with native discipline selection, load, reps, video URL, and notes. Submission is disabled. Inputs are not persisted.
-- `/login` and `/register`: existing account placeholders.
+- `/login`, `/register`: register logs you in right away.
+- `/dashboard`: athlete overview, personal records, last 5 lifts, and the top 3 of a
+  random leaderboard. New users see an onboarding form (gender + body weight) until
+  they fill it in.
+- `/leaderboard`: verified lifts by exercise, gender and weight class; the filters
+  live in the URL.
+- `/log-lift`: submit a lift with a video URL (opens as a modal from the nav).
+- `/profile`: details, records, lift ledger, log out, delete account.
+  `/profile/edit` and `/profile/picture` open as modals from the profile page.
 
 ## Structure
 
-Route files stay in `app/`. The dashboard route group shares `components/layout/app-shell.tsx`
-and `app-navigation.tsx`. The shell includes the demo notice, desktop navigation,
-and mobile bottom navigation. Shared SVG icons remain in `components/ui/icon.tsx`.
-
-Dashboard components and sample athlete data live in `features/dashboard/`.
-Profile reuses the dashboard's personal-record and lift-history components.
-Rankings come from the Go API through `features/leaderboard/api-server.ts`.
+- `app/`: routes only. `(app)` is the signed-in group (shell + `@modal` slot),
+  `(auth)` is login/register.
+- `features/<name>/`: components, `api.ts` (browser calls), `api-server.ts`
+  (server calls), `types.ts`.
+- `lib/api.ts` / `lib/api-server.ts`: fetch to Go; the server version forwards the
+  session cookie.
+- `proxy.ts` sends visitors without a `kheun_session` cookie to `/login`; the `(app)`
+  layout checks the session with Go.
 
 ## Design
 
@@ -33,17 +39,9 @@ The font stacks use Plus Jakarta Sans and JetBrains Mono when installed, with
 Segoe UI / sans-serif and Consolas / monospace fallbacks. No external font request
 or new dependency is required.
 
-## Preview limitations
-
-All athlete data and ranking entries are samples. Sign-in, registration, profile
-editing, lift saving, and Social are not connected. No sample verified status
-represents a real verification. Route groups organize appearance and do not protect
-routes. Connect the backend and enforce session protection before displaying any
-private athlete data. The Vite frontend and both backends are unchanged.
-
 ## Checks
 
 - `npm run lint`
 - `npx --no-install tsc --noEmit --incremental false`
 
-Do not run a production build without explicit approval (see `AGENTS.md`).
+Do not run a production build without explicit approval (see `CLAUDE.md`).

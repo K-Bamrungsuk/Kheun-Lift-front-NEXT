@@ -16,9 +16,9 @@
 - รักษา accessibility: label, aria, focus ring, skip link
 - ⚠ Next 16 ไม่เหมือนเดิม: อ่าน `node_modules/next/dist/docs/` ก่อนใช้ API
 
-## สถานะ (2026-11-15)
+## สถานะ (2026-11-17)
 
-- ✅ lib/api, กันหน้า login 2 ชั้น (`proxy.ts` + layout), login / register / logout, onboarding, dashboard, log lift, profile (แก้โปรไฟล์, ลบบัญชี), หน้า error
+- ✅ lib/api, กันหน้า login 2 ชั้น (`proxy.ts` + layout), login / register / logout, onboarding, dashboard, log lift, profile (แก้โปรไฟล์, ลบบัญชี), หน้า error, leaderboard, รูปโปรไฟล์
 
 ---
 
