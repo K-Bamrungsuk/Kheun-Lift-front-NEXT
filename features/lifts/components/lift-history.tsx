@@ -1,10 +1,10 @@
-import type { LiftRecord } from "../types";
+import type { LiftRecord, LiftStatus } from "../types";
 
 const statusBadge = {
   verified: { glyph: "✓", color: "text-accent" },
   pending: { glyph: "◷", color: "text-muted" },
   rejected: { glyph: "⊘", color: "text-red-400" },
-};
+} satisfies Record<LiftStatus, { glyph: string; color: string }>;
 
 export function LiftHistory({ lifts }: { lifts: LiftRecord[] }) {
   return (

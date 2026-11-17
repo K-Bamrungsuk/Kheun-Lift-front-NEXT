@@ -17,7 +17,6 @@ export function DashboardOverview({
   lifts: LiftRecord[];
   leaderboard: RandomLeaderboard | null;
 }) {
-  // Go returns null instead of an empty board, so a non-null board always has a first row.
   const board = leaderboard?.leaderboards;
   return (
     <>

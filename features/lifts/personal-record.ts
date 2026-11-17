@@ -7,6 +7,7 @@ export function getPersonalRecords(lifts: LiftRecord[]) {
     name,
     best: lifts
       .filter((lift) => lift.status === "verified" && lift.exercise.name === name)
-      .sort((a, b) => b.weight - a.weight || b.reps - a.reps)[0],
+      .sort((a, b) => b.weight - a.weight || b.reps - a.reps)
+      .at(0),
   }));
 }

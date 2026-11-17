@@ -1,3 +1,5 @@
+import type { WeightClass } from "@/features/user/types";
+
 export type LiftStatus = "pending" | "verified" | "rejected";
 
 export type LiftRecord = {
@@ -13,7 +15,7 @@ export type LiftRecord = {
   createdAt: string;
   updatedAt: string;
   exercise: { id: number; name: string };
-  weightClass: { id: number; name: string; gender: string };
+  weightClass: Pick<WeightClass, "id" | "name" | "gender">;
 };
 
 export type Exercise = { id: number; name: string; description: string | null };
