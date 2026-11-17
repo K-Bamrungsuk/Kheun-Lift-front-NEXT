@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   experimental: {
     agentFeedback: true,
+    agentUpgrade: "security",
     turbopackFileSystemCacheForDev: true,
     staleTimes: {dynamic: 30}
   },
