@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Icon } from "@/components/ui/icon";
 import { LogLiftForm } from "@/features/lifts/components/log-lift-form";
 
