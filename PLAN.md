@@ -16,9 +16,10 @@
 - รักษา accessibility: label, aria, focus ring, skip link
 - ⚠ Next 16 ไม่เหมือนเดิม: อ่าน `node_modules/next/dist/docs/` ก่อนใช้ API
 
-## สถานะ (2026-11-17)
+## สถานะ (2026-11-18)
 
 - ✅ lib/api, กันหน้า login 2 ชั้น (`proxy.ts` + layout), login / register / logout, onboarding, dashboard, log lift, profile (แก้โปรไฟล์, ลบบัญชี), หน้า error, leaderboard, รูปโปรไฟล์, lift detail (แก้ caption / ลบ), โปรไฟล์คนอื่น
+- ✅ test ด้วย vitest (`npm test`), prop `variant: "modal" | "page"` แทน `after` (type อยู่ที่ `components/ui/modal.tsx`)
 
 ---
 
@@ -80,18 +81,26 @@
   - ตอนนี้หน้าเว็บกรองให้ (comment `shortcut:` ใน `lift-detail.tsx`, `users/[id]/page.tsx`) แต่เรียก API ตรงยังเห็น pending / rejected + ลิงก์วิดีโอ
   - แก้ Go แล้วลบ filter ฝั่งหน้าเว็บออกได้
 
+## Validate response จาก Go ด้วย zod (ทำแน่นอน, ก่อน Phase 3)
+
+ตอนนี้ `request` ใน `lib/api.ts` ทำ `data as T` คือเชื่อ type โดยไม่ตรวจ ถ้า Go เปลี่ยนรูปข้อมูล หน้าจะพังตอน render แทนที่จะพังตอนรับข้อมูล zod ติดตั้งแล้ว (`dependencies`)
+
+- [ ] `features/*/types.ts` เปลี่ยน `type` เป็น zod schema แล้วใช้ `z.infer` (user, lifts, leaderboard)
+- [ ] `request` / `serverFetch` / `clientFetch` รับ schema แล้ว `safeParse` ถ้าไม่ผ่านโยน `ApiError(502, ...)` เพื่อไม่ให้ขึ้นว่า "Cannot reach the server"
+- [ ] ส่ง schema ทุกจุดที่เรียก fetch (19 จุด) endpoint ที่ไม่ใช้ body ส่ง `z.unknown()`
+- [ ] เพิ่มในกติกา: type มาจาก zod schema ใน `types.ts`
+
 ## ค้างจากรีวิว TypeScript (optional)
 
-- [ ] ใช้ `PageProps<"/lifts/[id]">` แทน `{ params: Promise<{ id: string }> }` (เช็กก่อนว่า route modal `(.)lifts/[id]` ใช้ได้)
-- [ ] type `after: "back" | "profile"` ซ้ำ 6 ไฟล์ ให้ derive จาก props แบบ `log-lift-form.tsx`
+- [ ] ใช้ `PageProps<"/lifts/[id]">` แทน `{ params: Promise<{ id: string }> }` ใน 4 page (เช็กแล้ว route modal `(.)lifts/[id]` ใช้ได้)
+- [x] type `after` ซ้ำ 6 ไฟล์: เปลี่ยนเป็น `variant` ที่มี type เดียวแล้ว
 - [ ] `[400, 404].includes(error.status)` ซ้ำ 3 ที่ (leaderboard, users, lift-detail) ทำเป็น `isNotFound(error)`
-- [ ] test ของ `youtubeEmbedUrl` ใน `lib/youtube.ts` (ต้องอนุมัติตาม CLAUDE.md ข้อ 3)
-- [ ] `data as T` ใน `lib/api.ts` ยังไม่ parse response จาก Go (ต้องเพิ่ม zod, ตัดสินใจแยก)
+- [x] test ของ `youtubeEmbedUrl` (`lib/youtube.test.ts`) และแก้ regex ให้รับลิงก์ที่ `v=` ไม่ได้อยู่ตัวแรก
 
 ## ปิดงาน
 
 - [ ] ทุกหน้าใช้ได้ที่ 375px, ใช้ด้วย keyboard ได้, Lighthouse a11y ≥ 90, ทุกหน้ามี title
-- [ ] `npm run lint` + `tsc --noEmit` ผ่าน
+- [ ] `npm run lint` + `tsc --noEmit` + `npm test` ผ่าน
 - [ ] README: ลิงก์เว็บจริง, บัญชี demo, screenshot, เหตุผลที่เลือก stack, วิธีรัน
 
 ---
