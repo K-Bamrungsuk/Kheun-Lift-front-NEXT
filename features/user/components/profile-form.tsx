@@ -3,6 +3,7 @@
 import { useId, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Field } from "@/components/ui/field";
+import type { Variant } from "@/components/ui/modal";
 import { errorMessage } from "@/lib/api";
 import { updateMe, type UpdateMeInput } from "../api";
 import type { User } from "../types";
@@ -25,13 +26,13 @@ const initial = (user: User) => ({
   dateOfBirth: user.dateOfBirth?.slice(0, 10) ?? "",
 });
 
-// after: "back" closes the edit modal, "profile" leaves the full edit page, and no value keeps the form on the page for onboarding.
+// variant: after a save, "modal" closes the edit modal, "page" goes to the profile, and "inline" keeps the onboarding card on the page.
 export function ProfileForm({
   user,
-  after,
+  variant,
 }: {
   user: User;
-  after?: "back" | "profile";
+  variant: Variant | "inline";
 }) {
   const router = useRouter();
   // Onboarding card and edit modal can be on the same page, so ids must be unique.
@@ -41,8 +42,18 @@ export function ProfileForm({
   const values = initial(user);
 
   function leave() {
-    if (after === "back") router.back();
-    if (after === "profile") router.push("/profile");
+    switch (variant) {
+      case "modal":
+        return router.back();
+      case "page":
+        return router.push("/profile");
+      case "inline":
+        return;
+      default: {
+        const _exhaustive: never = variant;
+        return _exhaustive;
+      }
+    }
   }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Avatar } from "@/components/ui/avatar";
 import { Icon } from "@/components/ui/icon";
+import type { Variant } from "@/components/ui/modal";
 import { errorMessage } from "@/lib/api";
 import { deleteLift, updateLiftCaption } from "../api";
 import { formatLiftDate } from "../format-date";
@@ -12,16 +13,16 @@ import type { LiftRecord } from "../types";
 
 // Lays out the lift like a post: the lifter, their caption and the ⋯ menu on top, then the lift itself.
 // The menu and the caption share the editing state, so the server passes the lift body in as children.
-// after: "back" closes the lift modal, "profile" leaves the full lift page once the lift is deleted.
+// variant: after a delete, "modal" closes the lift modal and "page" goes to the profile.
 export function LiftOwnerActions({
   lift,
   isOwner,
-  after,
+  variant,
   children,
 }: {
   lift: LiftRecord;
   isOwner: boolean;
-  after: "back" | "profile";
+  variant: Variant;
   children: React.ReactNode;
 }) {
   const router = useRouter();
@@ -75,8 +76,18 @@ export function LiftOwnerActions({
     setOpen(false);
     if (!confirm("Delete this lift? This cannot be undone.")) return;
     if (!(await run("delete", () => deleteLift(lift.id)))) return;
-    if (after === "back") router.back();
-    else router.replace("/profile");
+    switch (variant) {
+      case "modal":
+        router.back();
+        break;
+      case "page":
+        router.replace("/profile");
+        break;
+      default: {
+        const _exhaustive: never = variant;
+        void _exhaustive;
+      }
+    }
     router.refresh();
   }
 

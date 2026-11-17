@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import type { Variant } from "@/components/ui/modal";
 import { getMe } from "@/features/user/api-server";
 import { ApiError } from "@/lib/api";
 import { youtubeEmbedUrl } from "@/lib/youtube";
@@ -6,7 +7,7 @@ import { getLift } from "../api-server";
 import { LiftOwnerActions } from "./lift-owner-actions";
 
 // The /lifts/[id] page and its intercepted modal both use this component.
-export async function LiftDetail({ id, after }: { id: string; after: "back" | "profile" }) {
+export async function LiftDetail({ id, variant }: { id: string; variant: Variant }) {
   const [me, lift] = await Promise.all([
     getMe(),
     getLift(id).catch((error) => {
@@ -24,7 +25,7 @@ export async function LiftDetail({ id, after }: { id: string; after: "back" | "p
       <LiftOwnerActions
         lift={lift}
         isOwner={isOwner}
-        after={after}
+        variant={variant}
       >
         <header>
           <h2 id="lift-title" className="text-xl font-semibold">

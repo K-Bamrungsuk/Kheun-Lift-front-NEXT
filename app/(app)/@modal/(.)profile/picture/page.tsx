@@ -4,7 +4,7 @@ import { ProfilePicture } from "@/features/user/components/profile-picture";
 export default function ProfilePictureModal() {
   return (
     <Modal labelledBy="picture-title">
-      <ProfilePicture after="back" />
+      <ProfilePicture variant="modal" />
     </Modal>
   );
 }

@@ -4,7 +4,7 @@ import { EditProfile } from "@/features/user/components/edit-profile";
 export default function EditProfileModal() {
   return (
     <Modal labelledBy="edit-profile-title">
-      <EditProfile after="back" />
+      <EditProfile variant="modal" />
     </Modal>
   );
 }

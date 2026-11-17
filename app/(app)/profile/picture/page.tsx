@@ -7,7 +7,7 @@ export default function ProfilePicturePage() {
   // Same width as the picture modal, so a refresh keeps the same look.
   return (
     <div className="mx-auto w-full max-w-md">
-      <ProfilePicture after="profile" />
+      <ProfilePicture variant="page" />
     </div>
   );
 }

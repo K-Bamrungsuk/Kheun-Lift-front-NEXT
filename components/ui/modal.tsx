@@ -4,6 +4,9 @@ import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Icon } from "./icon";
 
+// Where a shared form or detail is shown: inside the intercepted modal or as the full page.
+export type Variant = "modal" | "page";
+
 export function Modal({
   labelledBy,
   wide = false,

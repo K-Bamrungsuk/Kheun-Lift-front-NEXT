@@ -10,7 +10,7 @@ export default function LiftPage({ params }: { params: Promise<{ id: string }> }
     <div className="mx-auto w-full max-w-2xl">
       <Suspense fallback={<p className="text-sm text-muted">Loading...</p>}>
         {params.then(({ id }) => (
-          <LiftDetail id={id} after="profile" />
+          <LiftDetail id={id} variant="page" />
         ))}
       </Suspense>
     </div>

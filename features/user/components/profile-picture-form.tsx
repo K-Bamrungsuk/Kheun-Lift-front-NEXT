@@ -3,6 +3,7 @@
 import { useId, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Avatar } from "@/components/ui/avatar";
+import type { Variant } from "@/components/ui/modal";
 import { errorMessage } from "@/lib/api";
 import { deleteProfileImage, uploadProfileImage } from "../api";
 import type { User } from "../types";
@@ -16,14 +17,14 @@ const primaryClass = `${buttonClass} bg-accent font-semibold text-background`;
 const secondaryClass = `${buttonClass} border border-border text-sm transition-colors`;
 
 // Pick a file to preview it, then Apply uploads it and leaves.
-// after: "back" closes the modal, "profile" leaves the full page. Remove stays here to show the blank avatar.
+// variant: after Apply, "modal" closes the modal and "page" goes to the profile. Remove stays here to show the blank avatar.
 // shortcut: a pick left un-applied survives closing the modal, because cacheComponents keeps state. Reset it on close if users find it confusing.
 export function ProfilePictureForm({
   user,
-  after,
+  variant,
 }: {
   user: User;
-  after: "back" | "profile";
+  variant: Variant;
 }) {
   const router = useRouter();
   // Modal and full page can both stay mounted, so ids must be unique.
@@ -60,8 +61,18 @@ export function ProfilePictureForm({
         startTransition(() => {
           clearPick();
           if (leave) {
-            if (after === "back") router.back();
-            else router.push("/profile");
+            switch (variant) {
+              case "modal":
+                router.back();
+                break;
+              case "page":
+                router.push("/profile");
+                break;
+              default: {
+                const _exhaustive: never = variant;
+                void _exhaustive;
+              }
+            }
           }
           router.refresh();
         });

@@ -1,10 +1,9 @@
 import { Suspense } from "react";
+import type { Variant } from "@/components/ui/modal";
 import { getExercises } from "../api-server";
 import { LogLiftFields } from "./log-lift-fields";
 
-type After = React.ComponentProps<typeof LogLiftFields>["after"];
-
-export function LogLiftForm({ after }: { after: After }) {
+export function LogLiftForm({ variant }: { variant: Variant }) {
   return (
     <section
       aria-labelledby="attempt-title"
@@ -16,12 +15,12 @@ export function LogLiftForm({ after }: { after: After }) {
         </h2>
       </div>
       <Suspense>
-        <ExerciseFields after={after} />
+        <ExerciseFields variant={variant} />
       </Suspense>
     </section>
   );
 }
 
-async function ExerciseFields({ after }: { after: After }) {
-  return <LogLiftFields exercises={await getExercises()} after={after} />;
+async function ExerciseFields({ variant }: { variant: Variant }) {
+  return <LogLiftFields exercises={await getExercises()} variant={variant} />;
 }

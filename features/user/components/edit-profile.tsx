@@ -1,12 +1,11 @@
 import { Suspense } from "react";
+import type { Variant } from "@/components/ui/modal";
 import { getMe } from "../api-server";
 import { ProfileForm } from "./profile-form";
 
-type After = "back" | "profile";
-
 // The /profile/edit page and its intercepted modal both use this component.
 // getMe() sits inside Suspense so the heading shows at once; cacheComponents flags uncached fetches outside Suspense.
-export function EditProfile({ after }: { after: After }) {
+export function EditProfile({ variant }: { variant: Variant }) {
   return (
     <section
       aria-labelledby="edit-profile-title"
@@ -16,13 +15,13 @@ export function EditProfile({ after }: { after: After }) {
         Edit profile
       </h2>
       <Suspense fallback={<p className="text-sm text-muted">Loading...</p>}>
-        <EditProfileForm after={after} />
+        <EditProfileForm variant={variant} />
       </Suspense>
     </section>
   );
 }
 
-async function EditProfileForm({ after }: { after: After }) {
+async function EditProfileForm({ variant }: { variant: Variant }) {
   const user = await getMe();
-  return <ProfileForm user={user} after={after} />;
+  return <ProfileForm user={user} variant={variant} />;
 }

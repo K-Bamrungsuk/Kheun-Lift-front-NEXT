@@ -1,12 +1,12 @@
 import { Suspense } from "react";
+import type { Variant } from "@/components/ui/modal";
 import { getMe } from "../api-server";
 import { ProfilePictureForm } from "./profile-picture-form";
 
 // The /profile/picture page and its intercepted modal both use this component.
 // getMe() sits inside Suspense so the heading shows at once; cacheComponents flags uncached fetches outside Suspense.
-type After = "back" | "profile";
 
-export function ProfilePicture({ after }: { after: After }) {
+export function ProfilePicture({ variant }: { variant: Variant }) {
   return (
     <section
       aria-labelledby="picture-title"
@@ -16,13 +16,13 @@ export function ProfilePicture({ after }: { after: After }) {
         Profile picture
       </h2>
       <Suspense fallback={<p className="text-sm text-muted">Loading...</p>}>
-        <ProfilePictureLoader after={after} />
+        <ProfilePictureLoader variant={variant} />
       </Suspense>
     </section>
   );
 }
 
-async function ProfilePictureLoader({ after }: { after: After }) {
+async function ProfilePictureLoader({ variant }: { variant: Variant }) {
   const user = await getMe();
-  return <ProfilePictureForm user={user} after={after} />;
+  return <ProfilePictureForm user={user} variant={variant} />;
 }

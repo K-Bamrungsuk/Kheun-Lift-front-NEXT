@@ -3,17 +3,18 @@
 import { useId, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Icon } from "@/components/ui/icon";
+import type { Variant } from "@/components/ui/modal";
 import { errorMessage } from "@/lib/api";
 import { createLift } from "../api";
 import type { Exercise } from "../types";
 
-// after: "back" closes the modal, "dashboard" leaves the full page.
+// variant: after a submit, "modal" closes the modal and "page" goes to the dashboard.
 export function LogLiftFields({
   exercises,
-  after,
+  variant,
 }: {
   exercises: Exercise[];
-  after: "back" | "dashboard";
+  variant: Variant;
 }) {
   const router = useRouter();
   // Modal and full page can both stay mounted, so ids must be unique.
@@ -41,8 +42,18 @@ export function LogLiftFields({
       // cacheComponents keeps this form mounted and hidden after the user leaves, so reset it.
       setPending(false);
       formElement.reset();
-      if (after === "back") router.back();
-      else router.push("/dashboard");
+      switch (variant) {
+        case "modal":
+          router.back();
+          break;
+        case "page":
+          router.push("/dashboard");
+          break;
+        default: {
+          const _exhaustive: never = variant;
+          void _exhaustive;
+        }
+      }
       // Re-run server components so the new lift shows up.
       router.refresh();
     } catch (err) {

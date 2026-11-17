@@ -19,7 +19,7 @@ export default function LogLiftPage() {
         </p>
       </header>
       <div className="grid items-start gap-6 md:grid-cols-[minmax(0,1fr)_280px]">
-        <LogLiftForm after="dashboard" />
+        <LogLiftForm variant="page" />
         <aside className="space-y-4 rounded-xl bg-surface-low p-5">
           <span className="grid size-11 place-items-center rounded-xl bg-surface text-accent">
             <Icon name="shieldCheck" className="size-6" />

@@ -14,7 +14,7 @@ export function OnboardingForm({ user }: { user: User }) {
         Gender and body weight set your weight class. You need them before
         logging a lift.
       </p>
-      <ProfileForm user={user} />
+      <ProfileForm user={user} variant="inline" />
     </section>
   );
 }
