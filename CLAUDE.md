@@ -79,11 +79,11 @@ per commit, in order. The user commits.
 - Go allows only one origin, `APP_ORIGIN` (e.g. `http://localhost:3002`);
   any other origin gets 403 on POST/PATCH/DELETE.
 - Browser calls use `credentials: "include"`. Server Components forward the
-  cookie from `cookies()` as a `Cookie` header. On prod, Go sets the cookie
+  cookie from `cookies()` as a `Cookie` header. In production, Go sets the cookie
   `Domain` to `.<domain>` so `app.<domain>` also gets it.
 - Go endpoints match the old Express API: `/auth`, `/users`, `/exercises`,
   `/lifts`, `/leaderboards`, `/weight-classes`. One difference: the
   `/leaderboards/exercises/...` list returns `{message, data}`, not a bare array.
 - No endpoint exists yet to verify or reject lifts.
-- `PATCH /lifts/:id` and `DELETE /lifts/:id` exist (edit caption / delete
-  lift), not used by the UI yet.
+- `PATCH /lifts/:id` edits a caption and `DELETE /lifts/:id` deletes a lift.
+  The UI does not call them yet.
