@@ -21,17 +21,18 @@ export function RegisterForm() {
     setError("");
     try {
       await register({ username: String(form.get("username")), email, password });
-      await login(email, password);
-      
-      // Go does not set a session on register, so log in right away.
-      formElement.reset();
-      setPending(false);
-      router.replace("/dashboard");
-      router.refresh();
     } catch (err) {
       setError(errorMessage(err));
       setPending(false);
+      return;
     }
+    // Go does not set a session on register, so log in right away.
+    // The account exists now; if this login fails, send the user to log in by hand.
+    const next = await login(email, password).then(() => "/dashboard", () => "/login");
+    formElement.reset();
+    setPending(false);
+    router.replace(next);
+    router.refresh();
   }
 
   return (
