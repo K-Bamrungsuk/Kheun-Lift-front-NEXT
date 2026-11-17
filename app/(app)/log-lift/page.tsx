@@ -8,7 +8,7 @@ export default function LogLiftPage() {
   return (
     <>
       <header>
-        <p className="mb-2 font-mono text-xs uppercase tracking-widest text-accent">
+        <p className="mb-2 text-xs uppercase tracking-widest text-accent">
           Make it count
         </p>
         <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">

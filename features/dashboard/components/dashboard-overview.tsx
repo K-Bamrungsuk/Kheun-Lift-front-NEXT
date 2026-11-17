@@ -22,7 +22,7 @@ export function DashboardOverview({
     <>
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="mb-2 font-mono text-xs uppercase tracking-widest text-accent">
+          <p className="mb-2 text-xs uppercase tracking-widest text-accent">
             Your training space
           </p>
           <h1 className="text-2xl font-semibold tracking-tight md:text-4xl">
@@ -38,7 +38,7 @@ export function DashboardOverview({
           aria-labelledby="leaderboard-title"
           className="rounded-xl bg-surface p-5"
         >
-          <p className="font-mono text-[10px] uppercase tracking-widest text-accent">
+          <p className="text-[10px] uppercase tracking-widest text-accent">
             The leaderboard
           </p>
           <div className="mt-2 flex items-center justify-between gap-3">
@@ -55,13 +55,13 @@ export function DashboardOverview({
               <ol className="mt-4 divide-y divide-border">
                 {board.slice(0, 3).map((entry) => (
                   <li key={entry.id} className="flex items-center gap-3 py-4">
-                    <span className="w-5 shrink-0 font-mono text-sm text-accent">
+                    <span className="w-5 shrink-0 text-sm text-accent">
                       {String(entry.rank).padStart(2, "0")}
                     </span>
                     <span className="min-w-0 flex-1 truncate text-sm">
                       {entry.user.username}
                     </span>
-                    <strong className="whitespace-nowrap font-mono text-sm font-medium tabular-nums">
+                    <strong className="whitespace-nowrap text-sm font-medium tabular-nums">
                       {entry.weight}
                       <span className="ml-1 text-[10px] text-muted">kg</span>
                     </strong>
@@ -91,7 +91,7 @@ export function DashboardOverview({
               className="size-12"
             />
             <div className="min-w-0">
-              <p className="font-mono text-[10px] uppercase tracking-widest text-muted">
+              <p className="text-[10px] uppercase tracking-widest text-muted">
                 Athlete overview
               </p>
               <h2
@@ -101,7 +101,7 @@ export function DashboardOverview({
                 {user.username}
               </h2>
               {user.weightClass && (
-                <p className="mt-2 inline-flex items-center gap-1.5 rounded-lg border border-accent/25 bg-accent/10 px-2.5 py-1 font-mono text-xs text-accent">
+                <p className="mt-2 inline-flex items-center gap-1.5 rounded-lg border border-accent/25 bg-accent/10 px-2.5 py-1 text-xs text-accent">
                   <Icon name="trophy" className="size-3.5" />
                   <span className="sr-only">Weight class: </span>
                   {user.weightClass.name}

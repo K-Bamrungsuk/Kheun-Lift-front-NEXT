@@ -7,7 +7,7 @@ export function PersonalRecords({ lifts }: { lifts: LiftRecord[] }) {
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h2
           id="records-title"
-          className="font-mono text-xs font-semibold uppercase tracking-widest text-muted"
+          className="text-xs font-semibold uppercase tracking-widest text-muted"
         >
           Personal records
         </h2>
@@ -16,13 +16,13 @@ export function PersonalRecords({ lifts }: { lifts: LiftRecord[] }) {
         {getPersonalRecords(lifts).map(({ name, best }) => (
           <div key={name} className="min-w-0 rounded-xl bg-surface p-3 md:p-5">
             <dt className="text-xs text-muted">{name}</dt>
-            <dd className="mt-3 font-mono text-2xl font-semibold tabular-nums tracking-tight md:text-3xl">
+            <dd className="mt-3 text-2xl font-semibold tabular-nums tracking-tight md:text-3xl">
               {best ? best.weight : "—"}
               {best && (
                 <span className="ml-1 text-xs font-normal text-muted">kg</span>
               )}
             </dd>
-            <dd className="mt-2 font-mono text-[11px] text-muted">
+            <dd className="mt-2 text-[11px] text-muted">
               {best ? `${best.reps} rep max` : "No verified lift"}
             </dd>
           </div>

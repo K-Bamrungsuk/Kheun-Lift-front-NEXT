@@ -34,7 +34,7 @@ export function AppNavigation({ mobile = false }: { mobile?: boolean }) {
       >
         <Icon name="plus" className={mobile ? "size-7" : "size-5"} />
       </span>
-      <span className={mobile ? "font-mono text-[11px]" : ""}>Log lift</span>
+      <span className={mobile ? "text-[11px]" : ""}>Log lift</span>
     </Link>
   );
 

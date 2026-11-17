@@ -6,7 +6,7 @@ export default function Loading() {
   return (
     <div role="status" aria-label="Loading dashboard" className="space-y-6">
       <header>
-        <p className="mb-2 font-mono text-xs uppercase tracking-widest text-accent">
+        <p className="mb-2 text-xs uppercase tracking-widest text-accent">
           Your training space
         </p>
         <Skeleton className="h-9 w-64 md:h-10" />

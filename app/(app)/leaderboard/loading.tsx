@@ -6,7 +6,7 @@ export default function Loading() {
   return (
     <div role="status" aria-label="Loading rankings" className="space-y-6">
       <header>
-        <p className="mb-2 font-mono text-xs uppercase tracking-widest text-accent">
+        <p className="mb-2 text-xs uppercase tracking-widest text-accent">
           Strength, on the record
         </p>
         <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">

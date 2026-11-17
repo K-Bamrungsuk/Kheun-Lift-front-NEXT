@@ -48,7 +48,7 @@ export default async function ProfilePage() {
               </span>
             </Link>
             <div className="min-w-0">
-              <p className="font-mono text-[10px] uppercase tracking-widest text-muted">
+              <p className="text-[10px] uppercase tracking-widest text-muted">
                 Athlete profile
               </p>
               <h2
@@ -58,7 +58,7 @@ export default async function ProfilePage() {
                 {user.username}
               </h2>
               {user.weightClass && (
-                <p className="mt-2 inline-flex items-center gap-1.5 rounded-lg border border-accent/25 bg-accent/10 px-2.5 py-1 font-mono text-xs text-accent">
+                <p className="mt-2 inline-flex items-center gap-1.5 rounded-lg border border-accent/25 bg-accent/10 px-2.5 py-1 text-xs text-accent">
                   <Icon name="trophy" className="size-3.5" />
                   <span className="sr-only">Weight class: </span>
                   {user.weightClass.name}

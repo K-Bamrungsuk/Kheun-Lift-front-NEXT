@@ -27,7 +27,7 @@ export function AppShell({
               <Icon name="shieldCheck" className="size-6" />
             </span>
             <span>
-              <span className="block font-mono text-xs font-semibold tracking-[0.2em] text-accent">
+              <span className="block text-xs font-semibold tracking-[0.2em] text-accent">
                 KHEUN LIFT
               </span>
               <span className="mt-0.5 block text-sm text-muted">

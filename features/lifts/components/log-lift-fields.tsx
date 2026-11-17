@@ -54,7 +54,7 @@ export function LogLiftFields({
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <fieldset>
-        <legend className="mb-3 font-mono text-xs uppercase tracking-widest text-muted">
+        <legend className="mb-3 text-xs uppercase tracking-widest text-muted">
           Discipline
         </legend>
         <div className="grid grid-cols-3 gap-2">
@@ -79,7 +79,7 @@ export function LogLiftFields({
         <div>
           <label
             htmlFor={`${uid}weight`}
-            className="font-mono text-xs uppercase tracking-widest text-muted"
+            className="text-xs uppercase tracking-widest text-muted"
           >
             Load (kg)
           </label>
@@ -91,13 +91,13 @@ export function LogLiftFields({
             step="0.5"
             required
             defaultValue="100"
-            className="mt-3 min-h-16 w-full min-w-0 rounded-lg border border-border bg-background px-4 font-mono text-2xl tabular-nums"
+            className="mt-3 min-h-16 w-full min-w-0 rounded-lg border border-border bg-background px-4 text-2xl tabular-nums"
           />
         </div>
         <div>
           <label
             htmlFor={`${uid}reps`}
-            className="font-mono text-xs uppercase tracking-widest text-muted"
+            className="text-xs uppercase tracking-widest text-muted"
           >
             Reps
           </label>
@@ -109,7 +109,7 @@ export function LogLiftFields({
             step="1"
             required
             defaultValue="1"
-            className="mt-3 min-h-16 w-full min-w-0 rounded-lg border border-border bg-background px-4 font-mono text-2xl tabular-nums"
+            className="mt-3 min-h-16 w-full min-w-0 rounded-lg border border-border bg-background px-4 text-2xl tabular-nums"
           />
         </div>
       </div>
