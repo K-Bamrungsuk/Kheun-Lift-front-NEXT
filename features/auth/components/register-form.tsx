@@ -20,7 +20,7 @@ export function RegisterForm() {
     setPending(true);
     setError("");
     try {
-      await register(String(form.get("username")), email, password);
+      await register({ username: String(form.get("username")), email, password });
       await login(email, password);
       
       // Go does not set a session on register, so log in right away.

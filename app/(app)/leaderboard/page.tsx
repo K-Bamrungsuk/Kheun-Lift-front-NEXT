@@ -87,9 +87,11 @@ export default async function LeaderboardPage({
     : exercises[0];
   if (!exercise) notFound();
 
-  const entries = await getLeaderboard(exercise.id, weightClass, gender).catch(
-    notFoundOnBadQuery,
-  );
+  const entries = await getLeaderboard({
+    exerciseId: exercise.id,
+    weightClassId: weightClass,
+    gender,
+  }).catch(notFoundOnBadQuery);
 
   const className =
     classes.find((item) => String(item.id) === weightClass)?.name ??
