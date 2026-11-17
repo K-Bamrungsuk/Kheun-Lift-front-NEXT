@@ -58,7 +58,8 @@ export function LiftHistory({ lifts }: { lifts: LiftRecord[] }) {
                 dateTime={lift.createdAt}
                 className="font-mono text-[10px] text-muted"
               >
-                {lift.createdAt.slice(0, 10)}
+                {/* shortcut: fixed to Thai time, show the date on the client if users abroad join. */}
+                {new Date(lift.createdAt).toLocaleDateString("en-CA", { timeZone: "Asia/Bangkok" })}
               </time>
             </div>
           </article>
