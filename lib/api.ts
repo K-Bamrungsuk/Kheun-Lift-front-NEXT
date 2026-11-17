@@ -5,6 +5,8 @@ export class ApiError extends Error {
 }
 
 export async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
+  // Without it every call goes to "undefined/..." and looks like a network failure.
+  if (!process.env.NEXT_PUBLIC_API_URL) throw new Error("NEXT_PUBLIC_API_URL is not set.");
   // Go answers 415 without this header on a JSON body; FormData sets its own multipart boundary.
   const headers = typeof init.body === "string" ?{ "Content-Type": "application/json", ...init.headers } : init.headers;
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${path}`, { ...init, headers });
