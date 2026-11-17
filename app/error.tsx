@@ -1,6 +1,6 @@
 "use client";
 
-// This file sits at the app root, so it also catches getMe() failing in the (app) layout when Go is down.
+// This file sits at the app root, so it catches every error under it: Go down, a Go 500, or a render bug.
 export default function ErrorPage() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center gap-5 px-6 text-center">
@@ -9,7 +9,7 @@ export default function ErrorPage() {
       </p>
       <h1 className="text-3xl font-black">Something went wrong.</h1>
       <p className="text-sm text-muted">
-        We could not reach the server. Please try again.
+        Please try again in a moment.
       </p>
       <button
         type="button"
