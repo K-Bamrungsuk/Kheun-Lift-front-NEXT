@@ -4,5 +4,10 @@ import { ProfilePicture } from "@/features/user/components/profile-picture";
 export const metadata: Metadata = { title: "Profile Picture | Kheun Lift" };
 
 export default function ProfilePicturePage() {
-  return <ProfilePicture after="profile" />;
+  // Same width as the picture modal, so a refresh keeps the same look.
+  return (
+    <div className="mx-auto w-full max-w-md">
+      <ProfilePicture after="profile" />
+    </div>
+  );
 }

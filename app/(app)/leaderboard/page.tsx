@@ -105,7 +105,7 @@ export default async function LeaderboardPage({
     <>
       <header className="flex items-end justify-between gap-4">
         <div>
-          <p className="mb-2 font-mono text-xs uppercase tracking-widest text-accent">
+          <p className="mb-2 text-xs uppercase tracking-widest text-accent">
             Strength, on the record
           </p>
           <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
@@ -165,14 +165,14 @@ export default async function LeaderboardPage({
         </div>
         <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl bg-surface p-4 md:p-5">
           <div>
-            <p className="font-mono text-[10px] uppercase tracking-widest text-muted">
+            <p className="text-[10px] uppercase tracking-widest text-muted">
               Discipline
             </p>
             <h2 id="ranking-title" className="mt-1 text-xl font-semibold">
               {exercise.name}
             </h2>
           </div>
-          <span className="rounded-lg border border-accent/25 bg-accent/10 px-3 py-2 font-mono text-xs text-accent">
+          <span className="rounded-lg border border-accent/25 bg-accent/10 px-3 py-2 text-xs text-accent">
             {className}
           </span>
         </div>
@@ -186,7 +186,7 @@ export default async function LeaderboardPage({
               <caption className="sr-only">
                 {exercise.name} rankings for {className}
               </caption>
-              <thead className="border-b border-border bg-surface-low font-mono text-[10px] uppercase tracking-widest text-muted">
+              <thead className="border-b border-border bg-surface-low text-[10px] uppercase tracking-widest text-muted">
                 <tr>
                   <th
                     scope="col"
@@ -211,7 +211,7 @@ export default async function LeaderboardPage({
                     key={entry.id}
                     className={entry.userId === me.id ? "bg-accent/10" : ""}
                   >
-                    <td className="px-3 py-5 font-mono tabular-nums md:px-5">
+                    <td className="px-3 py-5 tabular-nums md:px-5">
                       <span
                         className={`grid size-8 place-items-center rounded-full text-xs font-semibold ${rankStyle(entry.rank)}`}
                       >
@@ -222,7 +222,12 @@ export default async function LeaderboardPage({
                       scope="row"
                       className={`px-3 py-5 md:px-5 ${entry.rank <= 3 ? "font-bold" : "font-medium"}`}
                     >
-                      <span className="break-all">{entry.user.username}</span>
+                      <Link
+                        href={entry.userId === me.id ? "/profile" : `/users/${entry.userId}`}
+                        className="break-all underline-offset-4 hover:underline"
+                      >
+                        {entry.user.username}
+                      </Link>
                       {entry.rank === 1 && (
                         <Icon
                           name="trophy"
@@ -230,16 +235,22 @@ export default async function LeaderboardPage({
                         />
                       )}
                       {entry.userId === me.id && (
-                        <span className="ml-2 rounded bg-surface-high px-1.5 py-1 font-mono text-[9px] uppercase text-accent">
+                        <span className="ml-2 rounded bg-surface-high px-1.5 py-1 text-[9px] uppercase text-accent">
                           You
                         </span>
                       )}
                     </th>
                     <td
-                      className={`whitespace-nowrap px-3 py-5 text-right font-mono text-base tabular-nums md:px-5 ${entry.rank <= 3 ? "font-bold" : ""}`}
+                      className={`whitespace-nowrap px-3 py-5 text-right text-base tabular-nums md:px-5 ${entry.rank <= 3 ? "font-bold" : ""}`}
                     >
-                      {entry.weight}
-                      <span className="ml-1 text-xs text-muted">kg</span>
+                      <Link
+                        href={`/lifts/${entry.id}`}
+                        aria-label={`${entry.weight} kg lift by ${entry.user.username}`}
+                        className="underline-offset-4 hover:underline"
+                      >
+                        {entry.weight}
+                        <span className="ml-1 text-xs text-muted">kg</span>
+                      </Link>
                     </td>
                   </tr>
                 ))}

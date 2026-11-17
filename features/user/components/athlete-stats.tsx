@@ -1,8 +1,8 @@
 import { Icon } from "@/components/ui/icon";
-import type { User } from "../types";
+import type { PublicUser, User } from "../types";
 
-// The profile card and the dashboard athlete overview both use this component.
-export function AthleteStats({ user }: { user: User }) {
+// The profile card, the dashboard athlete overview and other users' profiles use this component.
+export function AthleteStats({ user }: { user: PublicUser & Partial<Pick<User, "dateOfBirth">> }) {
   // UTC because Go stores birthdays at UTC midnight; local time would show the day before in some zones.
   const born = user.dateOfBirth
     ? new Date(user.dateOfBirth).toLocaleDateString("en-GB", {
@@ -27,19 +27,19 @@ export function AthleteStats({ user }: { user: User }) {
           <Icon name="weight" className="size-4" />
           Body weight
         </dt>
-        <dd className="mt-2 font-mono text-sm">
+        <dd className="mt-2 text-sm">
           {user.bodyWeight != null ? `${user.bodyWeight} kg` : "—"}
         </dd>
       </div>
       <div className="rounded-lg bg-surface-high p-3">
         <dt className="text-xs text-muted">Height</dt>
-        <dd className="mt-2 font-mono text-sm">
+        <dd className="mt-2 text-sm">
           {user.height != null ? `${user.height} cm` : "—"}
         </dd>
       </div>
       <div className="rounded-lg bg-surface-high p-3">
         <dt className="text-xs text-muted">Born</dt>
-        <dd className="mt-2 font-mono text-sm">{born}</dd>
+        <dd className="mt-2 text-sm">{born}</dd>
       </div>
     </dl>
   );

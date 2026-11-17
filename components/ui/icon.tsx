@@ -8,6 +8,7 @@ const paths = {
   pencil:"M17 3a2.85 2.85 0 0 1 4 4L7.5 20.5 2 22l1.5-5.5Z",
   arrowRight: "M5 12h14M12 5l7 7-7 7",
   x: "M18 6 6 18M6 6l12 12",
+  more: "M5 12h.01M12 12h.01M19 12h.01",
   shieldCheck: "M12 3 3 7v5c0 5 9 9 9 9s9-4 9-9V7ZM8 12l3 3 5-6",
   weight: "M15 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM6 8h12l3 13H3Z",
 };

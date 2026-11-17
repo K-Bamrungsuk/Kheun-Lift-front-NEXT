@@ -22,7 +22,6 @@ export function LogLiftForm({ after }: { after: After }) {
   );
 }
 
-// serverFetch reads cookies, so this sits in its own Suspense.
 async function ExerciseFields({ after }: { after: After }) {
   return <LogLiftFields exercises={await getExercises()} after={after} />;
 }

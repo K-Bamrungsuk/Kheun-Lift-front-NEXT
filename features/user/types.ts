@@ -20,3 +20,9 @@ export type User = {
   updatedAt: string;
   weightClass: WeightClass | null;
 };
+
+// GET /users/:id leaves out email, birthday and timestamps.
+export type PublicUser = Pick<
+  User,
+  "id" | "username" | "profileImage" | "gender" | "bodyWeight" | "height" | "weightClass"
+>;
