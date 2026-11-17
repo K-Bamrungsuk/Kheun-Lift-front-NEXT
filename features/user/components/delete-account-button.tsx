@@ -15,12 +15,12 @@ export function DeleteAccountButton() {
     try {
       await deleteMe();
     } catch (error) {
-      // 409 = user still has lifts (until B4.5); Go's message says to delete them first.
+      // Go answers 409 while the user still has lifts, until backend task B4.5. Go's message says to delete them first.
       alert(errorMessage(error));
       setPending(false);
       return;
     }
-    // cacheComponents keeps this button mounted (hidden) after leaving, so reset it.
+    // cacheComponents keeps this button mounted and hidden after the user leaves, so reset it.
     setPending(false);
     router.replace("/login");
     router.refresh();

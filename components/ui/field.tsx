@@ -8,7 +8,7 @@ export function Field({
       <label htmlFor={id} className="text-sm text-muted">
         {label}
       </label>
-      {/* text-base (16px) stops iOS from zooming into the field on focus */}
+      {/* text-base is 16px, which stops iOS from zooming into the field on focus. */}
       <input
         id={id}
         name={id}

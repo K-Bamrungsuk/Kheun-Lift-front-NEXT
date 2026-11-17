@@ -16,7 +16,7 @@ const KEYS = [
 ] as const;
 const NUMBER_KEYS = new Set(["bodyWeight", "height"]);
 
-// Form value of each field, so unchanged fields are not sent.
+// Starting form value of each field. The form sends only fields that differ from it.
 const initial = (user: User) => ({
   username: user.username,
   gender: user.gender ?? "",
@@ -25,7 +25,7 @@ const initial = (user: User) => ({
   dateOfBirth: user.dateOfBirth?.slice(0, 10) ?? "",
 });
 
-// after: "back" closes the edit modal, "profile" leaves the full edit page, none stays (onboarding).
+// after: "back" closes the edit modal, "profile" leaves the full edit page, and no value keeps the form on the page for onboarding.
 export function ProfileForm({
   user,
   after,
@@ -51,7 +51,7 @@ export function ProfileForm({
     const body: UpdateMeInput = {};
     for (const key of KEYS) {
       const value = String(form.get(key)).trim();
-      // Go rejects null, so an emptied optional field is left as it was.
+      // Go rejects null, so the form skips an emptied optional field and Go keeps the old value.
       if (value && value !== values[key])
         body[key] = NUMBER_KEYS.has(key) ? Number(value) : value;
     }
@@ -61,7 +61,7 @@ export function ProfileForm({
     setError("");
     try {
       await updateMe(body);
-      // cacheComponents keeps this form mounted (hidden) after leaving, so reset it.
+      // cacheComponents keeps this form mounted and hidden after the user leaves, so reset it.
       setPending(false);
       leave();
       // Re-run server components so getMe() returns the new profile.

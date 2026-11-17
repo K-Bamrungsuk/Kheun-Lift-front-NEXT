@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { getMe } from "../api-server";
 import { ProfilePictureForm } from "./profile-picture-form";
 
-// Shared by the /profile/picture page and its intercepted modal.
+// The /profile/picture page and its intercepted modal both use this component.
 // getMe() sits inside Suspense so the heading shows at once; cacheComponents flags uncached fetches outside Suspense.
 type After = "back" | "profile";
 

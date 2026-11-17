@@ -1,7 +1,7 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
 // Suspense fallback around this page; it must sit in the page's folder to cover page-only re-renders.
-// Same layout as page.tsx so nothing jumps when the data arrives.
+// It uses the same layout as page.tsx, so the layout does not shift when the data arrives.
 export default function Loading() {
   return (
     <div role="status" aria-label="Loading rankings" className="space-y-6">

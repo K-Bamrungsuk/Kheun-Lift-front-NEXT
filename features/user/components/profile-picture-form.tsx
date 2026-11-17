@@ -17,7 +17,7 @@ const secondaryClass = `${buttonClass} border border-border text-sm transition-c
 
 // Pick a file to preview it, then Apply uploads it and leaves.
 // after: "back" closes the modal, "profile" leaves the full page. Remove stays here to show the blank avatar.
-// shortcut: a pick left un-applied survives closing the modal (cacheComponents keeps state); reset on close if users find it confusing.
+// shortcut: a pick left un-applied survives closing the modal, because cacheComponents keeps state. Reset it on close if users find it confusing.
 export function ProfilePictureForm({
   user,
   after,

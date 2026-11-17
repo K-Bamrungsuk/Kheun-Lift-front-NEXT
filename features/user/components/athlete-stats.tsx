@@ -1,7 +1,7 @@
 import { Icon } from "@/components/ui/icon";
 import type { User } from "../types";
 
-// Shared by the profile card and the dashboard athlete overview.
+// The profile card and the dashboard athlete overview both use this component.
 export function AthleteStats({ user }: { user: User }) {
   // UTC because Go stores birthdays at UTC midnight; local time would show the day before in some zones.
   const born = user.dateOfBirth

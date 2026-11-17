@@ -6,7 +6,7 @@ import type { Exercise, LiftRecord } from "./types";
 export const getMyLifts = () =>
   serverFetch<{ data: LiftRecord[] }>("/lifts/me").then((res) => res.data);
 
-// Public in Go and rarely changes, so it is cached on the server and sent without the cookie.
+// Go serves exercises publicly and they rarely change, so the server caches them and sends no cookie.
 export async function getExercises() {
   "use cache";
   cacheLife("hours");

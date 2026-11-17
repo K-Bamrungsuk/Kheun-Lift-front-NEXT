@@ -1,6 +1,7 @@
 import type { LiftRecord } from "./types";
 
-const EXERCISES = ["Squat", "Bench Press", "Deadlift"];   // ต้องสะกดตรงกับในตาราง Exercise ของ DB
+// Names must match the spelling in the Exercise table of the database.
+const EXERCISES = ["Squat", "Bench Press", "Deadlift"];
 
 export function getPersonalRecords(lifts: LiftRecord[]) {
   return EXERCISES.map((name) => ({

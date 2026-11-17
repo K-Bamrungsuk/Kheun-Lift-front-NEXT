@@ -4,7 +4,7 @@ import { ProfileForm } from "./profile-form";
 
 type After = "back" | "profile";
 
-// Shared by the /profile/edit page and its intercepted modal.
+// The /profile/edit page and its intercepted modal both use this component.
 // getMe() sits inside Suspense so the heading shows at once; cacheComponents flags uncached fetches outside Suspense.
 export function EditProfile({ after }: { after: After }) {
   return (

@@ -1,4 +1,4 @@
-// Matches GET /users/me → { user: User } in kheun-lift-backend-go.
+// Matches the { user: User } body of GET /users/me in kheun-lift-backend-go.
 export type WeightClass = {
   id: number;
   gender: "male" | "female";

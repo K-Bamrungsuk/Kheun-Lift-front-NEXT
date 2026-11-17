@@ -2,7 +2,7 @@ import { serverFetch } from "@/lib/api-server";
 import type { WeightClass } from "@/features/user/types";
 import type { LeaderboardEntry, RandomLeaderboard } from "./types";
 
-// weightClassId and gender come straight from the URL; Go validates them (400/404).
+// weightClassId and gender come straight from the URL, and Go validates them with a 400 or 404 answer.
 export const getLeaderboard = ({
   exerciseId,
   weightClassId,

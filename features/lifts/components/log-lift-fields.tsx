@@ -35,10 +35,10 @@ export function LogLiftFields({
         weight: Number(form.get("weight")),
         reps: Number(form.get("reps")),
         videoUrl: String(form.get("videoUrl")).trim(),
-        // Go stores what it gets, so an empty caption is not sent.
+        // Go stores what it gets, so the form does not send an empty caption.
         ...(caption && { caption }),
       });
-      // cacheComponents keeps this form mounted (hidden) after leaving, so reset it.
+      // cacheComponents keeps this form mounted and hidden after the user leaves, so reset it.
       setPending(false);
       formElement.reset();
       if (after === "back") router.back();

@@ -1,6 +1,6 @@
 import { Icon } from "./icon";
 
-// Profile image, or a blank avatar when the user has not uploaded one. className sets the size.
+// Shows the profile image, or a blank avatar when the user has not uploaded one. className sets the size.
 export function Avatar({
   src,
   alt,
@@ -12,7 +12,7 @@ export function Avatar({
 }) {
   const base = `shrink-0 rounded-full border border-accent/30 bg-surface-high ${className}`;
   return src ? (
-    // PLAN: profile images use <img>, not next/image (no remotePatterns for R2).
+    // PLAN: profile images use <img>, not next/image, because next.config has no remotePatterns for R2.
     // eslint-disable-next-line @next/next/no-img-element
     <img src={src} alt={alt} className={`${base} object-cover`} />
   ) : (

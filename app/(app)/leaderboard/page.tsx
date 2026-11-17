@@ -45,7 +45,7 @@ function Pill({
   );
 }
 
-// Gold, silver, bronze for 1–3; a gold ring for 4–5; plain below.
+// Ranks 1 to 3 get gold, silver and bronze. Ranks 4 and 5 get a gold ring. Lower ranks are plain.
 const medals = [
   "bg-accent text-background",
   "bg-[#c3ccd9] text-background",
@@ -69,7 +69,7 @@ export default async function LeaderboardPage({
   // The class row only shows for a chosen gender, so a class without one is ignored.
   const weightClass = gender ? first(params.weightClass) : undefined;
 
-  // Go answers 400/404 for a bad gender, an unknown class, or a class of the other gender.
+  // Go answers 400 or 404 for a bad gender, an unknown class, or a class of the other gender.
   const notFoundOnBadQuery = (error: unknown): never => {
     if (error instanceof ApiError && [400, 404].includes(error.status))
       notFound();
