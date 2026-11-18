@@ -69,6 +69,27 @@ that message. When work is ready, suggest a short commit message and list
 its files. If the work should be split, give one message and file list
 per commit, in order. The user commits.
 
+### 7. Code style
+The goal is code a new developer can read quickly. Keep each change small.
+
+- **Comments.** Write a comment only for a "why" the code cannot show, in one
+  line. Do not describe what the code does. Ask before adding a new comment.
+  Keep: `// Go answers 415 without this header on a JSON body`.
+  Cut: `// The /lifts/[id] page and its intercepted modal both use this component.`
+- **try/catch.** Catch an error only where you handle it: show a message to
+  the user, redirect, or call `notFound()`. Do not wrap code that cannot throw,
+  and do not catch only to rethrow.
+- **Error handling.** Handle only the statuses you can act on, such as 401 to
+  `/login` and `isNotFound(error)` to a 404 page. Rethrow the rest so
+  `app/error.tsx` shows them. Do not add a branch for each status.
+- **Types.** No `any`. Type data from outside as `unknown` and narrow it.
+  Avoid `as`; the one known exception is `data as T` in `lib/api.ts`, which
+  the zod task in `PLAN.md` replaces.
+- **Nesting.** Use early returns instead of nested `if`. When JSX nests more
+  than about 5 levels, or one component holds several jobs, split out a
+  component. Example: `lift-owner-actions.tsx` holds the menu, caption form
+  and delete.
+
 ## How the apps fit together
 
 - Next runs on port `3002`; the Go API runs on `3001` (port 3000 is taken on

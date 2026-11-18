@@ -94,7 +94,7 @@
 
 - [ ] ใช้ `PageProps<"/lifts/[id]">` แทน `{ params: Promise<{ id: string }> }` ใน 4 page (เช็กแล้ว route modal `(.)lifts/[id]` ใช้ได้)
 - [x] type `after` ซ้ำ 6 ไฟล์: เปลี่ยนเป็น `variant` ที่มี type เดียวแล้ว
-- [ ] `[400, 404].includes(error.status)` ซ้ำ 3 ที่ (leaderboard, users, lift-detail) ทำเป็น `isNotFound(error)`
+- [x] `[400, 404].includes(error.status)` ซ้ำ 3 ที่ (leaderboard, users, lift-detail) ทำเป็น `isNotFound(error)` (`lib/api.ts`)
 - [x] test ของ `youtubeEmbedUrl` (`lib/youtube.test.ts`) และแก้ regex ให้รับลิงก์ที่ `v=` ไม่ได้อยู่ตัวแรก
 
 ## ปิดงาน
