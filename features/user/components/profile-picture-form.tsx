@@ -17,8 +17,7 @@ const buttonClass =
 const primaryClass = `${buttonClass} bg-accent font-semibold text-background`;
 const secondaryClass = `${buttonClass} border border-border text-sm transition-colors`;
 
-// Pick a file to preview it, then Apply uploads it and leaves.
-// variant: after Apply, "modal" closes the modal and "page" goes to the profile. Remove stays here to show the blank avatar.
+// Remove stays here to show the blank avatar.
 // shortcut: a pick left un-applied survives closing the modal, because cacheComponents keeps state. Reset it on close if users find it confusing.
 export function ProfilePictureForm({
   user,
@@ -31,7 +30,6 @@ export function ProfilePictureForm({
   // Modal and full page can both stay mounted, so ids must be unique.
   const hintId = useId();
   const [error, setError] = useState("");
-  // The chosen file and its local preview URL, before Apply.
   const [picked, setPicked] = useState<{ file: File; url: string } | null>(null);
   // Pending lasts until router.refresh() shows the result. With a pick it is an upload, otherwise a remove.
   const [pending, startTransition] = useTransition();

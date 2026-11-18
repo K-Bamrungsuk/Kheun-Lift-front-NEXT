@@ -1,7 +1,6 @@
 import { Icon } from "@/components/ui/icon";
 import type { PublicUser, User } from "../types";
 
-// The profile card, the dashboard athlete overview and other users' profiles use this component.
 export function AthleteStats({ user }: { user: PublicUser & Partial<Pick<User, "dateOfBirth">> }) {
   // UTC because Go stores birthdays at UTC midnight; local time would show the day before in some zones.
   const born = user.dateOfBirth

@@ -6,7 +6,6 @@ import { youtubeEmbedUrl } from "@/lib/youtube";
 import { getLift } from "../api-server";
 import { LiftOwnerActions } from "./lift-owner-actions";
 
-// The /lifts/[id] page and its intercepted modal both use this component.
 export async function LiftDetail({ id, variant }: { id: string; variant: Variant }) {
   const [me, lift] = await Promise.all([
     getMe(),

@@ -9,7 +9,6 @@ import { errorMessage } from "@/lib/api";
 import { createLift } from "../api";
 import type { Exercise } from "../types";
 
-// variant: after a submit, "modal" closes the modal and "page" goes to the dashboard.
 export function LogLiftFields({
   exercises,
   variant,

@@ -1,7 +1,6 @@
 import type { LiftRecord } from "@/features/lifts/types";
 import type { User } from "@/features/user/types";
 
-// Each row of GET /leaderboards/... is a lift with its rank and the lifter.
 export type LeaderboardEntry = LiftRecord & {
   rank: number;
   user: Pick<User, "id" | "username" | "profileImage">;

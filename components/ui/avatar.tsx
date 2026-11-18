@@ -1,6 +1,5 @@
 import { Icon } from "./icon";
 
-// Shows the profile image, or a blank avatar when the user has not uploaded one. className sets the size.
 export function Avatar({
   src,
   alt,

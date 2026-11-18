@@ -12,7 +12,6 @@ export function SpinnerIcon({ label, className = "size-4" }: { label: string; cl
   );
 }
 
-// Suspense fallback.
 export function Spinner() {
   return (
     <div role="status" className="flex justify-center p-5 text-muted">

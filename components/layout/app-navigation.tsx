@@ -56,11 +56,8 @@ export function AppNavigation({ mobile = false }: { mobile?: boolean }) {
       >
         {navigation.map((item, index) => {
           const active = "href" in item && pathname === item.href;
-          const color = !("href" in item)
-            ? "cursor-not-allowed text-muted/40"
-            : active
-              ? "text-accent"
-              : "text-muted hover:bg-surface-high hover:text-foreground";
+          const idle = active ? "text-accent" : "text-muted hover:bg-surface-high hover:text-foreground";
+          const color = "href" in item ? idle : "cursor-not-allowed text-muted/40";
           const className = `${mobile ? "flex min-h-14 min-w-11 flex-col items-center justify-center gap-1 rounded-lg px-2 text-[11px]" : "flex min-h-11 items-center gap-2 rounded-xl px-3 text-sm font-medium"} transition-colors ${color}`;
           const content = (
             <>

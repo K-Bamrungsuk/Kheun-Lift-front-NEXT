@@ -18,7 +18,7 @@ const KEYS = [
 ] as const;
 const NUMBER_KEYS = new Set(["bodyWeight", "height"]);
 
-// Starting form value of each field. The form sends only fields that differ from it.
+// The form sends only fields that differ from these.
 const initial = (user: User) => ({
   username: user.username,
   gender: user.gender ?? "",
@@ -27,7 +27,6 @@ const initial = (user: User) => ({
   dateOfBirth: user.dateOfBirth?.slice(0, 10) ?? "",
 });
 
-// variant: after a save, "modal" closes the edit modal, "page" goes to the profile, and "inline" keeps the onboarding card on the page.
 export function ProfileForm({
   user,
   variant,

@@ -4,7 +4,6 @@ import type { Variant } from "@/components/ui/modal";
 import { getMe } from "../api-server";
 import { ProfileForm } from "./profile-form";
 
-// The /profile/edit page and its intercepted modal both use this component.
 // getMe() sits inside Suspense so the heading shows at once; cacheComponents flags uncached fetches outside Suspense.
 export function EditProfile({ variant }: { variant: Variant }) {
   return (

@@ -45,7 +45,6 @@ function Pill({
   );
 }
 
-// Ranks 1 to 3 get gold, silver and bronze. Ranks 4 and 5 get a gold ring. Lower ranks are plain.
 const medals = [
   "bg-accent text-background",
   "bg-[#c3ccd9] text-background",
