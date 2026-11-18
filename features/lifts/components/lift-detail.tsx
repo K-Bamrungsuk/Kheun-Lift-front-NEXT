@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Variant } from "@/components/ui/modal";
 import { getMe } from "@/features/user/api-server";
-import { ApiError } from "@/lib/api";
+import { isNotFound } from "@/lib/api";
 import { youtubeEmbedUrl } from "@/lib/youtube";
 import { getLift } from "../api-server";
 import { LiftOwnerActions } from "./lift-owner-actions";
@@ -11,7 +11,7 @@ export async function LiftDetail({ id, variant }: { id: string; variant: Variant
   const [me, lift] = await Promise.all([
     getMe(),
     getLift(id).catch((error) => {
-      if (error instanceof ApiError && [400, 404].includes(error.status)) notFound();
+      if (isNotFound(error)) notFound();
       throw error;
     }),
   ]);

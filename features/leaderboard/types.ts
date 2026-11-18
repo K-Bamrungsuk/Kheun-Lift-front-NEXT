@@ -7,7 +7,6 @@ export type LeaderboardEntry = LiftRecord & {
   user: Pick<User, "id" | "username" | "profileImage">;
 };
 
-// GET /leaderboards/random returns { data: RandomLeaderboard | null }.
 // Go returns null instead of an empty board, so a board always has a first row.
 export type RandomLeaderboard = {
   exerciseId: number;

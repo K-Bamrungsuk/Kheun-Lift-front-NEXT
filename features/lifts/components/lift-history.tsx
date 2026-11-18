@@ -29,50 +29,51 @@ export function LiftHistory({
           Lift ledger
         </h2>
         <span className="text-xs text-muted">
-          {lifts.length} entries
+          {lifts.length} {lifts.length === 1 ? "entry" : "entries"}
         </span>
       </div>
-      {lifts.length === 0 && (
+      {lifts.length === 0 ? (
         <p className="rounded-xl bg-surface p-5 text-sm text-muted">
           {empty}
         </p>
-      )}
-      <div className="divide-y divide-border overflow-hidden rounded-xl bg-surface">
-        {lifts.map((lift) => (
-          <Link
-            key={lift.id}
-            href={`/lifts/${lift.id}`}
-            className="flex flex-wrap items-center justify-between gap-3 p-4 transition-colors hover:bg-surface-high md:p-5"
-          >
-            <div>
-              <h3 className="font-semibold">{lift.exercise.name}</h3>
-              <p className="mt-1 text-xl tabular-nums">
-                {lift.weight}
-                <span className="ml-1 text-xs text-muted">kg</span>
-                <span className="mx-2 text-sm text-muted">×</span>
-                {lift.reps}
-                <span className="ml-1 text-xs text-muted">rep</span>
-              </p>
-            </div>
-            <div className="flex flex-col items-end gap-2">
-              <span
-                className={`inline-flex items-center gap-1.5 rounded-md bg-surface-high px-2 py-1 text-[11px] capitalize ${statusBadge[lift.status].color}`}
-              >
-                <span aria-hidden="true">
-                  {statusBadge[lift.status].glyph}
+      ) : (
+        <div className="divide-y divide-border overflow-hidden rounded-xl bg-surface">
+          {lifts.map((lift) => (
+            <Link
+              key={lift.id}
+              href={`/lifts/${lift.id}`}
+              className="flex flex-wrap items-center justify-between gap-3 p-4 transition-colors hover:bg-surface-high md:p-5"
+            >
+              <div>
+                <h3 className="font-semibold">{lift.exercise.name}</h3>
+                <p className="mt-1 text-xl tabular-nums">
+                  {lift.weight}
+                  <span className="ml-1 text-xs text-muted">kg</span>
+                  <span className="mx-2 text-sm text-muted">×</span>
+                  {lift.reps}
+                  <span className="ml-1 text-xs text-muted">rep</span>
+                </p>
+              </div>
+              <div className="flex flex-col items-end gap-2">
+                <span
+                  className={`inline-flex items-center gap-1.5 rounded-md bg-surface-high px-2 py-1 text-[11px] capitalize ${statusBadge[lift.status].color}`}
+                >
+                  <span aria-hidden="true">
+                    {statusBadge[lift.status].glyph}
+                  </span>
+                  {lift.status}
                 </span>
-                {lift.status}
-              </span>
-              <time
-                dateTime={lift.createdAt}
-                className="text-[10px] text-muted"
-              >
-                {formatLiftDate(lift.createdAt)}
-              </time>
-            </div>
-          </Link>
-        ))}
-      </div>
+                <time
+                  dateTime={lift.createdAt}
+                  className="text-[10px] text-muted"
+                >
+                  {formatLiftDate(lift.createdAt)}
+                </time>
+              </div>
+            </Link>
+          ))}
+        </div>
+      )}
     </section>
   );
 }

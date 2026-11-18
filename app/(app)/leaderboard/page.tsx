@@ -8,7 +8,7 @@ import {
 } from "@/features/leaderboard/api-server";
 import { getExercises } from "@/features/lifts/api-server";
 import { getMe } from "@/features/user/api-server";
-import { ApiError } from "@/lib/api";
+import { isNotFound } from "@/lib/api";
 
 export const metadata: Metadata = { title: "Rank | Kheun Lift" };
 
@@ -71,8 +71,7 @@ export default async function LeaderboardPage({
 
   // Go answers 400 or 404 for a bad gender, an unknown class, or a class of the other gender.
   const notFoundOnBadQuery = (error: unknown): never => {
-    if (error instanceof ApiError && [400, 404].includes(error.status))
-      notFound();
+    if (isNotFound(error)) notFound();
     throw error;
   };
 

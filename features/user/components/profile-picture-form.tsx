@@ -4,7 +4,7 @@ import { useId, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Avatar } from "@/components/ui/avatar";
 import { SpinnerIcon } from "@/components/ui/spinner";
-import type { Variant } from "@/components/ui/modal";
+import { leave, type Variant } from "@/components/ui/modal";
 import { errorMessage } from "@/lib/api";
 import { deleteProfileImage, uploadProfileImage } from "../api";
 import type { User } from "../types";
@@ -53,7 +53,7 @@ export function ProfilePictureForm({
     setPicked({ file, url: URL.createObjectURL(file) });
   }
 
-  function run(action: () => Promise<unknown>, leave = false) {
+  function run(action: () => Promise<unknown>, done = false) {
     setError("");
     startTransition(async () => {
       try {
@@ -61,20 +61,7 @@ export function ProfilePictureForm({
         // Clear the pick in the same transition as the refresh, so the preview never flashes the old image.
         startTransition(() => {
           clearPick();
-          if (leave) {
-            switch (variant) {
-              case "modal":
-                router.back();
-                break;
-              case "page":
-                router.push("/profile");
-                break;
-              default: {
-                const _exhaustive: never = variant;
-                void _exhaustive;
-              }
-            }
-          }
+          if (done) leave(router, variant, "/profile");
           router.refresh();
         });
       } catch (err) {

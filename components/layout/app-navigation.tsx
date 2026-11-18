@@ -44,7 +44,7 @@ export function AppNavigation({ mobile = false }: { mobile?: boolean }) {
       className={
         mobile
           ? "mobile-nav fixed inset-x-0 bottom-0 z-50 border-t border-border/60 bg-surface-low/95 backdrop-blur-xl md:hidden"
-          : "flex items-center gap-1"
+          : undefined
       }
     >
       <div

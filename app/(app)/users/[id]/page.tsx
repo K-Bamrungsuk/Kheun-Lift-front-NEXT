@@ -9,7 +9,7 @@ import { LiftHistory } from "@/features/lifts/components/lift-history";
 import { PersonalRecords } from "@/features/lifts/components/personal-records";
 import { getMe, getUser } from "@/features/user/api-server";
 import { AthleteStats } from "@/features/user/components/athlete-stats";
-import { ApiError } from "@/lib/api";
+import { isNotFound } from "@/lib/api";
 
 export const metadata: Metadata = { title: "Athlete | Kheun Lift" };
 
@@ -26,8 +26,7 @@ export default function UserPage({ params }: { params: Promise<{ id: string }> }
 async function UserProfile({ id }: { id: string }) {
   const [me, user, lifts] = await Promise.all([getMe(), getUser(id), getUserLifts(id)]).catch(
     (error) => {
-      // Go answers 400 for a bad id and 404 for a missing user.
-      if (error instanceof ApiError && [400, 404].includes(error.status)) notFound();
+      if (isNotFound(error)) notFound();
       throw error;
     },
   );

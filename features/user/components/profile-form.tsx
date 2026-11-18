@@ -4,7 +4,7 @@ import { useId, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Field } from "@/components/ui/field";
 import { SpinnerIcon } from "@/components/ui/spinner";
-import type { Variant } from "@/components/ui/modal";
+import { leave, type Variant } from "@/components/ui/modal";
 import { errorMessage } from "@/lib/api";
 import { updateMe, type UpdateMeInput } from "../api";
 import type { User } from "../types";
@@ -42,19 +42,8 @@ export function ProfileForm({
   const [pending, setPending] = useState(false);
   const values = initial(user);
 
-  function leave() {
-    switch (variant) {
-      case "modal":
-        return router.back();
-      case "page":
-        return router.push("/profile");
-      case "inline":
-        return;
-      default: {
-        const _exhaustive: never = variant;
-        return _exhaustive;
-      }
-    }
+  function close() {
+    if (variant !== "inline") leave(router, variant, "/profile");
   }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -67,7 +56,7 @@ export function ProfileForm({
       if (value && value !== values[key])
         body[key] = NUMBER_KEYS.has(key) ? Number(value) : value;
     }
-    if (Object.keys(body).length === 0) return leave();
+    if (Object.keys(body).length === 0) return close();
 
     setPending(true);
     setError("");
@@ -75,7 +64,7 @@ export function ProfileForm({
       await updateMe(body);
       // cacheComponents keeps this form mounted and hidden after the user leaves, so reset it.
       setPending(false);
-      leave();
+      close();
       // Re-run server components so getMe() returns the new profile.
       router.refresh();
     } catch (err) {

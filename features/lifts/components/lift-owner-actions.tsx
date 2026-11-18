@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { Avatar } from "@/components/ui/avatar";
 import { Icon } from "@/components/ui/icon";
 import { SpinnerIcon } from "@/components/ui/spinner";
-import type { Variant } from "@/components/ui/modal";
+import { leave, type Variant } from "@/components/ui/modal";
 import { errorMessage } from "@/lib/api";
 import { deleteLift, updateLiftCaption } from "../api";
 import { formatLiftDate } from "../format-date";
@@ -77,18 +77,7 @@ export function LiftOwnerActions({
     setOpen(false);
     if (!confirm("Delete this lift? This cannot be undone.")) return;
     if (!(await run("delete", () => deleteLift(lift.id)))) return;
-    switch (variant) {
-      case "modal":
-        router.back();
-        break;
-      case "page":
-        router.replace("/profile");
-        break;
-      default: {
-        const _exhaustive: never = variant;
-        void _exhaustive;
-      }
-    }
+    leave(router, variant, "/profile");
     router.refresh();
   }
 

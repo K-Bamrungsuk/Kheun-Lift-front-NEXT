@@ -4,7 +4,7 @@ import { useId, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Icon } from "@/components/ui/icon";
 import { SpinnerIcon } from "@/components/ui/spinner";
-import type { Variant } from "@/components/ui/modal";
+import { leave, type Variant } from "@/components/ui/modal";
 import { errorMessage } from "@/lib/api";
 import { createLift } from "../api";
 import type { Exercise } from "../types";
@@ -43,18 +43,7 @@ export function LogLiftFields({
       // cacheComponents keeps this form mounted and hidden after the user leaves, so reset it.
       setPending(false);
       formElement.reset();
-      switch (variant) {
-        case "modal":
-          router.back();
-          break;
-        case "page":
-          router.push("/dashboard");
-          break;
-        default: {
-          const _exhaustive: never = variant;
-          void _exhaustive;
-        }
-      }
+      leave(router, variant, "/dashboard");
       // Re-run server components so the new lift shows up.
       router.refresh();
     } catch (err) {
@@ -139,11 +128,8 @@ export function LogLiftFields({
         />
       </div>
       <div>
-        <label
-          htmlFor={`${uid}caption`}
-          className="flex justify-between gap-2 text-sm text-muted"
-        >
-          <span>Notes &amp; context</span>
+        <label htmlFor={`${uid}caption`} className="text-sm text-muted">
+          Notes &amp; context
         </label>
         <textarea
           id={`${uid}caption`}

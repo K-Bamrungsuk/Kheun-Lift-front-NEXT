@@ -7,6 +7,20 @@ import { Icon } from "./icon";
 // Where a shared form or detail is shown: inside the intercepted modal or as the full page.
 export type Variant = "modal" | "page";
 
+// After a shared form finishes: the modal goes back, the full page replaces itself with href.
+export function leave(router: ReturnType<typeof useRouter>, variant: Variant, href: string) {
+  switch (variant) {
+    case "modal":
+      return router.back();
+    case "page":
+      return router.replace(href);
+    default: {
+      const _exhaustive: never = variant;
+      return _exhaustive;
+    }
+  }
+}
+
 export function Modal({
   labelledBy,
   wide = false,
