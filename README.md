@@ -33,13 +33,12 @@ Run `npm install` and `npm run dev`, then open http://localhost:3002.
 
 The design comes from the Home, Log Lift, Profile and Leaderboard screens in
 the Kheun Lift Redesign Stitch project, id `12812117071399498758`. Navy surfaces,
-muted gold accents, compact cards, monospaced metrics, and bottom navigation
-follow the mobile reference, with a wider layout for desktop.
+muted gold accents, compact cards and bottom navigation follow the mobile
+reference, with a wider layout for desktop.
 
-Colors and font stacks are defined in `app/globals.css`, using Tailwind utilities.
-The font stacks use Plus Jakarta Sans and JetBrains Mono when installed, with
-Segoe UI / sans-serif and Consolas / monospace fallbacks. The app loads no
-external font and adds no dependency for fonts.
+Colors and the font are in `app/globals.css`. The app uses IBM Plex Sans Thai
+from `next/font/google`, one family for Latin and Thai text, with Segoe UI and
+sans-serif as fallbacks.
 
 ## Checks
 

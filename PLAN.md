@@ -1,4 +1,4 @@
-# Kheun Lift — แผน Frontend (Next.js)
+# Kheun Lift แผน Frontend (Next.js)
 
 การตัดสินใจ, สถาปัตยกรรม และ endpoint อยู่ในแผนหลัก [`../kheun-lift-backend-go/PLAN.md`](../kheun-lift-backend-go/PLAN.md) (เลข Phase ตรงกัน)
 
@@ -23,7 +23,7 @@
 
 ---
 
-## Phase 1 — Deploy
+## Phase 1: Deploy
 
 - [ ] Vercel + `NEXT_PUBLIC_API_URL=https://api.<domain>` (ตั้งก่อน build เพราะค่าฝังตอน build)
   - ⚠ preview URL `*.vercel.app` login ไม่ได้ ต้องทดสอบบน app.<domain>
@@ -39,7 +39,7 @@
 
 **เสร็จเมื่อ:** สมัคร → login → กรอกโปรไฟล์ → ส่ง lift → เห็นใน profile บน app.<domain>
 
-## Phase 2 — หน้า /admin
+## Phase 2: หน้า /admin
 
 - [ ] กันคนที่ไม่ใช่ admin ด้วย `notFound()` (ความปลอดภัยจริงอยู่ที่ Go)
 - [ ] tab Pending / Verified / Rejected, การ์ดมีวิดีโอฝัง (`lib/youtube.ts`), ปุ่ม Load more
@@ -48,28 +48,28 @@
 
 **เสร็จเมื่อ:** admin verify แล้ว lift ขึ้น leaderboard
 
-## Phase 3 — ผลจาก AI
+## Phase 3: ผลจาก AI
 
 - [ ] การ์ด admin แสดงธง + ความเห็นของ AI, เรียงอันที่ติดธงขึ้นก่อน
 
-## Phase 4 — Achievement
+## Phase 4: Achievement
 
 - [ ] grid badge ในหน้า profile: ได้แล้ว = สีทอง, ยังไม่ได้ = จาง + บอกเงื่อนไข
 
-## Phase 5 — Forgot password + Google
+## Phase 5: Forgot password + Google
 
 - [ ] `/forgot-password` ตอบข้อความเดิมเสมอ → `/reset-password` (รหัส 6 หลัก, `autoComplete="one-time-code"`, ส่งใหม่ได้หลัง 60 วิ)
 - [ ] ปุ่ม Google เป็น `<a>` ไปที่ `${API}/auth/google`, แสดง error จาก `?error=google`
 
-## Phase 6 — Feed + Like + Comment
+## Phase 6: Feed + Like + Comment
 
 - [ ] `/feed` หน้าแรกจาก server, หน้าถัดไปโหลดเองด้วย IntersectionObserver + ปุ่ม Load more สำรอง
 - [ ] like แบบ optimistic → ใช้ค่าที่ Go ตอบกลับ, `aria-pressed`
-- [ ] `/lifts/[id]` วิดีโอ + comment (1–500 ตัว, ลบได้เฉพาะของตัวเองหรือ admin)
+- [ ] `/lifts/[id]` วิดีโอ + comment (1 ถึง 500 ตัว, ลบได้เฉพาะของตัวเองหรือ admin)
   - ✅ หน้า + modal + วิดีโอ YouTube (`lib/youtube.ts`) แล้ว, เหลือ comment (รอ Go)
 - [x] `/users/[id]` โปรไฟล์คนอื่น, กดชื่อจาก leaderboard มาได้ (feed ยังไม่มี), id ตัวเอง → `/profile`
 
-## Phase 7 — Notification
+## Phase 7: Notification
 
 - [ ] กระดิ่งถามจำนวนทุก 60 วิ (หยุดเมื่อแท็บถูกซ่อน), เกิน 9 แสดง "9+"
 - [ ] `/notifications` สร้างข้อความจาก `type` + `data`, type ที่ไม่รู้จักไม่แสดง

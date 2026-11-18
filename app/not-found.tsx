@@ -8,7 +8,7 @@ export default function NotFound() {
       </p>
       <h1 className="text-3xl font-black">This page is out of reach.</h1>
       <p className="text-sm text-muted">
-        Let’s get you back to your training space.
+        Go back to your training space.
       </p>
       <Link
         className="rounded-xl bg-accent px-5 py-3 font-bold text-background hover:bg-accent/90"

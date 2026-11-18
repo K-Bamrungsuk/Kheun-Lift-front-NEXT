@@ -1,6 +1,6 @@
 @AGENTS.md
 
-# Kheun Lift — Next.js frontend
+# Kheun Lift Next.js frontend
 
 Powerlifting leaderboard app. Users log Squat / Bench / Deadlift lifts with a
 video link. Lifts are ranked by exercise and weight class, and only `verified`
@@ -20,7 +20,7 @@ Sibling folders under `../` (each its own git repo):
 | `../Kheun-Lift-frontend` | Old bootcamp frontend (React, Vite, zustand), **reference only** |
 
 - The main plan is `../kheun-lift-backend-go/PLAN.md` (decisions,
-  architecture, backend tasks by Phase 1–7). `PLAN.md` here holds frontend
+  architecture, backend tasks by Phase 1 to 7). `PLAN.md` here holds frontend
   tasks with the same Phase numbers. Tick tasks as they are done.
 - Do not edit the two old repos unless the user asks. Use them to see how
   features worked before.
