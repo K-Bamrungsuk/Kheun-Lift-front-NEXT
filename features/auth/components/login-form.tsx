@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { errorMessage } from "@/lib/api";
 import { login } from "../api";
 import { Field } from "@/components/ui/field";
+import { SpinnerIcon } from "@/components/ui/spinner";
 
 export function LoginForm() {
   const router = useRouter();
@@ -47,9 +48,9 @@ export function LoginForm() {
       <button
         type="submit"
         disabled={pending}
-        className="flex min-h-12 w-full items-center justify-center rounded-xl bg-accent px-4 font-semibold text-background disabled:opacity-60"
+        className="flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-accent px-4 font-semibold text-background disabled:opacity-60"
       >
-        {pending ? "Logging in..." : "Log in"}
+        {pending ? <><SpinnerIcon /><span className="sr-only">Logging in</span></> : "Log in"}
       </button>
     </form>
   );

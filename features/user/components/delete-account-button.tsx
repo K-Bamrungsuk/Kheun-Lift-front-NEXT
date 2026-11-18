@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { SpinnerIcon } from "@/components/ui/spinner";
 import { errorMessage } from "@/lib/api";
 import { deleteMe } from "../api";
 
@@ -31,9 +32,9 @@ export function DeleteAccountButton() {
       type="button"
       onClick={handleClick}
       disabled={pending}
-      className="min-h-11 w-full rounded-xl px-4 text-sm text-red-400 transition-colors hover:bg-red-400/10 disabled:opacity-60"
+      className="flex min-h-11 w-full items-center justify-center gap-2 rounded-xl px-4 text-sm text-red-400 transition-colors hover:bg-red-400/10 disabled:opacity-60"
     >
-      {pending ? "Deleting..." : "Delete account"}
+      {pending ? <><SpinnerIcon /><span className="sr-only">Deleting</span></> : "Delete account"}
     </button>
   );
 }

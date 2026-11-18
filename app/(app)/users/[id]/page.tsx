@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import { Spinner } from "@/components/ui/spinner";
 import { notFound, redirect } from "next/navigation";
 import { Avatar } from "@/components/ui/avatar";
 import { Icon } from "@/components/ui/icon";
@@ -14,7 +15,7 @@ export const metadata: Metadata = { title: "Athlete | Kheun Lift" };
 
 export default function UserPage({ params }: { params: Promise<{ id: string }> }) {
   return (
-    <Suspense fallback={<p className="text-sm text-muted">Loading...</p>}>
+    <Suspense fallback={<Spinner />}>
       {params.then(({ id }) => (
         <UserProfile id={id} />
       ))}

@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import { Spinner } from "@/components/ui/spinner";
 import type { Variant } from "@/components/ui/modal";
 import { getMe } from "../api-server";
 import { ProfilePictureForm } from "./profile-picture-form";
@@ -15,7 +16,7 @@ export function ProfilePicture({ variant }: { variant: Variant }) {
       <h2 id="picture-title" className="mb-5 text-lg font-semibold">
         Profile picture
       </h2>
-      <Suspense fallback={<p className="text-sm text-muted">Loading...</p>}>
+      <Suspense fallback={<Spinner />}>
         <ProfilePictureLoader variant={variant} />
       </Suspense>
     </section>

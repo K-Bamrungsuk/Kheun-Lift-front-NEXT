@@ -3,6 +3,7 @@
 import { useId, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Icon } from "@/components/ui/icon";
+import { SpinnerIcon } from "@/components/ui/spinner";
 import type { Variant } from "@/components/ui/modal";
 import { errorMessage } from "@/lib/api";
 import { createLift } from "../api";
@@ -164,8 +165,8 @@ export function LogLiftFields({
           disabled={pending}
           className="flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-accent px-4 font-semibold text-background disabled:opacity-60"
         >
-          <Icon name="shieldCheck" />
-          {pending ? "Submitting..." : "Submit lift"}
+          {pending ? <SpinnerIcon className="size-5" /> : <Icon name="shieldCheck" />}
+          {pending ? <span className="sr-only">Submitting</span> : "Submit lift"}
         </button>
       </div>
     </form>

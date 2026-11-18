@@ -3,6 +3,7 @@
 import { useId, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Field } from "@/components/ui/field";
+import { SpinnerIcon } from "@/components/ui/spinner";
 import type { Variant } from "@/components/ui/modal";
 import { errorMessage } from "@/lib/api";
 import { updateMe, type UpdateMeInput } from "../api";
@@ -150,9 +151,9 @@ export function ProfileForm({
       <button
         type="submit"
         disabled={pending}
-        className="flex min-h-12 w-full items-center justify-center rounded-xl bg-accent px-4 font-semibold text-background disabled:opacity-60 sm:col-span-2"
+        className="flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-accent px-4 font-semibold text-background disabled:opacity-60 sm:col-span-2"
       >
-        {pending ? "Saving..." : "Save profile"}
+        {pending ? <><SpinnerIcon /><span className="sr-only">Saving</span></> : "Save profile"}
       </button>
     </form>
   );

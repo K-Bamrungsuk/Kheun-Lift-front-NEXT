@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import { Spinner } from "@/components/ui/spinner";
 import type { Variant } from "@/components/ui/modal";
 import { getMe } from "../api-server";
 import { ProfileForm } from "./profile-form";
@@ -14,7 +15,7 @@ export function EditProfile({ variant }: { variant: Variant }) {
       <h2 id="edit-profile-title" className="mb-5 text-lg font-semibold">
         Edit profile
       </h2>
-      <Suspense fallback={<p className="text-sm text-muted">Loading...</p>}>
+      <Suspense fallback={<Spinner />}>
         <EditProfileForm variant={variant} />
       </Suspense>
     </section>
