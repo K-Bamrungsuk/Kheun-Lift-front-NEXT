@@ -13,7 +13,7 @@ import type { User } from "../types";
 const MAX_SIZE = 2 * 1024 * 1024;
 
 const buttonClass =
-  "flex min-h-12 min-w-0 flex-1 items-center justify-center gap-2 rounded-xl px-4 disabled:opacity-60";
+  "flex min-h-12 min-w-0 flex-1 items-center justify-center rounded-xl px-4 disabled:opacity-60";
 const primaryClass = `${buttonClass} bg-accent font-semibold text-background`;
 const secondaryClass = `${buttonClass} border border-border text-sm transition-colors`;
 
@@ -112,7 +112,7 @@ export function ProfilePictureForm({
               disabled={pending}
               className={primaryClass}
             >
-              {pending ? <><SpinnerIcon /><span className="sr-only">Uploading</span></> : "Apply"}
+              {pending ? <SpinnerIcon label="Uploading" /> : "Apply"}
             </button>
             <button
               type="button"
@@ -145,7 +145,7 @@ export function ProfilePictureForm({
                 disabled={pending}
                 className={`${secondaryClass} text-red-400 hover:bg-red-400/10`}
               >
-                {pending ? <><SpinnerIcon /><span className="sr-only">Removing</span></> : "Remove picture"}
+                {pending ? <SpinnerIcon label="Removing" /> : "Remove picture"}
               </button>
             )}
           </>

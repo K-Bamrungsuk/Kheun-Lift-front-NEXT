@@ -151,9 +151,9 @@ export function ProfileForm({
       <button
         type="submit"
         disabled={pending}
-        className="flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-accent px-4 font-semibold text-background disabled:opacity-60 sm:col-span-2"
+        className="flex min-h-12 w-full items-center justify-center rounded-xl bg-accent px-4 font-semibold text-background disabled:opacity-60 sm:col-span-2"
       >
-        {pending ? <><SpinnerIcon /><span className="sr-only">Saving</span></> : "Save profile"}
+        {pending ? <SpinnerIcon label="Saving" /> : "Save profile"}
       </button>
     </form>
   );

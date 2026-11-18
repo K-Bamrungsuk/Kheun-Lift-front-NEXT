@@ -189,9 +189,9 @@ export function LiftOwnerActions({
               <button
                 type="submit"
                 disabled={pending !== null}
-                className="flex min-h-11 flex-1 items-center justify-center gap-2 rounded-xl bg-accent px-4 font-semibold text-background disabled:opacity-60"
+                className="flex min-h-11 flex-1 items-center justify-center rounded-xl bg-accent px-4 font-semibold text-background disabled:opacity-60"
               >
-                {pending === "save" ? <><SpinnerIcon /><span className="sr-only">Saving</span></> : "Save"}
+                {pending === "save" ? <SpinnerIcon label="Saving" /> : "Save"}
               </button>
               <button
                 type="button"
@@ -217,8 +217,7 @@ export function LiftOwnerActions({
       <div className="space-y-4 border-t border-border pt-5">{children}</div>
       {pending === "delete" && (
         <p role="status" className="flex justify-center text-muted">
-          <SpinnerIcon className="size-5" />
-          <span className="sr-only">Deleting</span>
+          <SpinnerIcon className="size-5" label="Deleting" />
         </p>
       )}
       {error && (

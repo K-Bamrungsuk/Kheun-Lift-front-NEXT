@@ -32,9 +32,9 @@ export function DeleteAccountButton() {
       type="button"
       onClick={handleClick}
       disabled={pending}
-      className="flex min-h-11 w-full items-center justify-center gap-2 rounded-xl px-4 text-sm text-red-400 transition-colors hover:bg-red-400/10 disabled:opacity-60"
+      className="flex min-h-11 w-full items-center justify-center rounded-xl px-4 text-sm text-red-400 transition-colors hover:bg-red-400/10 disabled:opacity-60"
     >
-      {pending ? <><SpinnerIcon /><span className="sr-only">Deleting</span></> : "Delete account"}
+      {pending ? <SpinnerIcon label="Deleting" /> : "Delete account"}
     </button>
   );
 }

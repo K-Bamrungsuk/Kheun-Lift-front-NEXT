@@ -42,8 +42,8 @@ export function RegisterForm() {
       <Field id="email" label="Email" type="email" autoComplete="email" />
       <Field id="password" label="Password (at least 6 characters)" type="password" autoComplete="new-password" minLength={6} />
       {error && <p role="alert" className="text-sm text-red-400">{error}</p>}
-      <button type="submit" disabled={pending} className="flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-accent px-4 font-semibold text-background disabled:opacity-60">
-        {pending ? <><SpinnerIcon /><span className="sr-only">Creating account</span></> : "Create account"}
+      <button type="submit" disabled={pending} className="flex min-h-12 w-full items-center justify-center rounded-xl bg-accent px-4 font-semibold text-background disabled:opacity-60">
+        {pending ? <SpinnerIcon label="Creating account" /> : "Create account"}
       </button>
     </form>
   );

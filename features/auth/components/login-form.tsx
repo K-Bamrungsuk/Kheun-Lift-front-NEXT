@@ -48,9 +48,9 @@ export function LoginForm() {
       <button
         type="submit"
         disabled={pending}
-        className="flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-accent px-4 font-semibold text-background disabled:opacity-60"
+        className="flex min-h-12 w-full items-center justify-center rounded-xl bg-accent px-4 font-semibold text-background disabled:opacity-60"
       >
-        {pending ? <><SpinnerIcon /><span className="sr-only">Logging in</span></> : "Log in"}
+        {pending ? <SpinnerIcon label="Logging in" /> : "Log in"}
       </button>
     </form>
   );

@@ -165,8 +165,7 @@ export function LogLiftFields({
           disabled={pending}
           className="flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-accent px-4 font-semibold text-background disabled:opacity-60"
         >
-          {pending ? <SpinnerIcon className="size-5" /> : <Icon name="shieldCheck" />}
-          {pending ? <span className="sr-only">Submitting</span> : "Submit lift"}
+          {pending ? <SpinnerIcon className="size-5" label="Submitting" /> : <><Icon name="shieldCheck" />Submit lift</>}
         </button>
       </div>
     </form>

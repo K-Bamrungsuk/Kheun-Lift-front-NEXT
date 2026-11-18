@@ -29,8 +29,8 @@ export function LogoutButton({ className = "" }: { className?: string }) {
   }
 
   return (
-    <button type="button" onClick={handleClick} disabled={pending} className={`flex min-h-11 items-center justify-center gap-2 rounded-xl border border-border px-4 text-sm text-muted transition-colors hover:bg-surface-high hover:text-foreground disabled:opacity-60 ${className}`}>
-      {pending ? <><SpinnerIcon /><span className="sr-only">Logging out</span></> : "Log out"}
+    <button type="button" onClick={handleClick} disabled={pending} className={`flex min-h-11 items-center justify-center rounded-xl border border-border px-4 text-sm text-muted transition-colors hover:bg-surface-high hover:text-foreground disabled:opacity-60 ${className}`}>
+      {pending ? <SpinnerIcon label="Logging out" /> : "Log out"}
     </button>
   );
 }
