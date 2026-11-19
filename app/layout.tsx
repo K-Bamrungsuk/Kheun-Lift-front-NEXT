@@ -15,10 +15,13 @@ export const metadata: Metadata = {
     "Track your lifts, celebrate personal records, and find your place on the leaderboard.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children, modal }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`h-full antialiased ${plex.variable}`}>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {children}
+        {modal}
+      </body>
     </html>
   );
 }

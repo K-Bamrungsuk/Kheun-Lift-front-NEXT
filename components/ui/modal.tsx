@@ -4,6 +4,8 @@ import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Icon } from "./icon";
 
+const OPEN_MODAL = "open-modal";
+
 const CloseModal = createContext<(() => void) | null>(null);
 
 // null outside a modal, so a form can tell whether it was opened in one.
@@ -18,7 +20,22 @@ type DialogProps = {
 // For an intercepted route: closing goes back to the page underneath.
 export function Modal(props: DialogProps) {
   const router = useRouter();
+  // A refresh skips this cleanup, so the key left behind tells the full page it was a modal.
+  useEffect(() => {
+    sessionStorage.setItem(OPEN_MODAL, location.pathname);
+    return () => sessionStorage.removeItem(OPEN_MODAL);
+  }, []);
   return <Dialog {...props} onClose={() => router.back()} />;
+}
+
+export function CloseOnReload({ children }: { children: React.ReactNode }) {
+  const router = useRouter();
+  useEffect(() => {
+    if (sessionStorage.getItem(OPEN_MODAL) !== location.pathname) return;
+    sessionStorage.removeItem(OPEN_MODAL);
+    router.back();
+  }, [router]);
+  return children;
 }
 
 // For a form without its own URL, so a refresh simply closes it.
