@@ -37,7 +37,7 @@ export function LogLiftFields({
         reps: Number(form.get("reps")),
         videoUrl: String(form.get("videoUrl")).trim(),
         // Go stores what it gets, so the form does not send an empty caption.
-        ...(caption && { caption }),
+        caption: caption || undefined,
       });
       // cacheComponents keeps this form mounted and hidden after the user leaves, so reset it.
       setPending(false);

@@ -7,6 +7,7 @@ import {
   getWeightClasses,
 } from "@/features/leaderboard/api-server";
 import { getExercises } from "@/features/lifts/api-server";
+import type { LeaderboardEntry } from "@/features/leaderboard/types";
 import { getMe } from "@/features/user/api-server";
 import { isNotFound } from "@/lib/api";
 
@@ -179,82 +180,11 @@ export default async function LeaderboardPage({
             No verified lifts yet for this exercise and class.
           </p>
         ) : (
-          <div className="overflow-hidden rounded-xl border border-border/60 bg-surface">
-            <table className="w-full text-left text-sm">
-              <caption className="sr-only">
-                {exercise.name} rankings for {className}
-              </caption>
-              <thead className="border-b border-border bg-surface-low text-[10px] uppercase tracking-widest text-muted">
-                <tr>
-                  <th
-                    scope="col"
-                    className="w-16 px-3 py-4 font-medium md:px-5"
-                  >
-                    Rank
-                  </th>
-                  <th scope="col" className="px-3 py-4 font-medium md:px-5">
-                    Athlete
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-3 py-4 text-right font-medium md:px-5"
-                  >
-                    Best lift
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border">
-                {entries.map((entry) => (
-                  <tr
-                    key={entry.id}
-                    className={entry.userId === me.id ? "bg-accent/10" : ""}
-                  >
-                    <td className="px-3 py-5 tabular-nums md:px-5">
-                      <span
-                        className={`grid size-8 place-items-center rounded-full text-xs font-semibold ${rankStyle(entry.rank)}`}
-                      >
-                        {String(entry.rank).padStart(2, "0")}
-                      </span>
-                    </td>
-                    <th
-                      scope="row"
-                      className={`px-3 py-5 md:px-5 ${entry.rank <= 3 ? "font-bold" : "font-medium"}`}
-                    >
-                      <Link
-                        href={entry.userId === me.id ? "/profile" : `/users/${entry.userId}`}
-                        className="break-all underline-offset-4 hover:underline"
-                      >
-                        {entry.user.username}
-                      </Link>
-                      {entry.rank === 1 && (
-                        <Icon
-                          name="trophy"
-                          className="ml-2 inline size-4 text-accent"
-                        />
-                      )}
-                      {entry.userId === me.id && (
-                        <span className="ml-2 rounded bg-surface-high px-1.5 py-1 text-[9px] uppercase text-accent">
-                          You
-                        </span>
-                      )}
-                    </th>
-                    <td
-                      className={`whitespace-nowrap px-3 py-5 text-right text-base tabular-nums md:px-5 ${entry.rank <= 3 ? "font-bold" : ""}`}
-                    >
-                      <Link
-                        href={`/lifts/${entry.id}`}
-                        aria-label={`${entry.weight} kg lift by ${entry.user.username}`}
-                        className="underline-offset-4 hover:underline"
-                      >
-                        {entry.weight}
-                        <span className="ml-1 text-xs text-muted">kg</span>
-                      </Link>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <RankingTable
+            entries={entries}
+            meId={me.id}
+            caption={`${exercise.name} rankings for ${className}`}
+          />
         )}
         <aside className="flex items-start gap-3 rounded-xl bg-surface-low p-4 text-sm leading-6 text-muted">
           <Icon
@@ -268,5 +198,81 @@ export default async function LeaderboardPage({
         </aside>
       </section>
     </>
+  );
+}
+
+function RankingTable({
+  entries,
+  meId,
+  caption,
+}: {
+  entries: LeaderboardEntry[];
+  meId: number;
+  caption: string;
+}) {
+  return (
+    <div className="overflow-hidden rounded-xl border border-border/60 bg-surface">
+      <table className="w-full text-left text-sm">
+        <caption className="sr-only">{caption}</caption>
+        <thead className="border-b border-border bg-surface-low text-[10px] uppercase tracking-widest text-muted">
+          <tr>
+            <th scope="col" className="w-16 px-3 py-4 font-medium md:px-5">
+              Rank
+            </th>
+            <th scope="col" className="px-3 py-4 font-medium md:px-5">
+              Athlete
+            </th>
+            <th scope="col" className="px-3 py-4 text-right font-medium md:px-5">
+              Best lift
+            </th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-border">
+          {entries.map((entry) => {
+            const isMe = entry.userId === meId;
+            const isTop3 = entry.rank <= 3;
+            return (
+              <tr key={entry.id} className={isMe ? "bg-accent/10" : ""}>
+                <td className="px-3 py-5 tabular-nums md:px-5">
+                  <span
+                    className={`grid size-8 place-items-center rounded-full text-xs font-semibold ${rankStyle(entry.rank)}`}
+                  >
+                    {String(entry.rank).padStart(2, "0")}
+                  </span>
+                </td>
+                <th scope="row" className={`px-3 py-5 md:px-5 ${isTop3 ? "font-bold" : "font-medium"}`}>
+                  <Link
+                    href={isMe ? "/profile" : `/users/${entry.userId}`}
+                    className="break-all underline-offset-4 hover:underline"
+                  >
+                    {entry.user.username}
+                  </Link>
+                  {entry.rank === 1 && (
+                    <Icon name="trophy" className="ml-2 inline size-4 text-accent" />
+                  )}
+                  {isMe && (
+                    <span className="ml-2 rounded bg-surface-high px-1.5 py-1 text-[9px] uppercase text-accent">
+                      You
+                    </span>
+                  )}
+                </th>
+                <td
+                  className={`whitespace-nowrap px-3 py-5 text-right text-base tabular-nums md:px-5 ${isTop3 ? "font-bold" : ""}`}
+                >
+                  <Link
+                    href={`/lifts/${entry.id}`}
+                    aria-label={`${entry.weight} kg lift by ${entry.user.username}`}
+                    className="underline-offset-4 hover:underline"
+                  >
+                    {entry.weight}
+                    <span className="ml-1 text-xs text-muted">kg</span>
+                  </Link>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
   );
 }
