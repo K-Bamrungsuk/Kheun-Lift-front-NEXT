@@ -83,8 +83,8 @@ The goal is code a new developer can read quickly. Keep each change small.
   `/login` and `isNotFound(error)` to a 404 page. Rethrow the rest so
   `app/error.tsx` shows them. Do not add a branch for each status.
 - **Types.** No `any`. Type data from outside as `unknown` and narrow it.
-  Avoid `as`; the one known exception is `data as T` in `lib/api.ts`, which
-  the zod task in `PLAN.md` replaces.
+  Avoid `as`. API types come from zod schemas in `features/*/types.ts`
+  (`z.infer`); every fetch passes its schema.
 - **Nesting.** Use early returns instead of nested `if`. When JSX nests more
   than about 5 levels, or one component holds several jobs, split out a
   component. Example: `lift-owner-actions.tsx` holds the menu, caption form
@@ -103,8 +103,8 @@ The goal is code a new developer can read quickly. Keep each change small.
   cookie from `cookies()` as a `Cookie` header. In production, Go sets the cookie
   `Domain` to `.<domain>` so `app.<domain>` also gets it.
 - Go endpoints match the old Express API: `/auth`, `/users`, `/exercises`,
-  `/lifts`, `/leaderboards`, `/weight-classes`. One difference: the
-  `/leaderboards/exercises/...` list returns `{message, data}`, not a bare array.
+  `/lifts`, `/leaderboards`, `/weight-classes`. Every success answer is
+  `{message, data}`; `request` returns the parsed `data`.
 - No endpoint exists yet to verify or reject lifts.
 - `PATCH /lifts/:id` edits a caption and `DELETE /lifts/:id` deletes a lift.
   The UI does not call them yet.

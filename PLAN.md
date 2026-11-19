@@ -10,7 +10,7 @@
 - อ่านข้อมูล: Server Component + `serverFetch` (ส่ง cookie ต่อให้ Go)
 - เขียนข้อมูล: Client Component + `clientFetch` (`credentials: "include"`)
 - login / register / forgot password: Client Component เท่านั้น
-- type ตรงกับ struct ฝั่ง Go, แสดง `message` จาก Go เมื่อ error
+- type มาจาก zod schema ใน `features/*/types.ts` (`z.infer`) ตรงกับ struct ฝั่ง Go, แสดง `message` จาก Go เมื่อ error
 - รูปโปรไฟล์ใช้ `<img>` ไม่ใช้ `next/image`
 - ปุ่มที่ส่ง request: ปิดปุ่มระหว่างรอ + มีข้อความ เช่น "Saving..."
 - รักษา accessibility: label, aria, focus ring, skip link
@@ -81,14 +81,14 @@
   - ตอนนี้หน้าเว็บกรองให้ (comment `shortcut:` ใน `lift-detail.tsx`, `users/[id]/page.tsx`) แต่เรียก API ตรงยังเห็น pending / rejected + ลิงก์วิดีโอ
   - แก้ Go แล้วลบ filter ฝั่งหน้าเว็บออกได้
 
-## Validate response จาก Go ด้วย zod (ทำแน่นอน, ก่อน Phase 3)
+## Validate response จาก Go ด้วย zod ✅
 
 ตอนนี้ `request` ใน `lib/api.ts` ทำ `data as T` คือเชื่อ type โดยไม่ตรวจ ถ้า Go เปลี่ยนรูปข้อมูล หน้าจะพังตอน render แทนที่จะพังตอนรับข้อมูล zod ติดตั้งแล้ว (`dependencies`)
 
-- [ ] `features/*/types.ts` เปลี่ยน `type` เป็น zod schema แล้วใช้ `z.infer` (user, lifts, leaderboard)
-- [ ] `request` / `serverFetch` / `clientFetch` รับ schema แล้ว `safeParse` ถ้าไม่ผ่านโยน `ApiError(502, ...)` เพื่อไม่ให้ขึ้นว่า "Cannot reach the server"
-- [ ] ส่ง schema ทุกจุดที่เรียก fetch (19 จุด) endpoint ที่ไม่ใช้ body ส่ง `z.unknown()`
-- [ ] เพิ่มในกติกา: type มาจาก zod schema ใน `types.ts`
+- [x] `features/*/types.ts` เปลี่ยน `type` เป็น zod schema แล้วใช้ `z.infer` (user, lifts, leaderboard)
+- [x] `request` / `serverFetch` / `clientFetch` รับ schema แล้ว `safeParse` ถ้าไม่ผ่านโยน `ApiError(502, ...)` เพื่อไม่ให้ขึ้นว่า "Cannot reach the server"
+- [x] ส่ง schema ทุกจุดที่เรียก fetch (19 จุด) endpoint ที่ไม่ใช้ body ส่ง `z.unknown()`
+- [x] เพิ่มในกติกา: type มาจาก zod schema ใน `types.ts`
 
 ## ค้างจากรีวิว TypeScript (optional)
 
