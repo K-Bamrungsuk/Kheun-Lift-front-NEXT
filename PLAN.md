@@ -19,7 +19,7 @@
 ## สถานะ (2026-11-18)
 
 - ✅ lib/api, กันหน้า login 2 ชั้น (`proxy.ts` + layout), login / register / logout, onboarding, dashboard, log lift, profile (แก้โปรไฟล์, ลบบัญชี), หน้า error, leaderboard, รูปโปรไฟล์, lift detail (แก้ caption / ลบ), โปรไฟล์คนอื่น
-- ✅ test ด้วย vitest (`npm test`), prop `variant: "modal" | "page"` แทน `after` (type อยู่ที่ `components/ui/modal.tsx`)
+- ✅ test ด้วย vitest (`npm test`), ฟอร์มใน modal ปิดด้วย `useCloseModal()` (`components/ui/modal.tsx`), edit profile / รูปโปรไฟล์ / log lift เป็น modal แบบ state (ไม่มี URL), lift detail ยังเป็น intercepting route
 
 ---
 

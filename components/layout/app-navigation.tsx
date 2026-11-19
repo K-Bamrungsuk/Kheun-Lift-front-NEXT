@@ -4,6 +4,7 @@ import { Fragment } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Icon } from "@/components/ui/icon";
+import { ModalButton } from "@/components/ui/modal";
 
 const navigation = [
   { name: "Home", href: "/dashboard", icon: "dumbbell" },
@@ -12,30 +13,40 @@ const navigation = [
   { name: "Profile", href: "/profile", icon: "user" },
 ] as const;
 
-export function AppNavigation({ mobile = false }: { mobile?: boolean }) {
+export function AppNavigation({
+  mobile = false,
+  logLift,
+}: {
+  mobile?: boolean;
+  logLift: React.ReactNode;
+}) {
   const pathname = usePathname();
   const addLiftLink = (
-    <Link
-      href="/log-lift"
-      aria-label="Log a lift"
-      aria-current={pathname === "/log-lift" ? "page" : undefined}
+    <ModalButton
+      label="Log a lift"
+      labelledBy="attempt-title"
       className={
         mobile
           ? "-mt-5 flex min-h-16 flex-col items-center gap-1 text-accent"
           : "ml-2 flex min-h-11 items-center gap-2 rounded-xl bg-accent px-4 text-sm font-semibold text-background transition-colors hover:bg-accent/90"
       }
+      trigger={
+        <>
+          <span
+            className={
+              mobile
+                ? "grid size-14 place-items-center rounded-full border-4 border-surface-low bg-accent text-background"
+                : ""
+            }
+          >
+            <Icon name="plus" className={mobile ? "size-7" : "size-5"} />
+          </span>
+          <span className={mobile ? "text-[11px]" : ""}>Log lift</span>
+        </>
+      }
     >
-      <span
-        className={
-          mobile
-            ? "grid size-14 place-items-center rounded-full border-4 border-surface-low bg-accent text-background"
-            : ""
-        }
-      >
-        <Icon name="plus" className={mobile ? "size-7" : "size-5"} />
-      </span>
-      <span className={mobile ? "text-[11px]" : ""}>Log lift</span>
-    </Link>
+      {logLift}
+    </ModalButton>
   );
 
   return (

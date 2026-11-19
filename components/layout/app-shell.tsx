@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Avatar } from "@/components/ui/avatar";
 import { Icon } from "@/components/ui/icon";
+import { LogLiftForm } from "@/features/lifts/components/log-lift-form";
 import type { User } from "@/features/user/types";
 import { AppNavigation } from "./app-navigation";
 
@@ -36,7 +37,7 @@ export function AppShell({
             </span>
           </Link>
           <div className="hidden md:flex">
-            <AppNavigation />
+            <AppNavigation logLift={<LogLiftForm />} />
           </div>
           <Link
             href="/profile"
@@ -55,7 +56,7 @@ export function AppShell({
       >
         {children}
       </main>
-      <AppNavigation mobile />
+      <AppNavigation mobile logLift={<LogLiftForm />} />
     </div>
   );
 }

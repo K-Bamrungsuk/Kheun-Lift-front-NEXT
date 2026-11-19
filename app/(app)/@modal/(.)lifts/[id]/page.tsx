@@ -8,7 +8,7 @@ export default function LiftModal({ params }: { params: Promise<{ id: string }> 
     <Modal labelledBy="lift-title" wide>
       <Suspense fallback={<Spinner />}>
         {params.then(({ id }) => (
-          <LiftDetail id={id} variant="modal" />
+          <LiftDetail id={id} />
         ))}
       </Suspense>
     </Modal>

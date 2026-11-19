@@ -1,17 +1,16 @@
 import { Panel } from "@/components/ui/panel";
-import type { Variant } from "@/components/ui/modal";
 import { getMe } from "../api-server";
 import { ProfilePictureForm } from "./profile-picture-form";
 
-export function ProfilePicture({ variant }: { variant: Variant }) {
+export function ProfilePicture() {
   return (
     <Panel id="picture-title" title="Profile picture">
-      <ProfilePictureLoader variant={variant} />
+      <ProfilePictureLoader />
     </Panel>
   );
 }
 
-async function ProfilePictureLoader({ variant }: { variant: Variant }) {
+async function ProfilePictureLoader() {
   const user = await getMe();
-  return <ProfilePictureForm user={user} variant={variant} />;
+  return <ProfilePictureForm user={user} />;
 }

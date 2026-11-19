@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Avatar } from "@/components/ui/avatar";
 import { SpinnerIcon } from "@/components/ui/spinner";
-import { leave, type Variant } from "@/components/ui/modal";
+import { useCloseModal } from "@/components/ui/modal";
 import { errorMessage } from "@/lib/api";
 import { deleteLift, updateLiftCaption } from "../api";
 import { formatLiftDate } from "../format-date";
@@ -16,15 +16,14 @@ import { LiftMenu } from "./lift-menu";
 export function LiftOwnerActions({
   lift,
   isOwner,
-  variant,
   children,
 }: {
   lift: LiftRecord;
   isOwner: boolean;
-  variant: Variant;
   children: React.ReactNode;
 }) {
   const router = useRouter();
+  const close = useCloseModal();
   const [editing, setEditing] = useState(false);
   const [caption, setCaption] = useState(lift.caption);
   const [pending, setPending] = useState<"save" | "delete" | null>(null);
@@ -53,7 +52,8 @@ export function LiftOwnerActions({
     setError("");
     try {
       await deleteLift(lift.id);
-      leave(router, variant, "/profile");
+      if (close) close();
+      else router.replace("/profile");
       router.refresh();
     } catch (err) {
       setError(errorMessage(err));

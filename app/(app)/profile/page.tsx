@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Avatar } from "@/components/ui/avatar";
 import { Icon } from "@/components/ui/icon";
+import { ModalButton } from "@/components/ui/modal";
 import { LogoutButton } from "@/features/auth/components/logout-button";
 import { getMyLifts } from "@/features/lifts/api-server";
 import { LiftHistory } from "@/features/lifts/components/lift-history";
@@ -9,6 +9,8 @@ import { PersonalRecords } from "@/features/lifts/components/personal-records";
 import { getMe } from "@/features/user/api-server";
 import { AthleteStats } from "@/features/user/components/athlete-stats";
 import { DeleteAccountButton } from "@/features/user/components/delete-account-button";
+import { EditProfile } from "@/features/user/components/edit-profile";
+import { ProfilePicture } from "@/features/user/components/profile-picture";
 
 export const metadata: Metadata = { title: "Profile | Kheun Lift" };
 
@@ -29,24 +31,30 @@ export default async function ProfilePage() {
           aria-labelledby="athlete-title"
           className="relative rounded-xl bg-surface p-5 md:p-6"
         >
-          <Link
-            href="/profile/edit"
-            aria-label="Edit profile"
+          <ModalButton
+            label="Edit profile"
+            labelledBy="edit-profile-title"
             className="absolute right-3 top-3 grid size-11 place-items-center rounded-lg text-muted transition-colors hover:bg-surface-high hover:text-foreground border-2 rounded-xl border-gray-600"
+            trigger={<Icon name="pencil" className="size-5" />}
           >
-            <Icon name="pencil" className="size-5" />
-          </Link>
+            <EditProfile />
+          </ModalButton>
           <div className="flex items-center gap-4 pr-10">
-            <Link
-              href="/profile/picture"
-              aria-label="Change profile picture"
+            <ModalButton
+              label="Change profile picture"
+              labelledBy="picture-title"
               className="relative shrink-0 rounded-full"
+              trigger={
+                <>
+                  <Avatar src={user.profileImage} alt="" className="size-16" />
+                  <span className="absolute -bottom-0.5 -right-0.5 grid size-6 place-items-center rounded-full border-2 border-surface bg-accent text-background">
+                    <Icon name="camera" className="size-3.5" />
+                  </span>
+                </>
+              }
             >
-              <Avatar src={user.profileImage} alt="" className="size-16" />
-              <span className="absolute -bottom-0.5 -right-0.5 grid size-6 place-items-center rounded-full border-2 border-surface bg-accent text-background">
-                <Icon name="camera" className="size-3.5" />
-              </span>
-            </Link>
+              <ProfilePicture />
+            </ModalButton>
             <div className="min-w-0">
               <p className="text-[10px] uppercase tracking-widest text-muted">
                 Athlete profile

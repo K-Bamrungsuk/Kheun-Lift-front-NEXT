@@ -1,17 +1,16 @@
 import { Panel } from "@/components/ui/panel";
-import type { Variant } from "@/components/ui/modal";
 import { getMe } from "../api-server";
 import { ProfileForm } from "./profile-form";
 
-export function EditProfile({ variant }: { variant: Variant }) {
+export function EditProfile() {
   return (
     <Panel id="edit-profile-title" title="Edit profile">
-      <EditProfileForm variant={variant} />
+      <EditProfileForm />
     </Panel>
   );
 }
 
-async function EditProfileForm({ variant }: { variant: Variant }) {
+async function EditProfileForm() {
   const user = await getMe();
-  return <ProfileForm user={user} variant={variant} />;
+  return <ProfileForm user={user} />;
 }

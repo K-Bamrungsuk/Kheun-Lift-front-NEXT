@@ -4,7 +4,7 @@ import { useId, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Avatar } from "@/components/ui/avatar";
 import { SpinnerIcon } from "@/components/ui/spinner";
-import { leave, type Variant } from "@/components/ui/modal";
+import { useCloseModal } from "@/components/ui/modal";
 import { errorMessage } from "@/lib/api";
 import { deleteProfileImage, uploadProfileImage } from "../api";
 import type { User } from "../types";
@@ -18,16 +18,9 @@ const primaryClass = `${buttonClass} bg-accent font-semibold text-background`;
 const secondaryClass = `${buttonClass} border border-border text-sm transition-colors`;
 
 // Remove stays here to show the blank avatar.
-// shortcut: a pick left un-applied survives closing the modal, because cacheComponents keeps state. Reset it on close if users find it confusing.
-export function ProfilePictureForm({
-  user,
-  variant,
-}: {
-  user: User;
-  variant: Variant;
-}) {
+export function ProfilePictureForm({ user }: { user: User }) {
   const router = useRouter();
-  // Modal and full page can both stay mounted, so ids must be unique.
+  const close = useCloseModal();
   const hintId = useId();
   const [error, setError] = useState("");
   const [picked, setPicked] = useState<{ file: File; url: string } | null>(null);
@@ -59,7 +52,7 @@ export function ProfilePictureForm({
         // Clear the pick in the same transition as the refresh, so the preview never flashes the old image.
         startTransition(() => {
           clearPick();
-          if (done) leave(router, variant, "/profile");
+          if (done) close?.();
           router.refresh();
         });
       } catch (err) {

@@ -11,7 +11,7 @@ export default function LiftPage({ params }: { params: Promise<{ id: string }> }
     <div className="mx-auto w-full max-w-2xl">
       <Suspense fallback={<Spinner />}>
         {params.then(({ id }) => (
-          <LiftDetail id={id} variant="page" />
+          <LiftDetail id={id} />
         ))}
       </Suspense>
     </div>

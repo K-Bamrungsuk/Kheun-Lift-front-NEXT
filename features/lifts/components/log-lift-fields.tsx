@@ -4,28 +4,21 @@ import { useId, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Icon } from "@/components/ui/icon";
 import { SpinnerIcon } from "@/components/ui/spinner";
-import { leave, type Variant } from "@/components/ui/modal";
+import { useCloseModal } from "@/components/ui/modal";
 import { errorMessage } from "@/lib/api";
 import { createLift } from "../api";
 import type { Exercise } from "../types";
 
-export function LogLiftFields({
-  exercises,
-  variant,
-}: {
-  exercises: Exercise[];
-  variant: Variant;
-}) {
+export function LogLiftFields({ exercises }: { exercises: Exercise[] }) {
   const router = useRouter();
-  // Modal and full page can both stay mounted, so ids must be unique.
+  const close = useCloseModal();
   const uid = useId();
   const [error, setError] = useState("");
   const [pending, setPending] = useState(false);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const formElement = event.currentTarget;
-    const form = new FormData(formElement);
+    const form = new FormData(event.currentTarget);
     const caption = String(form.get("caption")).trim();
 
     setPending(true);
@@ -39,10 +32,7 @@ export function LogLiftFields({
         // Go stores what it gets, so the form does not send an empty caption.
         caption: caption || undefined,
       });
-      // cacheComponents keeps this form mounted and hidden after the user leaves, so reset it.
-      setPending(false);
-      formElement.reset();
-      leave(router, variant, "/dashboard");
+      close?.();
       // Re-run server components so the new lift shows up.
       router.refresh();
     } catch (err) {

@@ -1,12 +1,11 @@
 import { notFound } from "next/navigation";
-import type { Variant } from "@/components/ui/modal";
 import { getMe } from "@/features/user/api-server";
 import { isNotFound } from "@/lib/api";
 import { youtubeEmbedUrl } from "@/lib/youtube";
 import { getLift } from "../api-server";
 import { LiftOwnerActions } from "./lift-owner-actions";
 
-export async function LiftDetail({ id, variant }: { id: string; variant: Variant }) {
+export async function LiftDetail({ id }: { id: string }) {
   const [me, lift] = await Promise.all([
     getMe(),
     getLift(id).catch((error) => {
@@ -21,11 +20,7 @@ export async function LiftDetail({ id, variant }: { id: string; variant: Variant
 
   return (
     <section aria-labelledby="lift-title" className="space-y-5 rounded-xl bg-surface p-5 md:p-7">
-      <LiftOwnerActions
-        lift={lift}
-        isOwner={isOwner}
-        variant={variant}
-      >
+      <LiftOwnerActions lift={lift} isOwner={isOwner}>
         <header>
           <h2 id="lift-title" className="text-xl font-semibold">
             {lift.exercise.name}

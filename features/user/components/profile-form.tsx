@@ -4,7 +4,7 @@ import { useId, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Field } from "@/components/ui/field";
 import { SpinnerIcon } from "@/components/ui/spinner";
-import { leave, type Variant } from "@/components/ui/modal";
+import { useCloseModal } from "@/components/ui/modal";
 import { errorMessage } from "@/lib/api";
 import { updateMe, type UpdateMeInput } from "../api";
 import type { User } from "../types";
@@ -27,23 +27,14 @@ const initial = (user: User) => ({
   dateOfBirth: user.dateOfBirth?.slice(0, 10) ?? "",
 });
 
-export function ProfileForm({
-  user,
-  variant,
-}: {
-  user: User;
-  variant: Variant | "inline";
-}) {
+export function ProfileForm({ user }: { user: User }) {
   const router = useRouter();
+  const close = useCloseModal();
   // Onboarding card and edit modal can be on the same page, so ids must be unique.
   const uid = useId();
   const [error, setError] = useState("");
   const [pending, setPending] = useState(false);
   const values = initial(user);
-
-  function close() {
-    if (variant !== "inline") leave(router, variant, "/profile");
-  }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -55,15 +46,14 @@ export function ProfileForm({
       if (value && value !== values[key])
         body[key] = NUMBER_KEYS.has(key) ? Number(value) : value;
     }
-    if (Object.keys(body).length === 0) return close();
+    if (Object.keys(body).length === 0) return close?.();
 
     setPending(true);
     setError("");
     try {
       await updateMe(body);
-      // cacheComponents keeps this form mounted and hidden after the user leaves, so reset it.
       setPending(false);
-      close();
+      close?.();
       // Re-run server components so getMe() returns the new profile.
       router.refresh();
     } catch (err) {
