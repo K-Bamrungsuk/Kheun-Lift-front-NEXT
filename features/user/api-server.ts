@@ -1,10 +1,8 @@
 import { cache } from "react";
 import { serverFetch } from "@/lib/api-server";
-import type { PublicUser, User } from "./types";
+import { publicUserSchema, userSchema } from "./types";
 
-export const getMe = cache(() =>
-  serverFetch<{ user: User }>("/users/me").then((res) => res.user),
-);
+export const getMe = cache(() => serverFetch("/users/me", userSchema));
 
 export const getUser = (id: string) =>
-  serverFetch<{ user: PublicUser }>(`/users/${encodeURIComponent(id)}`).then((res) => res.user);
+  serverFetch(`/users/${encodeURIComponent(id)}`, publicUserSchema);

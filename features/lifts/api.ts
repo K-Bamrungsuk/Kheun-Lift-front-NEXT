@@ -1,5 +1,6 @@
+import { z } from "zod";
 import { clientFetch } from "@/lib/api";
-import type { LiftRecord } from "./types";
+import { liftRecordSchema } from "./types";
 
 export type CreateLiftInput = {
   exerciseId: number;
@@ -10,16 +11,16 @@ export type CreateLiftInput = {
 };
 
 export const createLift = (body: CreateLiftInput) =>
-  clientFetch<{ data: LiftRecord }>("/lifts", {
+  clientFetch("/lifts", liftRecordSchema, {
     method: "POST",
     body: JSON.stringify(body),
   });
 
 export const updateLiftCaption = (id: number, caption: string) =>
-  clientFetch<{ data: LiftRecord }>(`/lifts/${id}`, {
+  clientFetch(`/lifts/${id}`, liftRecordSchema, {
     method: "PATCH",
     body: JSON.stringify({ caption }),
   });
 
 export const deleteLift = (id: number) =>
-  clientFetch(`/lifts/${id}`, { method: "DELETE" });
+  clientFetch(`/lifts/${id}`, z.unknown(), { method: "DELETE" });

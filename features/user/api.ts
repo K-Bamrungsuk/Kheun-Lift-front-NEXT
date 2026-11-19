@@ -1,5 +1,5 @@
+import { z } from "zod";
 import { clientFetch } from "@/lib/api";
-import type { User } from "./types";
 
 export type UpdateMeInput = Partial<
   Record<
@@ -9,23 +9,23 @@ export type UpdateMeInput = Partial<
 >;
 
 export const updateMe = (body: UpdateMeInput) =>
-  clientFetch<{ user: User }>("/users/me", {
+  clientFetch("/users/me", z.unknown(), {
     method: "PATCH",
     body: JSON.stringify(body),
   });
 
-export const deleteMe = () => clientFetch("/users/me", { method: "DELETE" });
+export const deleteMe = () => clientFetch("/users/me", z.unknown(), { method: "DELETE" });
 
 export function uploadProfileImage(file: File) {
   const body = new FormData();
   body.append("profileImage", file);
-  return clientFetch<{ user: User }>("/users/me/profile-image", {
+  return clientFetch("/users/me/profile-image", z.unknown(), {
     method: "POST",
     body,
   });
 }
 
 export const deleteProfileImage = () =>
-  clientFetch<{ message: string }>("/users/me/profile-image", {
+  clientFetch("/users/me/profile-image", z.unknown(), {
     method: "DELETE",
   });

@@ -36,8 +36,8 @@ export function LiftOwnerActions({
     setPending("save");
     setError("");
     try {
-      const { data } = await updateLiftCaption(lift.id, value);
-      setCaption(data.caption);
+      const updated = await updateLiftCaption(lift.id, value);
+      setCaption(updated.caption);
       setEditing(false);
       router.refresh();
     } catch (err) {

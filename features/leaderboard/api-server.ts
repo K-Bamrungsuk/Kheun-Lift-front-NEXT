@@ -1,6 +1,7 @@
+import { z } from "zod";
 import { serverFetch } from "@/lib/api-server";
-import type { WeightClass } from "@/features/user/types";
-import type { LeaderboardEntry, RandomLeaderboard } from "./types";
+import { weightClassSchema } from "@/features/user/types";
+import { leaderboardEntrySchema, randomLeaderboardSchema } from "./types";
 
 // weightClassId and gender come straight from the URL, and Go validates them with a 400 or 404 answer.
 export const getLeaderboard = ({
@@ -12,20 +13,20 @@ export const getLeaderboard = ({
   weightClassId?: string;
   gender?: string;
 }) =>
-  serverFetch<{ data: LeaderboardEntry[] }>(
+  serverFetch(
     `/leaderboards/exercises/${exerciseId}` +
       (weightClassId
         ? `/weight-classes/${encodeURIComponent(weightClassId)}`
         : "") +
       (gender ? `?gender=${encodeURIComponent(gender)}` : ""),
-  ).then((res) => res.data);
-
-export const getRandomLeaderboard = () =>
-  serverFetch<{ data: RandomLeaderboard | null }>("/leaderboards/random").then(
-    (res) => res.data,
+    z.array(leaderboardEntrySchema),
   );
 
+export const getRandomLeaderboard = () =>
+  serverFetch("/leaderboards/random", randomLeaderboardSchema.nullable());
+
 export const getWeightClasses = (gender: string) =>
-  serverFetch<{ data: WeightClass[] }>(
+  serverFetch(
     `/weight-classes?gender=${encodeURIComponent(gender)}`,
-  ).then((res) => res.data);
+    z.array(weightClassSchema),
+  );

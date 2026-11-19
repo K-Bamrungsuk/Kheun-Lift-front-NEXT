@@ -1,22 +1,30 @@
-import type { User, WeightClass } from "@/features/user/types";
+import { z } from "zod";
+import { userSchema, weightClassSchema } from "@/features/user/types";
 
-export type LiftStatus = "pending" | "verified" | "rejected";
+export const liftStatusSchema = z.enum(["pending", "verified", "rejected"]);
+export type LiftStatus = z.infer<typeof liftStatusSchema>;
 
-export type LiftRecord = {
-  id: number;
-  userId: number;
-  exerciseId: number;
-  weightClassId: number;
-  weight: number;
-  reps: number;
-  caption: string | null;
-  videoUrl: string | null;
-  status: LiftStatus;
-  createdAt: string;
-  updatedAt: string;
-  user: Pick<User, "username" | "profileImage">;
-  exercise: { id: number; name: string };
-  weightClass: Pick<WeightClass, "id" | "name" | "gender">;
-};
+export const liftRecordSchema = z.object({
+  id: z.number(),
+  userId: z.number(),
+  exerciseId: z.number(),
+  weightClassId: z.number(),
+  weight: z.number(),
+  reps: z.number(),
+  caption: z.string().nullable(),
+  videoUrl: z.string().nullable(),
+  status: liftStatusSchema,
+  createdAt: z.string(),
+  updatedAt: z.string(),
+  user: userSchema.pick({ username: true, profileImage: true }),
+  exercise: z.object({ id: z.number(), name: z.string() }),
+  weightClass: weightClassSchema.pick({ id: true, name: true, gender: true }),
+});
+export type LiftRecord = z.infer<typeof liftRecordSchema>;
 
-export type Exercise = { id: number; name: string; description: string | null };
+export const exerciseSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  description: z.string().nullable(),
+});
+export type Exercise = z.infer<typeof exerciseSchema>;
