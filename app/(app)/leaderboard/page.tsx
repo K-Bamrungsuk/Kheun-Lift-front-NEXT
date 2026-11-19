@@ -1,59 +1,17 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Icon } from "@/components/ui/icon";
 import {
   getLeaderboard,
   getWeightClasses,
 } from "@/features/leaderboard/api-server";
+import { Pill } from "@/features/leaderboard/components/pill";
+import { RankingTable } from "@/features/leaderboard/components/ranking-table";
 import { getExercises } from "@/features/lifts/api-server";
-import type { LeaderboardEntry } from "@/features/leaderboard/types";
 import { getMe } from "@/features/user/api-server";
 import { isNotFound } from "@/lib/api";
 
 export const metadata: Metadata = { title: "Rank | Kheun Lift" };
-
-type Query = { exercise?: string | number; gender?: string; weightClass?: string | number };
-
-function href(query: Query) {
-  const params = new URLSearchParams();
-  for (const [key, value] of Object.entries(query))
-    if (value !== undefined) params.set(key, String(value));
-  return `/leaderboard?${params}`;
-}
-
-function Pill({
-  query,
-  active,
-  children,
-}: {
-  query: Query;
-  active: boolean;
-  children: React.ReactNode;
-}) {
-  return (
-    <Link
-      href={href(query)}
-      aria-current={active ? "true" : undefined}
-      className={`flex min-h-11 items-center rounded-lg border px-3 text-sm transition-colors ${
-        active
-          ? "border-accent/25 bg-accent/10 text-accent"
-          : "border-border bg-surface text-muted hover:bg-surface-high"
-      }`}
-    >
-      {children}
-    </Link>
-  );
-}
-
-const medals = [
-  "bg-accent text-background",
-  "bg-[#c3ccd9] text-background",
-  "bg-[#c58f61] text-background",
-];
-const rankStyle = (rank: number) =>
-  medals[rank - 1] ??
-  (rank <= 5 ? "border border-accent text-accent" : "text-muted");
 
 const first = (value: string | string[] | undefined) =>
   Array.isArray(value) ? value[0] : value;
@@ -198,81 +156,5 @@ export default async function LeaderboardPage({
         </aside>
       </section>
     </>
-  );
-}
-
-function RankingTable({
-  entries,
-  meId,
-  caption,
-}: {
-  entries: LeaderboardEntry[];
-  meId: number;
-  caption: string;
-}) {
-  return (
-    <div className="overflow-hidden rounded-xl border border-border/60 bg-surface">
-      <table className="w-full text-left text-sm">
-        <caption className="sr-only">{caption}</caption>
-        <thead className="border-b border-border bg-surface-low text-[10px] uppercase tracking-widest text-muted">
-          <tr>
-            <th scope="col" className="w-16 px-3 py-4 font-medium md:px-5">
-              Rank
-            </th>
-            <th scope="col" className="px-3 py-4 font-medium md:px-5">
-              Athlete
-            </th>
-            <th scope="col" className="px-3 py-4 text-right font-medium md:px-5">
-              Best lift
-            </th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-border">
-          {entries.map((entry) => {
-            const isMe = entry.userId === meId;
-            const isTop3 = entry.rank <= 3;
-            return (
-              <tr key={entry.id} className={isMe ? "bg-accent/10" : ""}>
-                <td className="px-3 py-5 tabular-nums md:px-5">
-                  <span
-                    className={`grid size-8 place-items-center rounded-full text-xs font-semibold ${rankStyle(entry.rank)}`}
-                  >
-                    {String(entry.rank).padStart(2, "0")}
-                  </span>
-                </td>
-                <th scope="row" className={`px-3 py-5 md:px-5 ${isTop3 ? "font-bold" : "font-medium"}`}>
-                  <Link
-                    href={isMe ? "/profile" : `/users/${entry.userId}`}
-                    className="break-all underline-offset-4 hover:underline"
-                  >
-                    {entry.user.username}
-                  </Link>
-                  {entry.rank === 1 && (
-                    <Icon name="trophy" className="ml-2 inline size-4 text-accent" />
-                  )}
-                  {isMe && (
-                    <span className="ml-2 rounded bg-surface-high px-1.5 py-1 text-[9px] uppercase text-accent">
-                      You
-                    </span>
-                  )}
-                </th>
-                <td
-                  className={`whitespace-nowrap px-3 py-5 text-right text-base tabular-nums md:px-5 ${isTop3 ? "font-bold" : ""}`}
-                >
-                  <Link
-                    href={`/lifts/${entry.id}`}
-                    aria-label={`${entry.weight} kg lift by ${entry.user.username}`}
-                    className="underline-offset-4 hover:underline"
-                  >
-                    {entry.weight}
-                    <span className="ml-1 text-xs text-muted">kg</span>
-                  </Link>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
   );
 }
