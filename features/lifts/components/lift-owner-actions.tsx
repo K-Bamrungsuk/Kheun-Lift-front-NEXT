@@ -66,17 +66,17 @@ export function LiftOwnerActions({
       <div className="space-y-3">
         <div className="flex items-center justify-between gap-3">
           <div className="flex min-w-0 items-center gap-3">
-            <Avatar src={lift.user.profileImage} alt="" className="size-10" />
+            <Avatar src={lift.user.profileImage} alt="" className="size-16" />
             <div className="min-w-0">
               <Link
                 href={isOwner ? "/profile" : `/users/${lift.userId}`}
-                className="block truncate font-semibold underline-offset-4 hover:underline"
+                className="block truncate text-md font-semibold underline-offset-4 hover:underline"
               >
                 {lift.user.username}
               </Link>
               <time
                 dateTime={lift.createdAt}
-                className="block text-xs text-muted"
+                className="block text-sm text-muted"
               >
                 {formatLiftDate(lift.createdAt)}
               </time>
@@ -130,7 +130,7 @@ export function LiftOwnerActions({
           </form>
         ) : (
           caption && (
-            <p className="whitespace-pre-line break-words text-sm leading-6">
+            <p className="whitespace-pre-line break-words text-md leading-6">
               {caption}
             </p>
           )

@@ -1,6 +1,23 @@
 import { youtubeEmbedUrl } from "@/lib/youtube";
-import type { LiftRecord } from "../types";
+import type { LiftRecord, LiftStatus } from "../types";
 import { LiftOwnerActions } from "./lift-owner-actions";
+
+const statusBadge = {
+  verified: { glyph: "✓", color: "text-accent" },
+  pending: { glyph: "◷", color: "text-muted" },
+  rejected: { glyph: "⊘", color: "text-red-400" },
+} satisfies Record<LiftStatus, { glyph: string; color: string }>;
+
+export function LiftStatusBadge({ status }: { status: LiftStatus }) {
+  return (
+    <span
+      className={`inline-flex items-center gap-1.5 rounded-md bg-surface-high px-2 py-1 text-[11px] capitalize ${statusBadge[status].color}`}
+    >
+      <span aria-hidden="true">{statusBadge[status].glyph}</span>
+      {status}
+    </span>
+  );
+}
 
 export function LiftDetail({ lift, isOwner }: { lift: LiftRecord; isOwner: boolean }) {
   const embed = lift.videoUrl && youtubeEmbedUrl(lift.videoUrl);
@@ -8,20 +25,18 @@ export function LiftDetail({ lift, isOwner }: { lift: LiftRecord; isOwner: boole
   return (
     <section aria-labelledby="lift-title" className="space-y-5 rounded-xl bg-surface p-5 md:p-7">
       <LiftOwnerActions lift={lift} isOwner={isOwner}>
-        <header>
-          <h2 id="lift-title" className="text-xl font-semibold">
-            {lift.exercise.name}
+        <header className="flex items-start justify-between gap-3">
+          <h2 id="lift-title" className="text-xs font-semibold uppercase tracking-widest text-muted">
+            {lift.exercise.name} · {lift.weightClass.name} class
           </h2>
-          <p className="mt-1 text-sm text-muted">
-            {lift.weightClass.name} · <span className="capitalize">{lift.status}</span>
-          </p>
+          <LiftStatusBadge status={lift.status} />
         </header>
-        <p className="text-3xl tabular-nums">
-          {lift.weight}
-          <span className="ml-1 text-sm text-muted">kg</span>
-          <span className="mx-2 text-lg text-muted">×</span>
-          {lift.reps}
-          <span className="ml-1 text-sm text-muted">rep</span>
+        <p className="flex items-baseline gap-1.5 tabular-nums">
+          <span className="text-5xl font-semibold text-accent">{lift.weight}</span>
+          <span className="text-sm text-muted">kg</span>
+          <span className="ml-2 text-2xl text-muted">×</span>
+          <span className="text-3xl">{lift.reps}</span>
+          <span className="text-sm text-muted">rep</span>
         </p>
         {embed ? (
           <iframe

@@ -1,13 +1,7 @@
 import { ModalButton } from "@/components/ui/modal";
 import { formatLiftDate } from "../format-date";
-import type { LiftRecord, LiftStatus } from "../types";
-import { LiftDetail } from "./lift-detail";
-
-const statusBadge = {
-  verified: { glyph: "✓", color: "text-accent" },
-  pending: { glyph: "◷", color: "text-muted" },
-  rejected: { glyph: "⊘", color: "text-red-400" },
-} satisfies Record<LiftStatus, { glyph: string; color: string }>;
+import type { LiftRecord } from "../types";
+import { LiftDetail, LiftStatusBadge } from "./lift-detail";
 
 export function LiftHistory({
   lifts,
@@ -61,14 +55,7 @@ export function LiftHistory({
                       </span>
                     </span>
                     <span className="flex flex-col items-end gap-2">
-                      <span
-                        className={`inline-flex items-center gap-1.5 rounded-md bg-surface-high px-2 py-1 text-[11px] capitalize ${statusBadge[lift.status].color}`}
-                      >
-                        <span aria-hidden="true">
-                          {statusBadge[lift.status].glyph}
-                        </span>
-                        {lift.status}
-                      </span>
+                      <LiftStatusBadge status={lift.status} />
                       <time
                         dateTime={lift.createdAt}
                         className="text-[10px] text-muted"
