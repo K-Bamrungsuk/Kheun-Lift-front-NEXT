@@ -11,6 +11,7 @@ const paths = {
   more: "M5 12h.01M12 12h.01M19 12h.01",
   shieldCheck: "M12 3 3 7v5c0 5 9 9 9 9s9-4 9-9V7ZM8 12l3 3 5-6",
   weight: "M15 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM6 8h12l3 13H3Z",
+  alert: "M21.73 18 13.73 4a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3ZM12 9v4M12 17h.01",
 };
 
 export function Icon({ name, className = "size-5" }: { name: keyof typeof paths; className?: string }) {
