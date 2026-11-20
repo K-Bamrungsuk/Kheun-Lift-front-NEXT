@@ -12,7 +12,6 @@ export const config = {
     "/dashboard/:path*",
     "/profile/:path*",
     "/leaderboard/:path*",
-    "/lifts/:path*",
     "/users/:path*",
   ],
 };

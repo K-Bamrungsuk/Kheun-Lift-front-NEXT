@@ -61,7 +61,7 @@ async function UserProfile({ id }: { id: string }) {
       </section>
       <div className="min-w-0 space-y-6">
         <PersonalRecords lifts={verified} />
-        <LiftHistory lifts={verified} empty="No verified lifts yet." />
+        <LiftHistory lifts={verified} isOwner={false} empty="No verified lifts yet." />
       </div>
     </div>
   );

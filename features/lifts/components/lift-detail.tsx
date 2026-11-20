@@ -1,21 +1,8 @@
-import { notFound } from "next/navigation";
-import { getMe } from "@/features/user/api-server";
-import { isNotFound } from "@/lib/api";
 import { youtubeEmbedUrl } from "@/lib/youtube";
-import { getLift } from "../api-server";
+import type { LiftRecord } from "../types";
 import { LiftOwnerActions } from "./lift-owner-actions";
 
-export async function LiftDetail({ id }: { id: string }) {
-  const [me, lift] = await Promise.all([
-    getMe(),
-    getLift(id).catch((error) => {
-      if (isNotFound(error)) notFound();
-      throw error;
-    }),
-  ]);
-  const isOwner = lift.userId === me.id;
-  // shortcut: Go returns every status to any signed-in user, this only hides it; filter in Go (see PLAN.md).
-  if (!isOwner && lift.status !== "verified") notFound();
+export function LiftDetail({ lift, isOwner }: { lift: LiftRecord; isOwner: boolean }) {
   const embed = lift.videoUrl && youtubeEmbedUrl(lift.videoUrl);
 
   return (

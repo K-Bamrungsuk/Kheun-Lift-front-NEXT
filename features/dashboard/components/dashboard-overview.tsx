@@ -115,7 +115,7 @@ export function DashboardOverview({
         </section>
       </div>
       <PersonalRecords lifts={lifts} />
-      <LiftHistory lifts={lifts.slice(0, 5)} />
+      <LiftHistory lifts={lifts.slice(0, 5)} isOwner />
     </>
   );
 }

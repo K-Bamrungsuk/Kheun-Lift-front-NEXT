@@ -80,7 +80,7 @@ export default async function ProfilePage() {
         </section>
         <div className="min-w-0 space-y-6">
           <PersonalRecords lifts={lifts} />
-          <LiftHistory lifts={lifts} />
+          <LiftHistory lifts={lifts} isOwner />
         </div>
       </div>
       <LogoutButton className="w-full bg-surface" />

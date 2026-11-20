@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { Icon } from "@/components/ui/icon";
+import { ModalButton } from "@/components/ui/modal";
+import { LiftDetail } from "@/features/lifts/components/lift-detail";
 import type { LeaderboardEntry } from "../types";
 
 const medals = [
@@ -69,14 +71,20 @@ export function RankingTable({
                 <td
                   className={`whitespace-nowrap px-3 py-5 text-right text-base tabular-nums md:px-5 ${isTop3 ? "font-bold" : ""}`}
                 >
-                  <Link
-                    href={`/lifts/${entry.id}`}
-                    aria-label={`${entry.weight} kg lift by ${entry.user.username}`}
+                  <ModalButton
+                    label={`${entry.weight} kg lift by ${entry.user.username}`}
+                    labelledBy="lift-title"
+                    wide
                     className="underline-offset-4 hover:underline"
+                    trigger={
+                      <>
+                        {entry.weight}
+                        <span className="ml-1 text-xs text-muted">kg</span>
+                      </>
+                    }
                   >
-                    {entry.weight}
-                    <span className="ml-1 text-xs text-muted">kg</span>
-                  </Link>
+                    <LiftDetail lift={entry} isOwner={isMe} />
+                  </ModalButton>
                 </td>
               </tr>
             );

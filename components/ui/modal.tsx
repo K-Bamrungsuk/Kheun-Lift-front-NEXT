@@ -1,10 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
 import { Icon } from "./icon";
-
-const OPEN_MODAL = "open-modal";
 
 const CloseModal = createContext<(() => void) | null>(null);
 
@@ -16,27 +13,6 @@ type DialogProps = {
   wide?: boolean;
   children: React.ReactNode;
 };
-
-// For an intercepted route: closing goes back to the page underneath.
-export function Modal(props: DialogProps) {
-  const router = useRouter();
-  // A refresh skips this cleanup, so the key left behind tells the full page it was a modal.
-  useEffect(() => {
-    sessionStorage.setItem(OPEN_MODAL, location.pathname);
-    return () => sessionStorage.removeItem(OPEN_MODAL);
-  }, []);
-  return <Dialog {...props} onClose={() => router.back()} />;
-}
-
-export function CloseOnReload({ children }: { children: React.ReactNode }) {
-  const router = useRouter();
-  useEffect(() => {
-    if (sessionStorage.getItem(OPEN_MODAL) !== location.pathname) return;
-    sessionStorage.removeItem(OPEN_MODAL);
-    router.back();
-  }, [router]);
-  return children;
-}
 
 // For a form without its own URL, so a refresh simply closes it.
 export function ModalButton({
@@ -88,7 +64,7 @@ function Dialog({
         event.preventDefault();
         onClose();
       }}
-      className={`m-auto max-h-[85dvh] w-[calc(100%-2rem)] ${wide ? "max-w-2xl" : "max-w-md"} overflow-y-auto rounded-2xl bg-surface text-foreground shadow-2xl backdrop:bg-background/60 backdrop:backdrop-blur-md`}
+      className={`m-auto w-[calc(100%-2rem)] ${wide ? "max-h-[95dvh] max-w-2xl" : "max-h-[85dvh] max-w-md"} overflow-y-auto rounded-2xl bg-surface text-foreground shadow-2xl backdrop:bg-background/60 backdrop:backdrop-blur-md`}
     >
       <div className="flex justify-end px-3 pt-3">
         <button
