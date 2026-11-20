@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { errorMessage } from "@/lib/api";
 import { login } from "../api";
@@ -10,25 +10,23 @@ import { SpinnerIcon } from "@/components/ui/spinner";
 export function LoginForm() {
   const router = useRouter();
   const [error, setError] = useState("");
-  const [pending, setPending] = useState(false);
+  const [pending, startTransition] = useTransition();
 
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const formElement = event.currentTarget;
-    const form = new FormData(formElement);
-    setPending(true);
+    const form = new FormData(event.currentTarget);
     setError("");
-    try {
-      await login(String(form.get("email")), String(form.get("password")));
-      formElement.reset();
-      setPending(false);
-
-      router.replace("/dashboard");
-      router.refresh();
-    } catch (err) {
-      setError(errorMessage(err));
-      setPending(false);
-    }
+    startTransition(async () => {
+      try {
+        await login(String(form.get("email")), String(form.get("password")));
+        startTransition(() => {
+          router.replace("/dashboard");
+          router.refresh();
+        });
+      } catch (err) {
+        setError(errorMessage(err));
+      }
+    });
   }
 
   return (
