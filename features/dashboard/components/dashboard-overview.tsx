@@ -115,7 +115,12 @@ export function DashboardOverview({
         </section>
       </div>
       <PersonalRecords lifts={lifts} />
-      <LiftHistory lifts={lifts.slice(0, 5)} isOwner />
+      <LiftHistory
+        lifts={lifts.slice(0, 5)}
+        title="Recent lifts"
+        viewAllHref="/profile#recent-activity"
+        isOwner
+      />
     </>
   );
 }
