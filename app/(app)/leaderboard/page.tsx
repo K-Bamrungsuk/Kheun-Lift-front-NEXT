@@ -6,6 +6,7 @@ import {
   getWeightClasses,
 } from "@/features/leaderboard/api-server";
 import { Pill } from "@/features/leaderboard/components/pill";
+import { RankHeader } from "@/features/leaderboard/components/rank-header";
 import { RankingTable } from "@/features/leaderboard/components/ranking-table";
 import { getExercises } from "@/features/lifts/api-server";
 import { getMe } from "@/features/user/api-server";
@@ -60,22 +61,7 @@ export default async function LeaderboardPage({
 
   return (
     <>
-      <header className="flex items-end justify-between gap-4">
-        <div>
-          <p className="mb-2 text-xs uppercase tracking-widest text-accent">
-            Strength, on the record
-          </p>
-          <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
-            Rank
-          </h1>
-          <p className="mt-2 text-sm text-muted">
-            A benchmark for your next personal best.
-          </p>
-        </div>
-        <span className="hidden size-14 place-items-center rounded-xl bg-surface text-accent sm:grid">
-          <Icon name="trophy" className="size-7" />
-        </span>
-      </header>
+      <RankHeader />
       <section aria-labelledby="ranking-title" className="space-y-5">
         <div className="space-y-3">
           <nav aria-label="Exercise" className="flex flex-wrap gap-2">
