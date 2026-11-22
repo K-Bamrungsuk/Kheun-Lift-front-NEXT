@@ -5,9 +5,13 @@ import {
   getLeaderboard,
   getWeightClasses,
 } from "@/features/leaderboard/api-server";
-import { Pill } from "@/features/leaderboard/components/pill";
+import { MyRank } from "@/features/leaderboard/components/my-rank";
+import { FilterPill, Pill } from "@/features/leaderboard/components/pill";
 import { RankHeader } from "@/features/leaderboard/components/rank-header";
-import { RankingTable } from "@/features/leaderboard/components/ranking-table";
+import {
+  LiftValue,
+  RankingTable,
+} from "@/features/leaderboard/components/ranking-table";
 import { getExercises } from "@/features/lifts/api-server";
 import { getMe } from "@/features/user/api-server";
 import { isNotFound } from "@/lib/api";
@@ -24,26 +28,25 @@ export default async function LeaderboardPage({
 }) {
   const params = await searchParams;
   const exerciseParam = first(params.exercise);
-  const gender = first(params.gender);
-  // The class row only shows for a chosen gender, so a class without one is ignored.
-  const weightClass = gender ? first(params.weightClass) : undefined;
-
   // Go answers 400 or 404 for a bad gender, an unknown class, or a class of the other gender.
   const notFoundOnBadQuery = (error: unknown): never => {
     if (isNotFound(error)) notFound();
     throw error;
   };
 
-  // Weight classes need only the gender, so they load together with the user and exercises.
-  const [me, exercises, classes] = await Promise.all([
-    getMe(),
-    getExercises(),
-    gender ? getWeightClasses(gender) : [],
-  ]).catch(notFoundOnBadQuery);
+  const [me, exercises] = await Promise.all([getMe(), getExercises()]);
   const exercise = exerciseParam
     ? exercises.find((item) => String(item.id) === exerciseParam)
     : exercises[0];
   if (!exercise) notFound();
+
+  const gender = first(params.gender) ?? me.gender ?? "male";
+  const classes = await getWeightClasses(gender).catch(notFoundOnBadQuery);
+  const defaultClass =
+    me.weightClass?.gender === gender ? me.weightClass : classes[0];
+  const weightClass =
+    first(params.weightClass) ??
+    (defaultClass ? String(defaultClass.id) : undefined);
 
   const entries = await getLeaderboard({
     exerciseId: exercise.id,
@@ -51,74 +54,89 @@ export default async function LeaderboardPage({
     gender,
   }).catch(notFoundOnBadQuery);
 
-  const className =
-    classes.find((item) => String(item.id) === weightClass)?.name ??
-    (gender === "male"
-      ? "All male classes"
-      : gender === "female"
-        ? "All female classes"
-        : "All classes");
+  const className = classes.find((item) => String(item.id) === weightClass)?.name;
 
   return (
     <>
       <RankHeader />
-      <section aria-labelledby="ranking-title" className="space-y-5">
-        <div className="space-y-3">
-          <nav aria-label="Exercise" className="flex flex-wrap gap-2">
-            {exercises.map((item) => (
-              <Pill
-                key={item.id}
-                query={{ exercise: item.id, gender, weightClass }}
-                active={item.id === exercise.id}
-              >
-                {item.name}
-              </Pill>
-            ))}
-          </nav>
-          <nav aria-label="Gender" className="flex flex-wrap gap-2">
-            <Pill query={{ exercise: exercise.id }} active={!gender}>
-              All
-            </Pill>
+      <section aria-label="Rankings" className="space-y-5">
+        <nav
+          aria-label="Exercise"
+          className="grid grid-cols-3 gap-1 rounded-xl border border-border bg-surface-low p-1 text-sm sm:max-w-md sm:text-base"
+        >
+          {exercises.map((item) => (
             <Pill
-              query={{ exercise: exercise.id, gender: "male" }}
-              active={gender === "male"}
+              key={item.id}
+              segment
+              query={{ exercise: item.id, gender, weightClass }}
+              active={item.id === exercise.id}
             >
-              Male
+              {item.name}
             </Pill>
-            <Pill
-              query={{ exercise: exercise.id, gender: "female" }}
-              active={gender === "female"}
+          ))}
+        </nav>
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div className="flex flex-wrap gap-2">
+            <FilterPill
+              key={gender}
+              id="gender-title"
+              title="Gender"
+              value={gender === "male" ? "Male" : "Female"}
             >
-              Female
-            </Pill>
-          </nav>
-          {classes.length > 0 && (
-            <nav aria-label="Weight class" className="flex flex-wrap gap-2">
-              {classes.map((item) => (
+              <nav aria-label="Gender" className="grid grid-cols-2 gap-2">
                 <Pill
-                  key={item.id}
-                  query={{ exercise: exercise.id, gender, weightClass: item.id }}
-                  active={String(item.id) === weightClass}
+                  query={{ exercise: exercise.id, gender: "male" }}
+                  active={gender === "male"}
                 >
-                  {item.name}
+                  Male
                 </Pill>
-              ))}
-            </nav>
+                <Pill
+                  query={{ exercise: exercise.id, gender: "female" }}
+                  active={gender === "female"}
+                >
+                  Female
+                </Pill>
+              </nav>
+            </FilterPill>
+            {className && (
+              <FilterPill
+                key={weightClass}
+                id="class-title"
+                title="Class"
+                value={className}
+              >
+                <nav aria-label="Weight class" className="grid grid-cols-4 gap-2">
+                  {classes.map((item) => (
+                    <Pill
+                      key={item.id}
+                      query={{ exercise: exercise.id, gender, weightClass: item.id }}
+                      active={String(item.id) === weightClass}
+                    >
+                      {item.name}
+                    </Pill>
+                  ))}
+                </nav>
+              </FilterPill>
+            )}
+          </div>
+          {entries.length > 0 && (
+            <dl className="flex gap-6 sm:text-right">
+              <div>
+                <dt className="text-xs text-muted">Record</dt>
+                <dd className="text-lg font-semibold text-accent">
+                  <LiftValue lift={entries[0]} />
+                </dd>
+              </div>
+              <div>
+                <dt className="text-xs text-muted">Athletes</dt>
+                <dd className="text-lg font-semibold tabular-nums">
+                  {entries.length}
+                </dd>
+              </div>
+            </dl>
           )}
         </div>
-        <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl bg-surface p-4 md:p-5">
-          <div>
-            <p className="text-[10px] uppercase tracking-widest text-muted">
-              Discipline
-            </p>
-            <h2 id="ranking-title" className="mt-1 text-xl font-semibold">
-              {exercise.name}
-            </h2>
-          </div>
-          <span className="rounded-lg border border-accent/25 bg-accent/10 px-3 py-2 text-xs text-accent">
-            {className}
-          </span>
-        </div>
+        <MyRank entries={entries} meId={me.id} />
         {entries.length === 0 ? (
           <p className="rounded-xl bg-surface p-5 text-sm text-muted">
             No verified lifts yet for this exercise and class.
@@ -127,7 +145,7 @@ export default async function LeaderboardPage({
           <RankingTable
             entries={entries}
             meId={me.id}
-            caption={`${exercise.name} rankings for ${className}`}
+            caption={`${exercise.name} rankings, ${gender} ${className}`}
           />
         )}
         <aside className="flex items-start gap-3 rounded-xl bg-surface-low p-4 text-sm leading-6 text-muted">

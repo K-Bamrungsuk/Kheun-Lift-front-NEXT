@@ -7,6 +7,7 @@ const paths = {
   camera: "M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3ZM15 13a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z",
   pencil:"M17 3a2.85 2.85 0 0 1 4 4L7.5 20.5 2 22l1.5-5.5Z",
   arrowRight: "M5 12h14M12 5l7 7-7 7",
+  chevronDown: "m6 9 6 6 6-6",
   x: "M18 6 6 18M6 6l12 12",
   more: "M5 12h.01M12 12h.01M19 12h.01",
   shieldCheck: "M12 3 3 7v5c0 5 9 9 9 9s9-4 9-9V7ZM8 12l3 3 5-6",

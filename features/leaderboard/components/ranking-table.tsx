@@ -2,7 +2,18 @@ import Link from "next/link";
 import { Icon } from "@/components/ui/icon";
 import { ModalButton } from "@/components/ui/modal";
 import { LiftDetail } from "@/features/lifts/components/lift-detail";
+import { formatLiftDate } from "@/features/lifts/format-date";
 import type { LeaderboardEntry } from "../types";
+
+export function LiftValue({ lift }: { lift: { weight: number; reps: number } }) {
+  return (
+    <span className="whitespace-nowrap tabular-nums">
+      {lift.weight}
+      <span className="ml-0.5 text-xs font-normal text-muted">kg</span>
+      <span className="ml-1 font-normal text-muted">× {lift.reps}</span>
+    </span>
+  );
+}
 
 const medals = [
   "bg-accent text-background",
@@ -33,6 +44,9 @@ export function RankingTable({
             </th>
             <th scope="col" className="px-3 py-4 font-medium md:px-5">
               Athlete
+            </th>
+            <th scope="col" className="hidden px-3 py-4 text-right font-medium sm:table-cell md:px-5">
+              Date
             </th>
             <th scope="col" className="px-3 py-4 text-right font-medium md:px-5">
               Best lift
@@ -68,20 +82,18 @@ export function RankingTable({
                     </span>
                   )}
                 </th>
+                <td className="hidden whitespace-nowrap px-3 py-5 text-right text-xs text-muted sm:table-cell md:px-5">
+                  <time dateTime={entry.createdAt}>{formatLiftDate(entry.createdAt)}</time>
+                </td>
                 <td
                   className={`whitespace-nowrap px-3 py-5 text-right text-base tabular-nums md:px-5 ${isTop3 ? "font-bold" : ""}`}
                 >
                   <ModalButton
-                    label={`${entry.weight} kg lift by ${entry.user.username}`}
+                    label={`${entry.weight} kg for ${entry.reps} reps by ${entry.user.username}`}
                     labelledBy="lift-title"
                     wide
                     className="underline-offset-4 hover:underline"
-                    trigger={
-                      <>
-                        {entry.weight}
-                        <span className="ml-1 text-xs text-muted">kg</span>
-                      </>
-                    }
+                    trigger={<LiftValue lift={entry} />}
                   >
                     <LiftDetail lift={entry} isOwner={isMe} />
                   </ModalButton>
