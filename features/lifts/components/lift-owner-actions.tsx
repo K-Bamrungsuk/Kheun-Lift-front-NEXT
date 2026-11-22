@@ -7,9 +7,10 @@ import { Avatar } from "@/components/ui/avatar";
 import { SpinnerIcon } from "@/components/ui/spinner";
 import { useCloseModal } from "@/components/ui/modal";
 import { errorMessage } from "@/lib/api";
-import { deleteLift, updateLiftCaption } from "../api";
+import { updateLiftCaption } from "../api";
 import { formatLiftDate } from "../format-date";
 import type { LiftRecord } from "../types";
+import { DeleteLiftDialog } from "./delete-lift-dialog";
 import { LiftMenu } from "./lift-menu";
 
 // The menu and the caption share the editing state, so the server passes the lift body in as children.
@@ -25,14 +26,15 @@ export function LiftOwnerActions({
   const router = useRouter();
   const close = useCloseModal();
   const [editing, setEditing] = useState(false);
+  const [confirming, setConfirming] = useState(false);
   const [caption, setCaption] = useState(lift.caption);
-  const [pending, setPending] = useState<"save" | "delete" | null>(null);
+  const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const value = String(new FormData(event.currentTarget).get("caption")).trim();
-    setPending("save");
+    setSaving(true);
     setError("");
     try {
       const updated = await updateLiftCaption(lift.id, value);
@@ -43,22 +45,14 @@ export function LiftOwnerActions({
       setError(errorMessage(err));
     }
     // cacheComponents keeps this component mounted and hidden after the user leaves, so reset it.
-    setPending(null);
+    setSaving(false);
   }
 
-  async function handleDelete() {
-    if (!confirm("Delete this lift? This cannot be undone.")) return;
-    setPending("delete");
-    setError("");
-    try {
-      await deleteLift(lift.id);
-      if (close) close();
-      else router.replace("/profile");
-      router.refresh();
-    } catch (err) {
-      setError(errorMessage(err));
-    }
-    setPending(null);
+  function handleDeleted() {
+    setConfirming(false);
+    if (close) close();
+    else router.replace("/profile");
+    router.refresh();
   }
 
   return (
@@ -84,12 +78,12 @@ export function LiftOwnerActions({
           </div>
           {isOwner && (
             <LiftMenu
-              disabled={pending !== null}
+              disabled={saving}
               onEdit={() => {
                 setError("");
                 setEditing(true);
               }}
-              onDelete={handleDelete}
+              onDelete={() => setConfirming(true)}
             />
           )}
         </div>
@@ -107,17 +101,10 @@ export function LiftOwnerActions({
               defaultValue={caption ?? ""}
               className="w-full min-w-0 rounded-lg border border-border bg-background px-4 py-3 text-base"
             />
-            <div className="flex gap-3">
-              <button
-                type="submit"
-                disabled={pending !== null}
-                className="flex min-h-11 flex-1 items-center justify-center rounded-xl bg-accent px-4 font-semibold text-background disabled:opacity-60"
-              >
-                {pending === "save" ? <SpinnerIcon label="Saving" /> : "Save"}
-              </button>
+            <div className="flex justify-end gap-2">
               <button
                 type="button"
-                disabled={pending !== null}
+                disabled={saving}
                 onClick={() => {
                   setEditing(false);
                   setError("");
@@ -125,6 +112,13 @@ export function LiftOwnerActions({
                 className="min-h-11 rounded-xl px-4 text-muted transition-colors hover:bg-surface-high disabled:opacity-60"
               >
                 Cancel
+              </button>
+              <button
+                type="submit"
+                disabled={saving}
+                className="flex min-h-11 min-w-20 items-center justify-center rounded-xl bg-accent px-5 font-semibold text-background disabled:opacity-60"
+              >
+                {saving ? <SpinnerIcon label="Saving" /> : "Save"}
               </button>
             </div>
           </form>
@@ -137,15 +131,17 @@ export function LiftOwnerActions({
         )}
       </div>
       <div className="space-y-4 border-t border-border pt-5">{children}</div>
-      {pending === "delete" && (
-        <p role="status" className="flex justify-center text-muted">
-          <SpinnerIcon className="size-5" label="Deleting" />
-        </p>
-      )}
       {error && (
         <p role="alert" className="text-sm text-red-400">
           {error}
         </p>
+      )}
+      {confirming && (
+        <DeleteLiftDialog
+          lift={lift}
+          onCancel={() => setConfirming(false)}
+          onDeleted={handleDeleted}
+        />
       )}
     </>
   );

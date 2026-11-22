@@ -41,7 +41,7 @@ export function ModalButton({
   );
 }
 
-function Dialog({
+export function Dialog({
   labelledBy,
   wide = false,
   onClose,
