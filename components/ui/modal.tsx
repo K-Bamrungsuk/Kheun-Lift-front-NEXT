@@ -62,6 +62,8 @@ export function Dialog({
       aria-labelledby={labelledBy}
       onCancel={(event) => {
         event.preventDefault();
+        // React bubbles cancel up the component tree, so Esc in a nested dialog would also close its parent.
+        event.stopPropagation();
         onClose();
       }}
       className={`m-auto w-[calc(100%-2rem)] ${wide ? "max-h-[95dvh] max-w-2xl" : "max-h-[85dvh] max-w-md"} overflow-y-auto rounded-2xl bg-surface text-foreground shadow-2xl backdrop:bg-background/60 backdrop:backdrop-blur-md`}
