@@ -66,7 +66,7 @@ export function LiftOwnerActions({
       <div className="space-y-3">
         <div className="flex items-center justify-between gap-3">
           <div className="flex min-w-0 items-center gap-3">
-            <Avatar src={lift.user.profileImage} alt="" className="size-16" />
+            <Avatar src={lift.user.profileImage} alt="" className="size-12" />
             <div className="min-w-0">
               <Link
                 href={isOwner ? "/profile" : `/users/${lift.userId}`}
