@@ -10,6 +10,7 @@
   --surface-high: #212a39;
   --muted: #bbc7dd;
   --border: #2c3544;
+  --danger: #f87171;
 }
 
 @theme inline {
@@ -21,6 +22,7 @@
   --color-surface-high: var(--surface-high);
   --color-muted: var(--muted);
   --color-border: var(--border);
+  --color-danger: var(--danger);
   --font-sans: var(--font-plex), "Segoe UI", sans-serif;
 }
 

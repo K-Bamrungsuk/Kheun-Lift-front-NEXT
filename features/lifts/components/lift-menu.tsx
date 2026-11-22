@@ -76,7 +76,7 @@ export function LiftMenu({
             type="button"
             role="menuitem"
             onClick={handleDelete}
-            className={`${item} text-red-400`}
+            className={`${item} text-danger`}
           >
             Delete
           </button>

@@ -77,7 +77,7 @@ export function ProfilePictureForm({ user }: { user: User }) {
         JPEG, PNG or WebP, up to 2 MB
       </p>
       {error && (
-        <p role="alert" className="mt-3 text-sm text-red-400">
+        <p role="alert" className="mt-3 text-sm text-danger">
           {error}
         </p>
       )}
@@ -121,7 +121,7 @@ export function ProfilePictureForm({ user }: { user: User }) {
                 type="button"
                 onClick={() => run(deleteProfileImage)}
                 disabled={pending}
-                className={`${secondaryClass} text-red-400 hover:bg-red-400/10`}
+                className={`${secondaryClass} text-danger hover:bg-danger/10`}
               >
                 {pending ? <SpinnerIcon label="Removing" /> : "Remove picture"}
               </button>

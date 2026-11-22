@@ -122,7 +122,7 @@ export function ProfileForm({ user }: { user: User }) {
         defaultValue={values.dateOfBirth}
       />
       {error && (
-        <p role="alert" className="text-sm text-red-400 sm:col-span-2">
+        <p role="alert" className="text-sm text-danger sm:col-span-2">
           {error}
         </p>
       )}
