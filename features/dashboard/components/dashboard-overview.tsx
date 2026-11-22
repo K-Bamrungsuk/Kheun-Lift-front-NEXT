@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { Avatar } from "@/components/ui/avatar";
 import { Icon } from "@/components/ui/icon";
 import type { RandomLeaderboard } from "@/features/leaderboard/types";
 import { LiftHistory } from "@/features/lifts/components/lift-history";
+import { LiftValue } from "@/features/lifts/components/lift-value";
 import { PersonalRecords } from "@/features/lifts/components/personal-records";
 import type { LiftRecord } from "@/features/lifts/types";
-import { AthleteStats } from "@/features/user/components/athlete-stats";
+import { AthleteCard } from "@/features/user/components/athlete-card";
 import type { User } from "@/features/user/types";
 
 export function DashboardOverview({
@@ -61,9 +61,8 @@ export function DashboardOverview({
                     <span className="min-w-0 flex-1 truncate text-sm">
                       {entry.user.username}
                     </span>
-                    <strong className="whitespace-nowrap text-sm font-medium tabular-nums">
-                      {entry.weight}
-                      <span className="ml-1 text-[10px] text-muted">kg</span>
+                    <strong className="text-sm font-medium">
+                      <LiftValue lift={entry} />
                     </strong>
                   </li>
                 ))}
@@ -80,39 +79,7 @@ export function DashboardOverview({
             <Icon name="arrowRight" className="size-4" />
           </Link>
         </section>
-        <section
-          aria-labelledby="athlete-title"
-          className="rounded-xl bg-surface p-5"
-        >
-          <div className="flex items-center gap-3">
-            <Avatar
-              src={user.profileImage}
-              alt={`${user.username} profile picture`}
-              className="size-12"
-            />
-            <div className="min-w-0">
-              <p className="text-[10px] uppercase tracking-widest text-muted">
-                Athlete overview
-              </p>
-              <h2
-                id="athlete-title"
-                className="mt-1 truncate text-lg font-semibold"
-              >
-                {user.username}
-              </h2>
-              {user.weightClass && (
-                <p className="mt-2 inline-flex items-center gap-1.5 rounded-lg border border-accent/25 bg-accent/10 px-2.5 py-1 text-xs text-accent">
-                  <Icon name="trophy" className="size-3.5" />
-                  <span className="sr-only">Weight class: </span>
-                  {user.weightClass.name}
-                </p>
-              )}
-            </div>
-          </div>
-          <div className="mt-5">
-            <AthleteStats user={user} />
-          </div>
-        </section>
+        <AthleteCard user={user} label="Athlete overview" />
       </div>
       <PersonalRecords lifts={lifts} />
       <LiftHistory
