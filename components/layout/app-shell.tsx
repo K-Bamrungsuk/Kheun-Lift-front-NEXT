@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { Avatar } from "@/components/ui/avatar";
 import { Icon } from "@/components/ui/icon";
-import { LogLiftForm } from "@/features/lifts/components/log-lift-form";
+import { LogLiftPanel } from "@/features/lifts/components/log-lift-panel";
 import type { User } from "@/features/user/types";
-import { AppNavigation } from "./app-navigation";
+import { DesktopNav, MobileNav } from "./app-navigation";
 
 export function AppShell({
   user,
@@ -37,7 +37,7 @@ export function AppShell({
             </span>
           </Link>
           <div className="hidden md:flex">
-            <AppNavigation logLift={<LogLiftForm />} />
+            <DesktopNav logLift={<LogLiftPanel />} />
           </div>
           <Link
             href="/profile"
@@ -56,7 +56,7 @@ export function AppShell({
       >
         {children}
       </main>
-      <AppNavigation mobile logLift={<LogLiftForm />} />
+      <MobileNav logLift={<LogLiftPanel />} />
     </div>
   );
 }
