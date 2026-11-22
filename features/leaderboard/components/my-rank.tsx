@@ -1,6 +1,6 @@
 import { passTarget } from "../pass-target";
 import type { LeaderboardEntry } from "../types";
-import { LiftValue } from "./ranking-table";
+import { LiftValue } from "@/features/lifts/components/lift-value";
 
 export function MyRank({
   entries,

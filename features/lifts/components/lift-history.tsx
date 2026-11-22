@@ -3,7 +3,9 @@ import { Icon } from "@/components/ui/icon";
 import { ModalButton } from "@/components/ui/modal";
 import { formatLiftDate } from "../format-date";
 import type { LiftRecord } from "../types";
-import { LiftDetail, LiftStatusBadge } from "./lift-detail";
+import { LiftDetail } from "./lift-detail";
+import { LiftStatusBadge } from "./lift-status-badge";
+import { LiftValue } from "./lift-value";
 
 export function LiftHistory({
   lifts,
@@ -62,12 +64,8 @@ export function LiftHistory({
                       <span className="block font-semibold">
                         {lift.exercise.name}
                       </span>
-                      <span className="mt-1 block text-xl tabular-nums">
-                        {lift.weight}
-                        <span className="ml-1 text-xs text-muted">kg</span>
-                        <span className="mx-2 text-sm text-muted">×</span>
-                        {lift.reps}
-                        <span className="ml-1 text-xs text-muted">rep</span>
+                      <span className="mt-1 block text-xl">
+                        <LiftValue lift={lift} />
                       </span>
                     </span>
                     <span className="flex flex-col items-end gap-2">

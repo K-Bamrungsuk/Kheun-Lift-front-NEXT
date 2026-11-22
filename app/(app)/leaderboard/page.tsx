@@ -8,11 +8,9 @@ import {
 import { MyRank } from "@/features/leaderboard/components/my-rank";
 import { FilterPill, Pill } from "@/features/leaderboard/components/pill";
 import { RankHeader } from "@/features/leaderboard/components/rank-header";
-import {
-  LiftValue,
-  RankingTable,
-} from "@/features/leaderboard/components/ranking-table";
+import { RankingTable } from "@/features/leaderboard/components/ranking-table";
 import { getExercises } from "@/features/lifts/api-server";
+import { LiftValue } from "@/features/lifts/components/lift-value";
 import { getMe } from "@/features/user/api-server";
 import { isNotFound } from "@/lib/api";
 
@@ -54,7 +52,7 @@ export default async function LeaderboardPage({
     gender,
   }).catch(notFoundOnBadQuery);
 
-  const className = classes.find((item) => String(item.id) === weightClass)?.name;
+  const classLabel = classes.find((item) => String(item.id) === weightClass)?.name;
 
   return (
     <>
@@ -77,6 +75,7 @@ export default async function LeaderboardPage({
         </nav>
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="flex flex-wrap gap-2">
+            {/* A new key remounts the pill after a pick, which closes its modal. */}
             <FilterPill
               key={gender}
               id="gender-title"
@@ -98,12 +97,12 @@ export default async function LeaderboardPage({
                 </Pill>
               </nav>
             </FilterPill>
-            {className && (
+            {classLabel && (
               <FilterPill
                 key={weightClass}
                 id="class-title"
                 title="Class"
-                value={className}
+                value={classLabel}
               >
                 <nav aria-label="Weight class" className="grid grid-cols-4 gap-2">
                   {classes.map((item) => (
@@ -145,7 +144,7 @@ export default async function LeaderboardPage({
           <RankingTable
             entries={entries}
             meId={me.id}
-            caption={`${exercise.name} rankings, ${gender} ${className}`}
+            caption={`${exercise.name} rankings, ${gender} ${classLabel}`}
           />
         )}
         <aside className="flex items-start gap-3 rounded-xl bg-surface-low p-4 text-sm leading-6 text-muted">

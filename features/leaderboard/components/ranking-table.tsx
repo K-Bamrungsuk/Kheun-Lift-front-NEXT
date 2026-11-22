@@ -2,18 +2,9 @@ import Link from "next/link";
 import { Icon } from "@/components/ui/icon";
 import { ModalButton } from "@/components/ui/modal";
 import { LiftDetail } from "@/features/lifts/components/lift-detail";
+import { LiftValue } from "@/features/lifts/components/lift-value";
 import { formatLiftDate } from "@/features/lifts/format-date";
 import type { LeaderboardEntry } from "../types";
-
-export function LiftValue({ lift }: { lift: { weight: number; reps: number } }) {
-  return (
-    <span className="whitespace-nowrap tabular-nums">
-      {lift.weight}
-      <span className="ml-0.5 text-xs font-normal text-muted">kg</span>
-      <span className="ml-1 font-normal text-muted">× {lift.reps}</span>
-    </span>
-  );
-}
 
 const medals = [
   "bg-accent text-background",
