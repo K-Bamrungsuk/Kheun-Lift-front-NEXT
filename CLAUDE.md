@@ -87,8 +87,8 @@ The goal is code a new developer can read quickly. Keep each change small.
   (`z.infer`); every fetch passes its schema.
 - **Nesting.** Use early returns instead of nested `if`. When JSX nests more
   than about 5 levels, or one component holds several jobs, split out a
-  component. Example: `lift-owner-actions.tsx` holds the menu, caption form
-  and delete.
+  component. Example: `lift-detail.tsx` keeps `CaptionForm`, `LiftMenu` and
+  `DeleteLiftDialog` out of its own body.
 
 ## How the apps fit together
 
@@ -107,4 +107,4 @@ The goal is code a new developer can read quickly. Keep each change small.
   `{message, data}`; `request` returns the parsed `data`.
 - No endpoint exists yet to verify or reject lifts.
 - `PATCH /lifts/:id` edits a caption and `DELETE /lifts/:id` deletes a lift.
-  The UI does not call them yet.
+  The lift detail modal calls both.

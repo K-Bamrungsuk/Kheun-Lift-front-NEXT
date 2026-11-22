@@ -19,7 +19,7 @@
 ## สถานะ (2026-11-18)
 
 - ✅ lib/api, กันหน้า login 2 ชั้น (`proxy.ts` + layout), login / register / logout, onboarding, dashboard, log lift, profile (แก้โปรไฟล์, ลบบัญชี), หน้า error, leaderboard, รูปโปรไฟล์, lift detail (แก้ caption / ลบ), โปรไฟล์คนอื่น
-- ✅ test ด้วย vitest (`npm test`), ฟอร์มใน modal ปิดด้วย `useCloseModal()` (`components/ui/modal.tsx`), edit profile / รูปโปรไฟล์ / log lift เป็น modal แบบ state (ไม่มี URL), lift detail ยังเป็น intercepting route
+- ✅ test ด้วย vitest (`npm test`), ฟอร์มใน modal ปิดด้วย `useCloseModal()` (`components/ui/modal.tsx`), edit profile / รูปโปรไฟล์ / log lift / lift detail เป็น modal แบบ state (ไม่มี URL), test ranking (`personal-record.test.ts`, `pass-target.test.ts`), Playwright (`npx playwright test`, โฟลเดอร์ `tests/`)
 
 ---
 
@@ -30,7 +30,7 @@
 - [x] Leaderboard ข้อมูลจริง
   - ตัวเลือกท่า / เพศ / รุ่น เก็บใน URL ให้แชร์ลิงก์ได้
   - response เป็น `{message, data}` ไม่ใช่ array
-- [x] แก้ caption / ลบ lift ในหน้า `/lifts/[id]` (modal เมื่อกดจาก profile / dashboard / leaderboard, กล่อง `confirm()` ก่อนลบ)
+- [x] แก้ caption / ลบ lift ใน modal lift detail (กดจาก profile / dashboard / leaderboard, dialog ยืนยันก่อนลบ)
 - [x] อัปโหลดรูปโปรไฟล์ในหน้า profile (`POST /users/me/profile-image`, FormData ช่อง `profileImage`)
   - เช็กไม่เกิน 2 MB ฝั่ง client ก่อนส่ง, Go ตรวจชนิดไฟล์จากเนื้อไฟล์
 - [x] ลบรูปโปรไฟล์ (`DELETE /users/me/profile-image`) → กลับเป็น avatar เปล่า
@@ -66,7 +66,8 @@
 - [ ] `/feed` หน้าแรกจาก server, หน้าถัดไปโหลดเองด้วย IntersectionObserver + ปุ่ม Load more สำรอง
 - [ ] like แบบ optimistic → ใช้ค่าที่ Go ตอบกลับ, `aria-pressed`
 - [ ] `/lifts/[id]` วิดีโอ + comment (1 ถึง 500 ตัว, ลบได้เฉพาะของตัวเองหรือ admin)
-  - ✅ หน้า + modal + วิดีโอ YouTube (`lib/youtube.ts`) แล้ว, เหลือ comment (รอ Go)
+  - ตอนนี้ lift detail เป็น modal อย่างเดียว (ลบหน้า `/lifts/[id]` ออกแล้ว) ต้องสร้างหน้าใหม่ไว้แชร์ลิงก์ + comment, ใช้ `getLift` ใน `features/lifts/api-server.ts` ที่เตรียมไว้ และ `LiftDetail` เดิม
+  - วิดีโอ YouTube (`lib/youtube.ts`) เสร็จแล้ว, comment รอ Go
 - [x] `/users/[id]` โปรไฟล์คนอื่น, กดชื่อจาก leaderboard มาได้ (feed ยังไม่มี), id ตัวเอง → `/profile`
 
 ## Phase 7: Notification
@@ -78,7 +79,7 @@
 
 - [ ] `GET /lifts/:id` ส่ง lift ที่ไม่ใช่ `verified` ให้เฉพาะเจ้าของ (และ admin) คนอื่นได้ 404
 - [ ] `GET /lifts/users/:id` คนอื่นได้เฉพาะ `verified`
-  - ตอนนี้หน้าเว็บกรองให้ (comment `shortcut:` ใน `lift-detail.tsx`, `users/[id]/page.tsx`) แต่เรียก API ตรงยังเห็น pending / rejected + ลิงก์วิดีโอ
+  - ตอนนี้หน้าเว็บกรองให้ (comment `shortcut:` ใน `users/[id]/page.tsx`) แต่เรียก API ตรงยังเห็น pending / rejected + ลิงก์วิดีโอ
   - แก้ Go แล้วลบ filter ฝั่งหน้าเว็บออกได้
 
 ## Validate response จาก Go ด้วย zod ✅
@@ -92,7 +93,7 @@
 
 ## ค้างจากรีวิว TypeScript (optional)
 
-- [ ] ใช้ `PageProps<"/lifts/[id]">` แทน `{ params: Promise<{ id: string }> }` ใน 4 page (เช็กแล้ว route modal `(.)lifts/[id]` ใช้ได้)
+- [x] ใช้ `PageProps<"/users/[id]">` แทน `{ params: Promise<{ id: string }> }` (หน้า `/lifts/[id]` ใหม่ใน Phase 6 ใช้แบบเดียวกัน)
 - [x] type `after` ซ้ำ 6 ไฟล์: เปลี่ยนเป็น `variant` ที่มี type เดียวแล้ว
 - [x] `[400, 404].includes(error.status)` ซ้ำ 3 ที่ (leaderboard, users, lift-detail) ทำเป็น `isNotFound(error)` (`lib/api.ts`)
 - [x] test ของ `youtubeEmbedUrl` (`lib/youtube.test.ts`) และแก้ regex ให้รับลิงก์ที่ `v=` ไม่ได้อยู่ตัวแรก

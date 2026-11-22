@@ -13,15 +13,17 @@ Run `npm install` and `npm run dev`, then open http://localhost:3002.
   gender and body weight until they fill it in.
 - `/leaderboard` ranks verified lifts by exercise, gender and weight class.
   The URL holds the filters.
-- `/log-lift` submits a lift with a video URL. The navigation link opens it as a modal.
 - `/profile` shows details, records and the lift ledger, with log out and
-  delete account buttons. The profile page opens `/profile/edit` and
-  `/profile/picture` as modals.
+  delete account buttons.
+- `/users/[id]` shows another athlete's verified lifts.
+- Log lift, edit profile, profile picture and lift detail open as modals
+  (`ModalButton` in `components/ui/modal.tsx`). They have no URL, so a refresh
+  closes them.
 
 ## Structure
 
-- `app/` holds routes only. `(app)` is the signed-in group with the shell and
-  the `@modal` slot. `(auth)` holds login and register.
+- `app/` holds routes only. `(app)` is the signed-in group with the shell.
+  `(auth)` holds login and register.
 - `features/<name>/` holds components, `api.ts` for browser calls,
   `api-server.ts` for server calls, and `types.ts`.
 - `lib/api.ts` and `lib/api-server.ts` call Go. The server version forwards
@@ -44,5 +46,7 @@ sans-serif as fallbacks.
 
 - `npm run lint`
 - `npx --no-install tsc --noEmit --incremental false`
+- `npm test` runs the Vitest unit tests (`*.test.ts`).
+- `npx playwright test` runs browser tests in `tests/`. Start `npm run dev` first.
 
 Do not run a production build without explicit approval. Rule 5 in `CLAUDE.md` sets this.
