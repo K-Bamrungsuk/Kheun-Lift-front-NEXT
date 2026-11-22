@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { SpinnerIcon } from "@/components/ui/spinner";
 import { ApiError, errorMessage } from "@/lib/api";
@@ -9,25 +9,23 @@ import { logout } from "../api";
 export function LogoutButton({ className = "" }: { className?: string }) {
   const router = useRouter();
   const [error, setError] = useState("");
-  const [pending, startTransition] = useTransition();
+  const [pending, setPending] = useState(false);
 
-  function handleClick() {
+  async function handleClick() {
+    setPending(true);
     setError("");
-    startTransition(async () => {
-      try {
-        await logout();
-      } catch (err) {
-        const alreadyLoggedOut = err instanceof ApiError && err.status === 401;
-        if (!alreadyLoggedOut) {
-          setError(errorMessage(err));
-          return;
-        }
+    try {
+      await logout();
+    } catch (err) {
+      const alreadyLoggedOut = err instanceof ApiError && err.status === 401;
+      if (!alreadyLoggedOut) {
+        setError(errorMessage(err));
+        setPending(false);
+        return;
       }
-      startTransition(() => {
-        router.replace("/login");
-        router.refresh();
-      });
-    });
+    }
+    router.replace("/login");
+    router.refresh();
   }
 
   return (
@@ -41,7 +39,7 @@ export function LogoutButton({ className = "" }: { className?: string }) {
         {pending ? <SpinnerIcon label="Logging out" /> : "Log out"}
       </button>
       {error && (
-        <p role="alert" className="text-sm text-red-400">
+        <p role="alert" className="text-sm text-danger">
           {error}
         </p>
       )}

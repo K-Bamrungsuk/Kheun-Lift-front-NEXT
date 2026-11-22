@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { errorMessage } from "@/lib/api";
 import { login } from "../api";
@@ -10,23 +10,21 @@ import { SpinnerIcon } from "@/components/ui/spinner";
 export function LoginForm() {
   const router = useRouter();
   const [error, setError] = useState("");
-  const [pending, startTransition] = useTransition();
+  const [pending, setPending] = useState(false);
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
+    setPending(true);
     setError("");
-    startTransition(async () => {
-      try {
-        await login(String(form.get("email")), String(form.get("password")));
-        startTransition(() => {
-          router.replace("/dashboard");
-          router.refresh();
-        });
-      } catch (err) {
-        setError(errorMessage(err));
-      }
-    });
+    try {
+      await login(String(form.get("email")), String(form.get("password")));
+      router.replace("/dashboard");
+      router.refresh();
+    } catch (err) {
+      setError(errorMessage(err));
+      setPending(false);
+    }
   }
 
   return (
@@ -39,7 +37,7 @@ export function LoginForm() {
         autoComplete="current-password"
       />
       {error && (
-        <p role="alert" className="text-sm text-red-400">
+        <p role="alert" className="text-sm text-danger">
           {error}
         </p>
       )}

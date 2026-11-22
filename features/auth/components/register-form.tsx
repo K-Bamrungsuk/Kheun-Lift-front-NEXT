@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { errorMessage } from "@/lib/api";
 import { login, register } from "../api";
@@ -10,37 +10,31 @@ import { SpinnerIcon } from "@/components/ui/spinner";
 export function RegisterForm() {
   const router = useRouter();
   const [error, setError] = useState("");
-  const [pending, startTransition] = useTransition();
+  const [pending, setPending] = useState(false);
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
     const email = String(form.get("email"));
     const password = String(form.get("password"));
+    setPending(true);
     setError("");
-    startTransition(async () => {
-      try {
-        await register({
-          username: String(form.get("username")),
-          email,
-          password,
-        });
-      } catch (err) {
-        setError(errorMessage(err));
-        return;
-      }
+    try {
+      await register({ username: String(form.get("username")), email, password });
+    } catch (err) {
+      setError(errorMessage(err));
+      setPending(false);
+      return;
+    }
 
-      // Go does not set a session on register, so log in right away.
-      // The account exists now; if this login fails, send the user to log in by hand.
-      const next = await login(email, password).then(
-        () => "/dashboard",
-        () => "/login",
-      );
-      startTransition(() => {
-        router.replace(next);
-        router.refresh();
-      });
-    });
+    // Go does not set a session on register, so log in right away.
+    // The account exists now; if this login fails, send the user to log in by hand.
+    const next = await login(email, password).then(
+      () => "/dashboard",
+      () => "/login",
+    );
+    router.replace(next);
+    router.refresh();
   }
 
   return (
@@ -60,7 +54,7 @@ export function RegisterForm() {
         minLength={6}
       />
       {error && (
-        <p role="alert" className="text-sm text-red-400">
+        <p role="alert" className="text-sm text-danger">
           {error}
         </p>
       )}
