@@ -84,7 +84,13 @@ The goal is code a new developer can read quickly. Keep each change small.
   `app/error.tsx` shows them. Do not add a branch for each status.
 - **Types.** No `any`. Type data from outside as `unknown` and narrow it.
   Avoid `as`. API types come from zod schemas in `features/*/types.ts`
-  (`z.infer`); every fetch passes its schema.
+  (`z.infer`); every fetch passes its schema. A type that is exported or used
+  in more than one file goes in `types.ts`; a type used in one file (props,
+  a local shape) stays in that file.
+- **Folders.** In `features/<name>/`, forms go in `forms/` and every other
+  component in `components/`. A file name ends with its job: `-form`,
+  `-dialog`, `-button`, `-menu`, `-badge`. Add a folder such as `hooks/` or
+  `utils/` only once it would hold two files.
 - **Nesting.** Use early returns instead of nested `if`. When JSX nests more
   than about 5 levels, or one component holds several jobs, split out a
   component. Example: `lift-detail.tsx` keeps `CaptionForm`, `LiftMenu` and

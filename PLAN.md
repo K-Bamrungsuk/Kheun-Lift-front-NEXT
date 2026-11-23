@@ -6,7 +6,7 @@
 
 ## กติกา
 
-- โครง: `app/` มีแค่ route, ของแต่ละฟีเจอร์อยู่ `features/<ชื่อ>/` (components, api.ts, types.ts)
+- โครง: `app/` มีแค่ route, ของแต่ละฟีเจอร์อยู่ `features/<ชื่อ>/` (`forms/` เก็บฟอร์ม, `components/` เก็บ component อื่น, api.ts, api-server.ts, types.ts) ดูกติกาเต็มใน CLAUDE.md หัวข้อ Folders
 - อ่านข้อมูล: Server Component + `serverFetch` (ส่ง cookie ต่อให้ Go)
 - เขียนข้อมูล: Client Component + `clientFetch` (`credentials: "include"`)
 - login / register / forgot password: Client Component เท่านั้น

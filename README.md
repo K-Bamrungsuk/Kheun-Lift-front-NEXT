@@ -24,8 +24,10 @@ Run `npm install` and `npm run dev`, then open http://localhost:3002.
 
 - `app/` holds routes only. `(app)` is the signed-in group with the shell.
   `(auth)` holds login and register.
-- `features/<name>/` holds components, `api.ts` for browser calls,
-  `api-server.ts` for server calls, and `types.ts`.
+- `features/<name>/` holds `forms/`, `components/` for everything else,
+  `api.ts` for browser calls, `api-server.ts` for server calls, and `types.ts`.
+- `components/ui/` holds shared building blocks (modal, field, avatar) and
+  `components/layout/` holds the app shell and navigation.
 - `lib/api.ts` and `lib/api-server.ts` call Go. The server version forwards
   the session cookie.
 - `proxy.ts` sends visitors without a `kheun_session` cookie to `/login`.
