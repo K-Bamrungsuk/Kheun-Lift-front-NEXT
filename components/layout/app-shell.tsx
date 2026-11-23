@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { Avatar } from "@/components/ui/avatar";
 import { Icon } from "@/components/ui/icon";
 import { LogLiftPanel } from "@/features/lifts/components/log-lift-panel";
 import type { User } from "@/features/user/types";
 import { DesktopNav, MobileNav } from "./app-navigation";
+import { UserMenu } from "./user-menu";
 
 export function AppShell({
   user,
@@ -36,17 +36,12 @@ export function AppShell({
               </span>
             </span>
           </Link>
-          <div className="hidden md:flex">
-            <DesktopNav logLift={<LogLiftPanel />} />
+          <div className="flex items-center gap-3">
+            <div className="hidden md:flex">
+              <DesktopNav logLift={<LogLiftPanel />} />
+            </div>
+            <UserMenu profileImage={user.profileImage} />
           </div>
-          <Link
-            href="/profile"
-            aria-label="View athlete profile"
-            className="shrink-0 rounded-full md:hidden"
-          >
-            {/* The link's aria-label already names it, so the image is decorative. */}
-            <Avatar src={user.profileImage} alt="" className="size-11" />
-          </Link>
         </div>
       </header>
       <main

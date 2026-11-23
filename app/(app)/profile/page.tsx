@@ -3,7 +3,6 @@ import { Avatar } from "@/components/ui/avatar";
 import { Icon } from "@/components/ui/icon";
 import { ModalButton } from "@/components/ui/modal";
 import { Panel } from "@/components/ui/panel";
-import { LogoutButton } from "@/features/auth/components/logout-button";
 import { getMyLifts } from "@/features/lifts/api-server";
 import { LiftHistory } from "@/features/lifts/components/lift-history";
 import { PersonalRecords } from "@/features/lifts/components/personal-records";
@@ -68,8 +67,18 @@ export default async function ProfilePage() {
           <LiftHistory lifts={lifts} isOwner />
         </div>
       </div>
-      <LogoutButton className="w-full bg-surface" />
-      <DeleteAccountButton />
+      <section aria-labelledby="danger-title">
+        <h2 id="danger-title" className="mb-2 text-sm font-semibold">
+          Danger zone
+        </h2>
+        <div className="flex items-center justify-between gap-4 rounded-xl border border-danger/50 p-4">
+          <div>
+            <h3 className="text-sm font-semibold">Delete account</h3>
+            <p className="mt-0.5 text-sm text-muted">This can&apos;t be undone.</p>
+          </div>
+          <DeleteAccountButton />
+        </div>
+      </section>
     </>
   );
 }

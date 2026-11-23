@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { Icon } from "@/components/ui/icon";
 import { ModalButton, useCloseModal } from "@/components/ui/modal";
 import { SpinnerIcon } from "@/components/ui/spinner";
@@ -13,7 +12,7 @@ export function DeleteAccountButton() {
     <ModalButton
       label="Delete account"
       labelledBy="delete-account-title"
-      className="flex min-h-11 w-full items-center justify-center rounded-xl px-4 text-sm text-danger transition-colors hover:bg-danger/10"
+      className="flex min-h-11 shrink-0 items-center justify-center rounded-xl border border-border px-4 text-sm font-medium text-danger transition-colors hover:border-danger hover:bg-danger hover:text-background"
       trigger="Delete account"
     >
       <DeleteAccountConfirm />
@@ -22,7 +21,6 @@ export function DeleteAccountButton() {
 }
 
 function DeleteAccountConfirm() {
-  const router = useRouter();
   const close = useCloseModal();
   const [error, setError] = useState("");
   const [pending, setPending] = useState(false);
@@ -33,13 +31,12 @@ function DeleteAccountConfirm() {
     try {
       await deleteMe();
     } catch (err) {
-      // Go answers 409 while the user still has lifts, until backend task B4.5. Go's message says to delete them first.
       setError(errorMessage(err));
       setPending(false);
       return;
     }
-    router.replace("/login");
-    router.refresh();
+    // eslint-disable-next-line @next/next/no-location-assign-relative-destination -- a full load drops the old user's state that Activity keeps
+    window.location.href = "/login";
   }
 
   return (

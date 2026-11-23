@@ -1,13 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { SpinnerIcon } from "@/components/ui/spinner";
 import { ApiError, errorMessage } from "@/lib/api";
 import { logout } from "../api";
 
-export function LogoutButton({ className = "" }: { className?: string }) {
-  const router = useRouter();
+export function LogoutButton() {
   const [error, setError] = useState("");
   const [pending, setPending] = useState(false);
 
@@ -24,22 +22,24 @@ export function LogoutButton({ className = "" }: { className?: string }) {
         return;
       }
     }
-    router.replace("/login");
-    router.refresh();
+    // eslint-disable-next-line @next/next/no-location-assign-relative-destination -- a full load drops the old user's state that Activity keeps
+    window.location.href = "/login";
   }
 
   return (
     <>
       <button
         type="button"
+        role="menuitem"
         onClick={handleClick}
         disabled={pending}
-        className={`flex min-h-11 items-center justify-center rounded-xl border border-border px-4 text-sm text-muted transition-colors hover:bg-surface-high hover:text-foreground disabled:opacity-60 ${className}`}
+        className="flex min-h-11 w-full items-center justify-between px-4 text-left text-sm transition-colors hover:bg-surface-high disabled:opacity-60"
       >
-        {pending ? <SpinnerIcon label="Logging out" /> : "Log out"}
+        Log out
+        {pending && <SpinnerIcon label="Logging out" />}
       </button>
       {error && (
-        <p role="alert" className="text-sm text-danger">
+        <p role="alert" className="px-4 pb-2 text-sm text-danger">
           {error}
         </p>
       )}
