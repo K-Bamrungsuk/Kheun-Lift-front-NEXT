@@ -35,3 +35,10 @@ export const publicUserSchema = userSchema.pick({
   weightClass: true,
 });
 export type PublicUser = z.infer<typeof publicUserSchema>;
+
+export type UpdateMeInput = Partial<
+  Record<
+    "username" | "gender" | "bodyWeight" | "height" | "dateOfBirth",
+    string | number
+  >
+>;

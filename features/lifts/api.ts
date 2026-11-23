@@ -1,14 +1,6 @@
 import { z } from "zod";
 import { clientFetch } from "@/lib/api";
-import { liftRecordSchema } from "./types";
-
-export type CreateLiftInput = {
-  exerciseId: number;
-  weight: number;
-  reps: number;
-  videoUrl: string;
-  caption?: string;
-};
+import { liftRecordSchema, type CreateLiftInput } from "./types";
 
 export const createLift = (body: CreateLiftInput) =>
   clientFetch("/lifts", liftRecordSchema, {

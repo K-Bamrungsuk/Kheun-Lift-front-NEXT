@@ -6,7 +6,7 @@ import {
   getWeightClasses,
 } from "@/features/leaderboard/api-server";
 import { MyRank } from "@/features/leaderboard/components/my-rank";
-import { FilterPill, Pill } from "@/features/leaderboard/components/pill";
+import { FilterPill, Pill } from "@/features/leaderboard/components/filter-pill";
 import { RankHeader } from "@/features/leaderboard/components/rank-header";
 import { RankingTable } from "@/features/leaderboard/components/ranking-table";
 import { getExercises } from "@/features/lifts/api-server";

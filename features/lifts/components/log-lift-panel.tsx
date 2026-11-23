@@ -1,6 +1,6 @@
 import { Panel } from "@/components/ui/panel";
 import { getExercises } from "../api-server";
-import { LogLiftForm } from "./log-lift-form";
+import { LogLiftForm } from "../forms/log-lift-form";
 
 export function LogLiftPanel() {
   return (

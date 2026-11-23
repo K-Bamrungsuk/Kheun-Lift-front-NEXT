@@ -28,3 +28,11 @@ export const exerciseSchema = z.object({
   description: z.string().nullable(),
 });
 export type Exercise = z.infer<typeof exerciseSchema>;
+
+export type CreateLiftInput = {
+  exerciseId: number;
+  weight: number;
+  reps: number;
+  videoUrl: string;
+  caption?: string;
+};

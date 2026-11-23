@@ -6,8 +6,8 @@ import { Field } from "@/components/ui/field";
 import { SpinnerIcon } from "@/components/ui/spinner";
 import { useCloseModal } from "@/components/ui/modal";
 import { errorMessage } from "@/lib/api";
-import { updateMe, type UpdateMeInput } from "../api";
-import type { User } from "../types";
+import { updateMe } from "../api";
+import type { UpdateMeInput, User } from "../types";
 
 const KEYS = [
   "username",

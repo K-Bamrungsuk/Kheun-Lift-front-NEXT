@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { RegisterForm } from "@/features/auth/components/register-form";
+import { RegisterForm } from "@/features/auth/forms/register-form";
 
 export const metadata: Metadata = { title: "Register | Kheun Lift" };
 

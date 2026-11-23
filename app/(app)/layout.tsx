@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { AppShell } from "@/components/layout/app-shell";
 import { getMe } from "@/features/user/api-server";
-import { OnboardingForm } from "@/features/user/components/onboarding-form";
+import { OnboardingForm } from "@/features/user/forms/onboarding-form";
 
 export default function DashboardLayout({
   children,

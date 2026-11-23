@@ -1,12 +1,6 @@
 import { z } from "zod";
 import { clientFetch } from "@/lib/api";
-
-export type UpdateMeInput = Partial<
-  Record<
-    "username" | "gender" | "bodyWeight" | "height" | "dateOfBirth",
-    string | number
-  >
->;
+import type { UpdateMeInput } from "./types";
 
 export const updateMe = (body: UpdateMeInput) =>
   clientFetch("/users/me", z.unknown(), {

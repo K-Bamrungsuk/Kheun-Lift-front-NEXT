@@ -10,8 +10,8 @@ import { PersonalRecords } from "@/features/lifts/components/personal-records";
 import { getMe } from "@/features/user/api-server";
 import { AthleteCard } from "@/features/user/components/athlete-card";
 import { DeleteAccountButton } from "@/features/user/components/delete-account-button";
-import { ProfileForm } from "@/features/user/components/profile-form";
-import { ProfilePictureForm } from "@/features/user/components/profile-picture-form";
+import { ProfileForm } from "@/features/user/forms/profile-form";
+import { ProfilePictureForm } from "@/features/user/forms/profile-picture-form";
 
 export const metadata: Metadata = { title: "Profile | Kheun Lift" };
 
