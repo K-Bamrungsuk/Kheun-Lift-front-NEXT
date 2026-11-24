@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { AccountSwitchLink } from "@/features/auth/components/account-switch-link";
 import { LoginForm } from "@/features/auth/forms/login-form";
 
 export const metadata: Metadata = { title: "Log in | Kheun Lift" };
@@ -7,17 +7,13 @@ export const metadata: Metadata = { title: "Log in | Kheun Lift" };
 export default function LoginPage() {
   return (
     <>
-      <h1 className="text-3xl font-black">Log in</h1>
+      <h1 className="mt-2 text-lg font-semibold">Welcome back.</h1>
       <LoginForm />
-      <p className="mt-6 text-sm text-muted">
-        New to Kheun Lift?{" "}
-        <Link
-          href="/register"
-          className="font-semibold text-accent hover:underline"
-        >
-          Create an account
-        </Link>
-      </p>
+      <AccountSwitchLink
+        question="New to Kheun Lift?"
+        label="Create an account"
+        href="/register"
+      />
     </>
   );
 }
