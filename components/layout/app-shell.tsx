@@ -37,6 +37,7 @@ export function AppShell({
             </span>
           </Link>
           <div className="flex items-center gap-3">
+            {/* The header nav shows on desktop only, md and wider */}
             <div className="hidden md:flex">
               <DesktopNav logLift={<LogLiftPanel />} />
             </div>
@@ -44,6 +45,7 @@ export function AppShell({
           </div>
         </div>
       </header>
+      {/* On mobile, the bottom padding leaves room for MobileNav */}
       <main
         id="main-content"
         tabIndex={-1}
@@ -51,6 +53,7 @@ export function AppShell({
       >
         {children}
       </main>
+      {/* MobileNav is the bottom tab bar, shown below md only */}
       <MobileNav logLift={<LogLiftPanel />} />
     </div>
   );

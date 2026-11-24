@@ -14,6 +14,7 @@ export function RankHeader() {
           A benchmark for your next personal best.
         </p>
       </div>
+      {/* The trophy icon shows on sm and wider only */}
       <span className="hidden size-14 place-items-center rounded-xl bg-surface text-accent sm:grid">
         <Icon name="trophy" className="size-7" />
       </span>

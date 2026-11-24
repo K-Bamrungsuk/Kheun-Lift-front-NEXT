@@ -14,6 +14,7 @@ export function MyRank({
   const mine = entries[index];
   const above = entries[index - 1];
 
+  // On mobile the pass hint takes its own row. On sm and wider, all 3 parts sit in one row.
   return (
     <div className="grid grid-cols-2 items-center gap-4 rounded-xl border border-accent/35 bg-surface p-4 sm:grid-cols-[auto_1fr_auto]">
       <div>

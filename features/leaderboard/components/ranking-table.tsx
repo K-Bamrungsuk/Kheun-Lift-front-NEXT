@@ -36,6 +36,7 @@ export function RankingTable({
             <th scope="col" className="px-3 py-4 font-medium md:px-5">
               Athlete
             </th>
+            {/* The Date column shows on sm and wider, and hides on mobile */}
             <th scope="col" className="hidden px-3 py-4 text-right font-medium sm:table-cell md:px-5">
               Date
             </th>
