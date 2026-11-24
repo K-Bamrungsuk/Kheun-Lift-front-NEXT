@@ -9,7 +9,7 @@ Run `npm install` and `npm run dev`, then open http://localhost:3002.
 
 - `/login` and `/register`. Registering logs the user in right away.
 - `/dashboard` shows the athlete overview, personal records, the last 5 lifts,
-  and the top 3 of a random leaderboard. New users see an onboarding form for
+  and the top 3 of a random leaderboard. New users see a notice asking for
   gender and body weight until they fill it in.
 - `/leaderboard` ranks verified lifts by exercise, gender and weight class.
   The URL holds the filters.

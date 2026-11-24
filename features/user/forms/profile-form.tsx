@@ -30,7 +30,6 @@ const initial = (user: User) => ({
 export function ProfileForm({ user }: { user: User }) {
   const router = useRouter();
   const close = useCloseModal();
-  // Onboarding card and edit modal can be on the same page, so ids must be unique.
   const uid = useId();
   const [error, setError] = useState("");
   const [pending, setPending] = useState(false);
