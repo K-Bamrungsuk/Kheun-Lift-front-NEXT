@@ -23,11 +23,13 @@
   --color-muted: var(--muted);
   --color-border: var(--border);
   --color-danger: var(--danger);
-  --font-sans: var(--font-plex), "Segoe UI", sans-serif;
+  --font-sans: var(--font-noto-sans), var(--font-plex), "Segoe UI", sans-serif;
+  --font-display: var(--font-iceberg), var(--font-plex), sans-serif;
 }
 
-body { background: var(--background); color: var(--foreground); font-family: var(--font-sans); }
+body { background: var(--background); color: var(--foreground); font-family: var(--font-sans); font-synthesis-weight: none; }
 h1, h2, h3 { text-wrap: balance; }
+h1 { font-family: var(--font-display); }
 p { text-wrap: pretty; }
 a, button, input, select, textarea { -webkit-tap-highlight-color: transparent; }
 a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {

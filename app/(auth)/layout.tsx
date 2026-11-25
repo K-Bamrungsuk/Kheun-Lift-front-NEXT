@@ -20,7 +20,7 @@ export default function AuthLayout({
       {/* The brand panel shows on lg and wider only */}
       <aside className="hidden flex-col justify-between border-r border-border bg-surface-low p-12 lg:flex xl:p-16">
         <Logo />
-        <p className="text-5xl font-bold leading-[1.1] tracking-tight xl:text-6xl">
+        <p className="font-display text-5xl font-bold leading-[1.1] tracking-tight xl:text-6xl">
           Lift it.
           <br />
           Film it.
@@ -42,7 +42,7 @@ export default function AuthLayout({
         <header className="px-5 pt-8 sm:px-8 lg:hidden">
           <div className="mx-auto max-w-sm">
             <Logo />
-            <p className="mt-12 text-5xl font-bold leading-[1.05] tracking-tight">
+            <p className="mt-12 font-display text-5xl font-bold leading-[1.05] tracking-tight">
               Lift it.
               <br />
               Film it.
