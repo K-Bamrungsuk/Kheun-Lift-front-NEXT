@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { cacheLife } from "next/cache";
 import { notFound } from "next/navigation";
 import { Icon } from "@/components/ui/icon";
 import {
@@ -7,56 +8,70 @@ import {
 } from "@/features/leaderboard/api-server";
 import { MyRank } from "@/features/leaderboard/components/my-rank";
 import { FilterPill, Pill } from "@/features/leaderboard/components/filter-pill";
-import { RankHeader } from "@/features/leaderboard/components/rank-header";
-import { RankingTable } from "@/features/leaderboard/components/ranking-table";
+import { LeaderboardHeader } from "@/features/leaderboard/components/leaderboard-header";
+import { LeaderboardTable } from "@/features/leaderboard/components/leaderboard-table";
 import { getExercises } from "@/features/lifts/api-server";
-import { LiftValue } from "@/features/lifts/components/lift-value";
 import { getMe } from "@/features/user/api-server";
 import { isNotFound } from "@/lib/api";
 
-export const metadata: Metadata = { title: "Rank | Kheun Lift" };
+export const metadata: Metadata = { title: "Leaderboard | Kheun Lift" };
 
 const first = (value: string | string[] | undefined) =>
   Array.isArray(value) ? value[0] : value;
 
-export default async function LeaderboardPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-}) {
-  const params = await searchParams;
-  const exerciseParam = first(params.exercise);
+type Query = { [key: string]: string | string[] | undefined };
+
+// Private cache lets the exercise links prefetch this page per user; the result stays in that user's browser.
+async function loadLeaderboard(params: Query) {
+  "use cache: private";
+  cacheLife({ stale: 30 });
+
   // Go answers 400 or 404 for a bad gender, an unknown class, or a class of the other gender.
   const notFoundOnBadQuery = (error: unknown): never => {
     if (isNotFound(error)) notFound();
     throw error;
   };
 
-  const [me, exercises] = await Promise.all([getMe(), getExercises()]);
+  const exercises = await getExercises();
+  const exerciseParam = first(params.exercise);
   const exercise = exerciseParam
     ? exercises.find((item) => String(item.id) === exerciseParam)
     : exercises[0];
   if (!exercise) notFound();
 
-  const gender = first(params.gender) ?? me.gender ?? "male";
-  const classes = await getWeightClasses(gender).catch(notFoundOnBadQuery);
-  const defaultClass =
-    me.weightClass?.gender === gender ? me.weightClass : classes[0];
+  const mePromise = getMe();
+  const gender = first(params.gender) ?? (await mePromise).gender ?? "male";
+  const classesPromise = getWeightClasses(gender).catch(notFoundOnBadQuery);
+  // Pill links carry the class, so only a first visit or a gender switch waits for the default.
   const weightClass =
     first(params.weightClass) ??
-    (defaultClass ? String(defaultClass.id) : undefined);
+    (await Promise.all([mePromise, classesPromise]).then(([me, classes]) => {
+      const fallback = me.weightClass?.gender === gender ? me.weightClass : classes[0];
+      return fallback ? String(fallback.id) : undefined;
+    }));
 
-  const entries = await getLeaderboard({
-    exerciseId: exercise.id,
-    weightClassId: weightClass,
-    gender,
-  }).catch(notFoundOnBadQuery);
+  const [me, classes, entries] = await Promise.all([
+    mePromise,
+    classesPromise,
+    getLeaderboard({ exerciseId: exercise.id, weightClassId: weightClass, gender }).catch(
+      notFoundOnBadQuery,
+    ),
+  ]);
+  return { me, exercises, exercise, gender, classes, weightClass, entries };
+}
 
+export default async function LeaderboardPage({
+  searchParams,
+}: {
+  searchParams: Promise<Query>;
+}) {
+  const { me, exercises, exercise, gender, classes, weightClass, entries } =
+    await loadLeaderboard(await searchParams);
   const classLabel = classes.find((item) => String(item.id) === weightClass)?.name;
 
   return (
     <>
-      <RankHeader />
+      <LeaderboardHeader />
       <section aria-label="Rankings" className="space-y-5">
         <nav
           aria-label="Exercise"
@@ -119,20 +134,15 @@ export default async function LeaderboardPage({
             )}
           </div>
           {entries.length > 0 && (
-            <dl className="flex gap-6 sm:text-right">
-              <div>
-                <dt className="text-xs text-muted">Record</dt>
-                <dd className="text-lg font-semibold text-accent">
-                  <LiftValue lift={entries[0]} />
-                </dd>
-              </div>
-              <div>
-                <dt className="text-xs text-muted">Athletes</dt>
-                <dd className="text-lg font-semibold tabular-nums">
+            <p className="ml-auto flex items-center gap-2 text-sm text-muted">
+              <Icon name="users" className="size-4 text-accent" />
+              <span>
+                <span className="font-semibold tabular-nums text-accent">
                   {entries.length}
-                </dd>
-              </div>
-            </dl>
+                </span>{" "}
+                lifters in this class
+              </span>
+            </p>
           )}
         </div>
         <MyRank entries={entries} meId={me.id} />
@@ -141,7 +151,7 @@ export default async function LeaderboardPage({
             No verified lifts yet for this exercise and class.
           </p>
         ) : (
-          <RankingTable
+          <LeaderboardTable
             entries={entries}
             meId={me.id}
             caption={`${exercise.name} rankings, ${gender} ${classLabel}`}

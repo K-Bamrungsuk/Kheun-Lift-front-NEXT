@@ -1,6 +1,6 @@
 import { Icon } from "@/components/ui/icon";
 
-export function RankHeader() {
+export function LeaderboardHeader() {
   return (
     <header className="flex items-end justify-between gap-4">
       <div>
@@ -8,7 +8,7 @@ export function RankHeader() {
           Strength, on the record
         </p>
         <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
-          Rank
+          Leaderboard
         </h1>
         <p className="mt-2 text-sm text-muted">
           A benchmark for your next personal best.

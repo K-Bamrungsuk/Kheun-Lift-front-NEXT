@@ -15,7 +15,7 @@ const rankStyle = (rank: number) =>
   medals[rank - 1] ??
   (rank <= 5 ? "border border-accent text-accent" : "text-muted");
 
-export function RankingTable({
+export function LeaderboardTable({
   entries,
   meId,
   caption,

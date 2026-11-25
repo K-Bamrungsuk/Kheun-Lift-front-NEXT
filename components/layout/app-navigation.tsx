@@ -8,7 +8,7 @@ import { ModalButton } from "@/components/ui/modal";
 const navigation = [
   { name: "Home", href: "/dashboard", icon: "dumbbell" },
   { name: "Social", icon: "users" },
-  { name: "Rank", href: "/leaderboard", icon: "trophy" },
+  { name: "Leaderboard", href: "/leaderboard", icon: "trophy" },
   { name: "Profile", href: "/profile", icon: "user" },
 ] as const;
 
