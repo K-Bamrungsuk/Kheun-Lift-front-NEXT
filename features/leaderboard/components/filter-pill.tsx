@@ -39,6 +39,7 @@ export function Pill({
   return (
     <Link
       href={href(query)}
+      prefetch={segment ? true : undefined}
       aria-current={active ? "true" : undefined}
       className={`${style.base} transition-colors ${active ? style.on : style.off}`}
     >
