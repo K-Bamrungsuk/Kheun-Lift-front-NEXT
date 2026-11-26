@@ -1,8 +1,10 @@
 import { z } from "zod";
 
+export const genderSchema = z.enum(["male", "female"]);
+
 export const weightClassSchema = z.object({
   id: z.number(),
-  gender: z.enum(["male", "female"]),
+  gender: genderSchema,
   name: z.string(),
   minWeight: z.number(),
   maxWeight: z.number().nullable(),
@@ -16,7 +18,7 @@ export const userSchema = z.object({
   profileImage: z.string().nullable(),
   bodyWeight: z.number().nullable(),
   height: z.number().nullable(),
-  gender: z.enum(["male", "female"]).nullable(),
+  gender: genderSchema.nullable(),
   dateOfBirth: z.string().nullable(),
   createdAt: z.string(),
   updatedAt: z.string(),

@@ -67,7 +67,7 @@ export function FilterPill({
       trigger={
         <>
           <span className="text-muted">{title}</span>
-          <span className="font-semibold text-accent">{value}</span>
+          <span className="font-semibold capitalize text-accent">{value}</span>
           <Icon name="chevronDown" className="size-4 text-muted" />
         </>
       }
